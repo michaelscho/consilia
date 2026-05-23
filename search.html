@@ -82,7 +82,7 @@
       align-items: center;
     }
 
-    #volume-select {
+    #author-select, #volume-select {
       background: rgba(255,255,255,.15);
       color: #fff;
       border: 1px solid rgba(255,255,255,.35);
@@ -93,7 +93,7 @@
       cursor: pointer;
       flex-shrink: 0;
     }
-    #volume-select option { background: var(--accent); }
+    #author-select option, #volume-select option { background: var(--accent); }
 
     .search-box {
       position: relative;
@@ -429,6 +429,7 @@
 
 <div class="hero">
   <div class="hero-controls">
+    <select id="author-select"></select>
     <select id="volume-select"></select>
     <div class="search-box">
       <input id="search-input" type="search" placeholder="Search consilia…" autocomplete="off" spellcheck="false">
@@ -591,6 +592,7 @@ function esc(s) {
 
 // ── state ──────────────────────────────────────────────────────────────────
 let consilia   = {};
+let authors    = {};      // output/authors.json
 let miniSearch = null;
 let volume     = null;
 let items      = [];      // sorted array for current volume
@@ -598,24 +600,53 @@ let lastResults = [];
 let searchTimer = null;
 
 // ── boot ───────────────────────────────────────────────────────────────────
-fetch('output/consilia.json')
-  .then(r => r.json())
-  .then(data => {
-    consilia = data.consilia;
-    const volumes = [...new Set(Object.values(consilia).map(c => c.volume))].sort();
-    const sel = document.getElementById('volume-select');
-    volumes.forEach(v => {
-      const o = document.createElement('option');
-      o.value = v; o.textContent = v.replace(/_/g, ' ');
-      sel.appendChild(o);
-    });
-    sel.addEventListener('change', () => loadVolume(sel.value));
-    loadVolume(volumes[0]);
-  })
-  .catch(err => {
-    document.getElementById('initial-msg').textContent =
-      'Could not load consilia.json: ' + err.message;
+Promise.all([
+  fetch('output/consilia.json').then(r => r.json()),
+  fetch('output/authors.json').then(r => r.json()).catch(() => ({})),
+]).then(([consiliaData, authorsData]) => {
+  consilia = consiliaData.consilia;
+  authors  = authorsData;
+
+  // author dropdown
+  const authSel = document.getElementById('author-select');
+  const allOpt = document.createElement('option');
+  allOpt.value = ''; allOpt.textContent = 'All prints';
+  authSel.appendChild(allOpt);
+  Object.entries(authors).forEach(([viaf, info]) => {
+    const o = document.createElement('option');
+    o.value = viaf; o.textContent = info.name || viaf.replace(/_/g, ' ');
+    authSel.appendChild(o);
   });
+  authSel.addEventListener('change', () => {
+    populateVolumeSelect(authSel.value);
+    const sel = document.getElementById('volume-select');
+    if (sel.options.length > 0) loadVolume(sel.options[0].value);
+  });
+
+  // volume dropdown
+  populateVolumeSelect('');
+  const sel = document.getElementById('volume-select');
+  sel.addEventListener('change', () => loadVolume(sel.value));
+  loadVolume(sel.options[0].value);
+}).catch(err => {
+  document.getElementById('initial-msg').textContent =
+    'Could not load consilia.json: ' + err.message;
+});
+
+// ── populate volume dropdown ────────────────────────────────────────────────
+function populateVolumeSelect(authorFilter) {
+  const allVolumes = [...new Set(Object.values(consilia).map(c => c.volume))].sort();
+  const filtered = authorFilter
+    ? allVolumes.filter(v => authors[authorFilter]?.prints?.includes(v))
+    : allVolumes;
+  const sel = document.getElementById('volume-select');
+  sel.innerHTML = '';
+  filtered.forEach(v => {
+    const o = document.createElement('option');
+    o.value = v; o.textContent = v.replace(/_/g, ' ');
+    sel.appendChild(o);
+  });
+}
 
 // ── volume ─────────────────────────────────────────────────────────────────
 function loadVolume(v) {

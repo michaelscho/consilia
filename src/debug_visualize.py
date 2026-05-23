@@ -285,13 +285,21 @@ def _write_coverage(
 # Main
 # ---------------------------------------------------------------------------
 
+def _find_print_dirs(volume_filter: str | None) -> list[Path]:
+    """Return all print directories under data/{author_viaf}/{print_id}/."""
+    result = []
+    for author_dir in sorted(DATA_DIR.iterdir()):
+        if not author_dir.is_dir():
+            continue
+        for print_dir in sorted(author_dir.iterdir()):
+            if print_dir.is_dir() and (print_dir / "page").is_dir():
+                if volume_filter is None or print_dir.name == volume_filter:
+                    result.append(print_dir)
+    return result
+
+
 def run(volume_filter: str | None, pages_only: bool) -> None:
-    volumes = sorted(
-        d for d in DATA_DIR.iterdir()
-        if d.is_dir() and (d / "page").is_dir()
-    )
-    if volume_filter:
-        volumes = [v for v in volumes if v.name == volume_filter]
+    volumes = _find_print_dirs(volume_filter)
 
     for vol_dir in volumes:
         log.info("Analysing %s …", vol_dir.name)

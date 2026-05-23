@@ -397,6 +397,7 @@ class Consilium:
     n: int
     roman: str
     volume: str
+    author_viaf: str
     title: str
     summary: str
     body: list[str]   # sections split at leading † markers
@@ -408,6 +409,7 @@ class Consilium:
             "n": self.n,
             "roman": self.roman,
             "volume": self.volume,
+            "author_viaf": self.author_viaf,
             "title": self.title,
             "summary": self.summary,
             "body": self.body,
@@ -548,8 +550,9 @@ class ConsiliumSegmenter:
       BODY → (next heading) → SUMMARY     [flush previous consilium]
     """
 
-    def __init__(self, volume: str, use_lb_model: bool = True):
+    def __init__(self, volume: str, author_viaf: str = "", use_lb_model: bool = True):
         self.volume = volume
+        self.author_viaf = author_viaf
         self.use_lb_model = use_lb_model
         self._unknown_count = 0
         self._used_ids: dict[str, int] = {}  # base_id → count of times seen
@@ -690,6 +693,7 @@ class ConsiliumSegmenter:
             n=self._n,
             roman=self._roman,
             volume=self.volume,
+            author_viaf=self.author_viaf,
             title=self._title,
             summary=summary,
             body=body,
@@ -709,6 +713,7 @@ class ConsiliumSegmenter:
                 n=n2,
                 roman=str(n2),
                 volume=self.volume,
+                author_viaf=self.author_viaf,
                 title=c.title,
                 summary=summary,
                 body=body[:],

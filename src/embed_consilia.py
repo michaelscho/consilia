@@ -82,6 +82,7 @@ def embed(
         "ids": ids,
         "ns": [c.get("n", 0) for c in consilia],
         "titles": [c.get("title", "") for c in consilia],
+        "author_viafs": [c.get("author_viaf", "") for c in consilia],
     }
     Path(meta_path).write_text(json.dumps(meta), encoding="utf-8")
     log.info("Saved %s", meta_path)

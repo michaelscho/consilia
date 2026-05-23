@@ -2,20 +2,22 @@
 Main pipeline: walk data/ → parse PageXML → segment consilia → write JSON → embed.
 
 Usage:
-    python pipeline.py [--no-lb-model] [--volume VOLUME_DIR_NAME] [--no-embed]
+    python pipeline.py [--no-lb-model] [--author AUTHOR_DIR] [--print PRINT_DIR] [--no-embed]
 
 Options:
     --no-lb-model   Use heuristic dehyphenation (¬ → merge) instead of Flair.
-    --volume NAME   Process only the named volume subdirectory.
+    --author NAME   Process only prints belonging to this author directory (e.g. Baldo_29618397).
+    --print NAME    Process only the named print directory (e.g. Baldo_Cons_Print_Venice_1575_v1).
     --no-embed      Skip the embedding stage even if embeddings are stale.
     --embed-fp16    Load BGE-M3 in float16 (~1 GB VRAM instead of ~2 GB).
     --embed-device  Force device for embedding: 'cuda', 'cpu', 'cuda:0', etc.
 
 Output:
-    output/<volume_name>.json          per-volume consilium dictionary
-    output/consilia.json               merged dictionary across all volumes
-    output/embeddings.safetensors      BGE-M3 Float32[N, 1024] (when stale)
-    output/embeddings_meta.json        embedding metadata
+    output/{author_viaf}/{print_id}.json        per-print consilium dictionary
+    output/{author_viaf}/consilia.json          per-author merged dictionary
+    output/consilia.json                        merged dictionary across all authors/prints
+    output/embeddings.safetensors               BGE-M3 Float32[N, 1024] (when stale)
+    output/embeddings_meta.json                 embedding metadata
 """
 
 from __future__ import annotations
@@ -45,25 +47,30 @@ OUTPUT_DIR = ROOT / "output"
 
 
 # ---------------------------------------------------------------------------
-# Volume discovery
+# Print discovery
 # ---------------------------------------------------------------------------
 
 
-def find_volumes(data_dir: Path) -> list[Path]:
-    """Return all subdirectories of data_dir that contain a 'page' folder."""
-    return sorted(
-        d for d in data_dir.iterdir()
-        if d.is_dir() and (d / "page").is_dir()
-    )
+def find_prints(data_dir: Path) -> list[tuple[str, str, Path]]:
+    """Return (author_viaf, print_id, print_dir) for every known print."""
+    result = []
+    for author_dir in sorted(data_dir.iterdir()):
+        if not author_dir.is_dir():
+            continue
+        viaf = author_dir.name
+        for print_dir in sorted(author_dir.iterdir()):
+            if print_dir.is_dir() and (print_dir / "page").is_dir():
+                result.append((viaf, print_dir.name, print_dir))
+    return result
 
 
 # ---------------------------------------------------------------------------
-# Per-volume processing
+# Per-print processing
 # ---------------------------------------------------------------------------
 
 
-def load_pages(volume_dir: Path) -> list[PageData]:
-    page_dir = volume_dir / "page"
+def load_pages(print_dir: Path) -> list[PageData]:
+    page_dir = print_dir / "page"
     xml_files = sorted(page_dir.glob("*.xml"), key=lambda p: int(p.stem))
     pages: list[PageData] = []
     for xml_file in xml_files:
@@ -71,17 +78,18 @@ def load_pages(volume_dir: Path) -> list[PageData]:
             pages.append(parse_pagexml(xml_file))
         except Exception as exc:
             log.warning("Could not parse %s: %s", xml_file.name, exc)
-    log.info("  Loaded %d pages from %s", len(pages), volume_dir.name)
+    log.info("  Loaded %d pages from %s", len(pages), print_dir.name)
     return pages
 
 
-def process_volume(volume_dir: Path, use_lb_model: bool = True) -> dict:
-    """Process one volume and return a dict keyed by consilium id."""
-    log.info("Processing volume: %s", volume_dir.name)
-    pages = load_pages(volume_dir)
+def process_print(print_dir: Path, author_viaf: str, use_lb_model: bool = True) -> dict:
+    """Process one print and return a dict keyed by consilium id."""
+    log.info("Processing print: %s / %s", author_viaf, print_dir.name)
+    pages = load_pages(print_dir)
 
     segmenter = ConsiliumSegmenter(
-        volume=volume_dir.name,
+        volume=print_dir.name,
+        author_viaf=author_viaf,
         use_lb_model=use_lb_model,
     )
     consilia = segmenter.process(iter_lines(pages))
@@ -103,7 +111,8 @@ def _embeddings_stale(consilia_path: Path, embeddings_path: Path) -> bool:
 
 
 def run(
-    volume_filter: str | None = None,
+    author_filter: str | None = None,
+    print_filter: str | None = None,
     use_lb_model: bool = True,
     embed: bool = True,
     embed_fp16: bool = False,
@@ -111,30 +120,51 @@ def run(
 ) -> None:
     OUTPUT_DIR.mkdir(exist_ok=True)
 
-    volumes = find_volumes(DATA_DIR)
-    if not volumes:
-        log.error("No volumes found in %s", DATA_DIR)
+    prints = find_prints(DATA_DIR)
+    if not prints:
+        log.error("No prints found in %s", DATA_DIR)
         sys.exit(1)
 
-    if volume_filter:
-        volumes = [v for v in volumes if v.name == volume_filter]
-        if not volumes:
-            log.error("Volume '%s' not found in %s", volume_filter, DATA_DIR)
+    if author_filter:
+        prints = [p for p in prints if p[0] == author_filter]
+        if not prints:
+            log.error("Author '%s' not found in %s", author_filter, DATA_DIR)
+            sys.exit(1)
+
+    if print_filter:
+        prints = [p for p in prints if p[1] == print_filter]
+        if not prints:
+            log.error("Print '%s' not found in %s", print_filter, DATA_DIR)
             sys.exit(1)
 
     all_consilia: dict = {}
+    by_author: dict[str, dict] = {}
 
-    for volume_dir in volumes:
-        volume_data = process_volume(volume_dir, use_lb_model=use_lb_model)
-        all_consilia.update(volume_data)
+    for author_viaf, print_id, print_dir in prints:
+        print_data = process_print(print_dir, author_viaf, use_lb_model=use_lb_model)
 
-        # Write per-volume JSON
-        per_volume_path = OUTPUT_DIR / f"{volume_dir.name}.json"
-        with per_volume_path.open("w", encoding="utf-8") as fh:
-            json.dump({"consilia": volume_data}, fh, ensure_ascii=False, indent=2)
-        log.info("  Wrote %s", per_volume_path)
+        # Accumulate for merged outputs
+        all_consilia.update(print_data)
+        by_author.setdefault(author_viaf, {}).update(print_data)
 
-    # Write merged JSON
+        # Write per-print JSON
+        author_out_dir = OUTPUT_DIR / author_viaf
+        author_out_dir.mkdir(exist_ok=True)
+        per_print_path = author_out_dir / f"{print_id}.json"
+        with per_print_path.open("w", encoding="utf-8") as fh:
+            json.dump({"consilia": print_data}, fh, ensure_ascii=False, indent=2)
+        log.info("  Wrote %s", per_print_path)
+
+    # Write per-author merged JSONs
+    for author_viaf, author_data in by_author.items():
+        author_out_dir = OUTPUT_DIR / author_viaf
+        author_out_dir.mkdir(exist_ok=True)
+        per_author_path = author_out_dir / "consilia.json"
+        with per_author_path.open("w", encoding="utf-8") as fh:
+            json.dump({"consilia": author_data}, fh, ensure_ascii=False, indent=2)
+        log.info("Wrote per-author output: %s (%d consilia)", per_author_path, len(author_data))
+
+    # Write global merged JSON
     merged_path = OUTPUT_DIR / "consilia.json"
     with merged_path.open("w", encoding="utf-8") as fh:
         json.dump({"consilia": all_consilia}, fh, ensure_ascii=False, indent=2)
@@ -167,9 +197,15 @@ def main() -> None:
         help="Use heuristic (¬ = merge) instead of the Flair LB detector",
     )
     parser.add_argument(
-        "--volume",
+        "--author",
         metavar="NAME",
-        help="Process only this volume directory (e.g. Baldo_Consilia_v1)",
+        help="Process only prints in this author directory (e.g. Baldo_29618397)",
+    )
+    parser.add_argument(
+        "--print",
+        metavar="NAME",
+        dest="print_filter",
+        help="Process only this print directory (e.g. Baldo_Cons_Print_Venice_1575_v1)",
     )
     parser.add_argument(
         "--no-embed",
@@ -189,7 +225,8 @@ def main() -> None:
     )
     args = parser.parse_args()
     run(
-        volume_filter=args.volume,
+        author_filter=args.author,
+        print_filter=args.print_filter,
         use_lb_model=not args.no_lb_model,
         embed=not args.no_embed,
         embed_fp16=args.embed_fp16,
