@@ -1,0 +1,649 @@
+<!DOCTYPE html>
+<html lang="la">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Consilia</title>
+  <style>
+    :root {
+      --sidebar-w: 230px;
+      --image-w:   700px;
+      --header-h:  52px;
+      --bg:        #faf8f4;
+      --paper:     #fffef9;
+      --text:      #2c2416;
+      --muted:     #7a6f5c;
+      --accent:    #7b4c1c;
+      --border:    #e0d8cc;
+      --sidebar-bg:#f2ede5;
+      --active-bg: #e4d4be;
+      --dark-bg:   #28201a;
+      --dark-bar:  #1c1610;
+      --dark-text: #c8b99a;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html, body {
+      height: 100%;
+      font-family: Georgia, 'Times New Roman', serif;
+      background: var(--bg);
+      color: var(--text);
+      overflow: hidden;
+    }
+
+    /* ── Header ──────────────────────────────────────────── */
+    header {
+      height: var(--header-h);
+      background: var(--accent);
+      color: #fff;
+      display: flex;
+      align-items: center;
+      padding: 0 1.25rem;
+      gap: .9rem;
+      flex-shrink: 0;
+      box-shadow: 0 2px 6px rgba(0,0,0,.25);
+      z-index: 20;
+    }
+
+    header h1 {
+      font-size: 1.05rem;
+      font-weight: normal;
+      letter-spacing: .1em;
+      white-space: nowrap;
+    }
+
+    #volume-select {
+      background: rgba(255,255,255,.15);
+      color: #fff;
+      border: 1px solid rgba(255,255,255,.35);
+      border-radius: 4px;
+      padding: .25rem .55rem;
+      font-size: .85rem;
+      cursor: pointer;
+      font-family: inherit;
+      max-width: 240px;
+    }
+    #volume-select option { background: var(--accent); }
+
+    /* ── Search box ──────────────────────────────────────── */
+    .search-wrap {
+      position: relative;
+      display: flex;
+      align-items: center;
+      flex: 1;
+      max-width: 340px;
+    }
+
+    #search-input {
+      width: 100%;
+      background: rgba(255,255,255,.15);
+      color: #fff;
+      border: 1px solid rgba(255,255,255,.35);
+      border-radius: 4px;
+      padding: .28rem 2rem .28rem .65rem;
+      font-size: .85rem;
+      font-family: inherit;
+      outline: none;
+      transition: background .15s, border-color .15s;
+    }
+    #search-input::placeholder { color: rgba(255,255,255,.5); }
+    #search-input:focus {
+      background: rgba(255,255,255,.25);
+      border-color: rgba(255,255,255,.7);
+    }
+
+    #search-clear {
+      position: absolute;
+      right: .4rem;
+      background: none;
+      border: none;
+      color: rgba(255,255,255,.6);
+      font-size: 1rem;
+      cursor: pointer;
+      line-height: 1;
+      padding: 0 .15rem;
+      display: none;
+    }
+    #search-clear:hover { color: #fff; }
+
+    #header-stats {
+      font-size: .78rem;
+      opacity: .65;
+      margin-left: auto;
+      white-space: nowrap;
+    }
+
+    /* ── Layout ──────────────────────────────────────────── */
+    .layout {
+      display: flex;
+      height: calc(100vh - var(--header-h));
+      overflow: hidden;
+    }
+
+    /* ── Sidebar ─────────────────────────────────────────── */
+    .sidebar {
+      width: var(--sidebar-w);
+      background: var(--sidebar-bg);
+      border-right: 1px solid var(--border);
+      overflow-y: auto;
+      flex-shrink: 0;
+    }
+
+    .sidebar-item {
+      display: flex;
+      align-items: baseline;
+      gap: .55rem;
+      padding: .42rem .9rem;
+      border-bottom: 1px solid var(--border);
+      cursor: pointer;
+      font-size: .8rem;
+      transition: background .1s;
+    }
+    .sidebar-item.hidden { display: none; }
+    .sidebar-item:hover  { background: var(--active-bg); }
+    .sidebar-item.active {
+      background: var(--active-bg);
+      border-left: 3px solid var(--accent);
+      padding-left: calc(.9rem - 3px);
+    }
+
+    .sn {
+      font-family: monospace;
+      color: var(--accent);
+      min-width: 2.4rem;
+      font-size: .75rem;
+    }
+    .stitle {
+      color: var(--muted);
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+      font-size: .78rem;
+    }
+
+    /* ── Reader ──────────────────────────────────────────── */
+    .reader {
+      flex: 1;
+      overflow-y: auto;
+      padding: 1.75rem 1.75rem 3rem;
+    }
+
+    .card {
+      background: var(--paper);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 1.75rem 2rem;
+      margin-bottom: 1.75rem;
+      max-width: 660px;
+      scroll-margin-top: 1rem;
+    }
+    .card.hidden { display: none; }
+
+    .card-meta {
+      font-size: .72rem;
+      color: var(--muted);
+      font-family: monospace;
+      margin-bottom: .4rem;
+    }
+    .card h2 {
+      font-size: 1rem;
+      font-weight: bold;
+      letter-spacing: .06em;
+      color: var(--accent);
+      margin-bottom: 1rem;
+    }
+    .section-label {
+      font-size: .65rem;
+      text-transform: uppercase;
+      letter-spacing: .12em;
+      color: var(--muted);
+      margin: 1.1rem 0 .35rem;
+    }
+    .summary {
+      font-size: .85rem;
+      color: var(--muted);
+      line-height: 1.65;
+      font-style: italic;
+      padding-left: .85rem;
+      border-left: 2px solid var(--border);
+    }
+    .body-section {
+      font-size: .88rem;
+      line-height: 1.8;
+      margin-bottom: .65rem;
+    }
+
+    /* ── Search highlight ────────────────────────────────── */
+    mark {
+      background: #ffe066;
+      color: inherit;
+      border-radius: 2px;
+      padding: 0 1px;
+    }
+
+    /* ── Image panel ─────────────────────────────────────── */
+    .image-panel {
+      width: var(--image-w);
+      background: var(--dark-bg);
+      border-left: 1px solid #111;
+      display: flex;
+      flex-direction: column;
+      flex-shrink: 0;
+    }
+    .image-bar {
+      background: var(--dark-bar);
+      color: var(--dark-text);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: .45rem .85rem;
+      font-size: .75rem;
+      flex-shrink: 0;
+      gap: .5rem;
+    }
+    .page-nav { display: flex; align-items: center; gap: .35rem; }
+    .page-nav button {
+      background: rgba(255,255,255,.08);
+      color: var(--dark-text);
+      border: 1px solid rgba(255,255,255,.15);
+      border-radius: 3px;
+      width: 1.6rem; height: 1.6rem;
+      cursor: pointer;
+      font-size: .85rem; line-height: 1;
+      display: flex; align-items: center; justify-content: center;
+      transition: background .1s;
+    }
+    .page-nav button:disabled { opacity: .3; cursor: default; }
+    .page-nav button:not(:disabled):hover { background: rgba(255,255,255,.18); }
+    .page-nav .counter { font-size: .7rem; min-width: 2rem; text-align: center; }
+
+    .image-scroll {
+      flex: 1;
+      overflow: auto;
+      display: flex;
+      align-items: flex-start;
+      justify-content: center;
+      padding: .5rem;
+      min-height: 0;
+    }
+    .image-scroll img {
+      max-height: 100%;
+      width: auto;
+      max-width: 100%;
+      display: block;
+      border-radius: 2px;
+    }
+
+    .placeholder {
+      color: rgba(200,185,154,.35);
+      font-size: .85rem;
+      font-style: italic;
+      margin: auto;
+    }
+
+    /* ── Responsive ──────────────────────────────────────── */
+    @media (max-width: 1100px) { .image-panel { display: none; } }
+    @media (max-width:  700px) { .sidebar { display: none; } }
+  </style>
+</head>
+<body>
+
+<header>
+  <h1>Consilia</h1>
+  <select id="volume-select"></select>
+  <nav style="display:flex;gap:.5rem;">
+    <a href="index.html" style="color:rgba(255,255,255,.75);text-decoration:none;font-size:.82rem;padding:.2rem .65rem;border:1px solid rgba(255,255,255,.3);border-radius:4px;background:rgba(255,255,255,.2);color:#fff">Reader</a>
+    <a href="search.html" style="color:rgba(255,255,255,.75);text-decoration:none;font-size:.82rem;padding:.2rem .65rem;border:1px solid rgba(255,255,255,.3);border-radius:4px;transition:background .12s">Search</a>
+  </nav>
+  <div class="search-wrap">
+    <input id="search-input" type="search" placeholder="Search… (j=i, v=u, ae=e)" autocomplete="off" spellcheck="false">
+    <button id="search-clear" title="Clear search">&#x2715;</button>
+  </div>
+  <span id="header-stats"></span>
+</header>
+
+<div class="layout">
+  <nav class="sidebar" id="sidebar"></nav>
+  <main class="reader" id="reader">
+    <div style="padding:4rem;color:var(--muted);font-style:italic;">Loading…</div>
+  </main>
+  <aside class="image-panel">
+    <div class="image-bar">
+      <span id="page-label">—</span>
+      <div class="page-nav">
+        <button id="page-prev" title="Previous page">&#8249;</button>
+        <span class="counter" id="page-counter"></span>
+        <button id="page-next" title="Next page">&#8250;</button>
+      </div>
+    </div>
+    <div class="image-scroll" id="image-scroll">
+      <span class="placeholder">select a consilium</span>
+    </div>
+  </aside>
+</div>
+
+<script src="vendor/minisearch.min.js"></script>
+<script>
+// ── normalisation ──────────────────────────────────────────────────────────
+// Applied identically to indexed terms and query terms so the index is
+// consistent.  Order matters: ae→e before individual letter substitutions
+// to avoid double-processing.
+function normalise(term) {
+  return term
+    .toLowerCase()
+    .replace(/æ/g, 'e')        // æ ligature
+    .replace(/ę/g, 'e')        // e caudata (U+0119)
+    .replace(/ae/g, 'e')       // digraph ae → e
+    .replace(/j/g, 'i')        // consonantal i
+    .replace(/v/g, 'u');       // consonantal u
+}
+
+// Build a RegExp that matches a *normalised* term in the *original* text,
+// accounting for all the equivalences above (in reverse).
+// The "ae/æ/ę → e" expansion must handle the two-char case first.
+function termToRegexPart(normTerm) {
+  let pat = '';
+  for (let i = 0; i < normTerm.length; i++) {
+    switch (normTerm[i]) {
+      case 'i': pat += '[ij]';                    break;
+      case 'u': pat += '[uv]';                    break;
+      // 'e' in a normalised term could have come from e, ę, æ, or "ae"
+      case 'e': pat += '(?:ae|[eæę])';           break;
+      default:  pat += normTerm[i].replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+    }
+  }
+  return pat;
+}
+
+// Build one RegExp for all query tokens (alternation), case-insensitive.
+function buildHighlightRe(rawQuery) {
+  const tokens = rawQuery.trim().split(/\s+/).filter(Boolean);
+  if (!tokens.length) return null;
+  const parts = tokens.map(t => termToRegexPart(normalise(t)));
+  return new RegExp(`(${parts.join('|')})`, 'gi');
+}
+
+// Highlight occurrences of `re` in `text`, returning safe HTML.
+function highlightText(text, re) {
+  if (!re) return esc(text);
+  re.lastIndex = 0;
+  const parts = [];
+  let last = 0, m;
+  while ((m = re.exec(text)) !== null) {
+    parts.push(esc(text.slice(last, m.index)));
+    parts.push(`<mark>${esc(m[0])}</mark>`);
+    last = m.index + m[0].length;
+  }
+  parts.push(esc(text.slice(last)));
+  return parts.join('');
+}
+
+// ── state ──────────────────────────────────────────────────────────────────
+let consilia    = {};
+let miniSearch  = null;
+let volume      = null;
+let items       = [];       // sorted array for current volume
+let activeIndex = 0;
+let srcPage     = 0;
+let observer    = null;
+let highlightRe = null;     // current highlight regex (null = no search)
+let searchTimer = null;
+
+// ── boot ───────────────────────────────────────────────────────────────────
+fetch('output/consilia.json')
+  .then(r => r.json())
+  .then(data => {
+    consilia = data.consilia;
+
+    const volumes = [...new Set(Object.values(consilia).map(c => c.volume))].sort();
+    const sel = document.getElementById('volume-select');
+    volumes.forEach(v => {
+      const o = document.createElement('option');
+      o.value = v; o.textContent = v.replace(/_/g, ' ');
+      sel.appendChild(o);
+    });
+    sel.addEventListener('change', () => loadVolume(sel.value));
+
+    // honour ?n=44 links from the search page
+    const targetN = parseInt(new URLSearchParams(location.search).get('n'));
+    loadVolume(volumes[0]);
+    if (targetN) {
+      // wait for items to be built, then jump
+      setTimeout(() => {
+        const idx = items.findIndex(c => c.n === targetN);
+        if (idx >= 0) { activate(idx, true); scrollCardTo(idx); }
+      }, 50);
+    }
+  })
+  .catch(err => {
+    document.getElementById('reader').innerHTML =
+      `<p style="color:red;padding:2rem">Could not load consilia.json: ${err.message}</p>`;
+  });
+
+// ── volume ─────────────────────────────────────────────────────────────────
+function loadVolume(v) {
+  volume = v;
+  items  = Object.values(consilia)
+    .filter(c => c.volume === v)
+    .sort((a, b) => a.n - b.n || a.id.localeCompare(b.id));
+
+  buildIndex();
+  buildSidebar();
+  buildReader();
+  clearSearch();
+  activate(0, false);
+}
+
+// ── MiniSearch index ───────────────────────────────────────────────────────
+function buildIndex() {
+  miniSearch = new MiniSearch({
+    fields: ['title', 'summary', 'body'],
+    idField: 'idx',
+    processTerm: normalise,
+    searchOptions: {
+      boost: { title: 3, summary: 1.5, body: 1 },
+      prefix: true,
+      fuzzy: term => term.length > 4 ? 0.15 : false,
+    },
+  });
+
+  miniSearch.addAll(items.map((c, i) => ({
+    idx: i,
+    title:   c.title   || '',
+    summary: c.summary || '',
+    body:    (c.body   || []).join(' '),
+  })));
+}
+
+// ── sidebar ────────────────────────────────────────────────────────────────
+function buildSidebar() {
+  const nav = document.getElementById('sidebar');
+  nav.innerHTML = '';
+  items.forEach((c, i) => {
+    const div = document.createElement('div');
+    div.className   = 'sidebar-item';
+    div.dataset.idx = i;
+    div.innerHTML   =
+      `<span class="sn">${c.n || '?'}</span><span class="stitle">${esc(subtitle(c))}</span>`;
+    div.addEventListener('click', () => { activate(i, false); scrollCardTo(i); });
+    nav.appendChild(div);
+  });
+}
+
+function subtitle(c) {
+  return (c.summary || '').split(/\s+/).slice(0, 6).join(' ') || c.title;
+}
+
+// ── reader ─────────────────────────────────────────────────────────────────
+function buildReader() {
+  if (observer) { observer.disconnect(); observer = null; }
+  const reader = document.getElementById('reader');
+  reader.innerHTML = '';
+
+  items.forEach((c, i) => {
+    const card = document.createElement('div');
+    card.className   = 'card';
+    card.id          = `card-${i}`;
+    card.dataset.idx = i;
+    card.innerHTML   = cardHTML(c, null);
+    reader.appendChild(card);
+  });
+
+  observer = new IntersectionObserver(entries => {
+    let top = null, topY = Infinity;
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        const y = e.boundingClientRect.top;
+        if (y >= 0 && y < topY) { topY = y; top = e.target; }
+      }
+    });
+    if (top) {
+      const i = parseInt(top.dataset.idx);
+      if (i !== activeIndex) activate(i, true);
+    }
+  }, { root: reader, threshold: 0.15 });
+
+  reader.querySelectorAll('.card').forEach(el => observer.observe(el));
+}
+
+// Generate inner HTML for one card, with optional highlight regex.
+function cardHTML(c, re) {
+  const h = re ? (t => highlightText(t, re)) : esc;
+  let html =
+    `<div class="card-meta">Consilium ${c.n} &nbsp;·&nbsp; ${esc(c.id)}</div>` +
+    `<h2>${h(c.title)}</h2>`;
+  if (c.summary) {
+    html += `<div class="section-label">Summary</div><div class="summary">${h(c.summary)}</div>`;
+  }
+  if (c.body && c.body.length) {
+    html += `<div class="section-label">Body</div>`;
+    c.body.forEach(s => { html += `<div class="body-section">${h(s)}</div>`; });
+  }
+  return html;
+}
+
+// ── search ─────────────────────────────────────────────────────────────────
+document.getElementById('search-input').addEventListener('input', e => {
+  clearTimeout(searchTimer);
+  searchTimer = setTimeout(() => runSearch(e.target.value), 220);
+});
+
+document.getElementById('search-clear').addEventListener('click', () => {
+  document.getElementById('search-input').value = '';
+  clearSearch();
+});
+
+function runSearch(raw) {
+  const q = raw.trim();
+  document.getElementById('search-clear').style.display = q ? 'block' : 'none';
+
+  if (!q) { clearSearch(); return; }
+
+  highlightRe = buildHighlightRe(q);
+
+  // Query MiniSearch — collect matching indices in a Set for O(1) lookup
+  const results  = miniSearch.search(q);
+  const matchSet = new Set(results.map(r => r.id));   // r.id is idx (number)
+
+  let shown = 0;
+  items.forEach((c, i) => {
+    const card    = document.getElementById(`card-${i}`);
+    const sideEl  = document.querySelector(`.sidebar-item[data-idx="${i}"]`);
+    if (matchSet.has(i)) {
+      card.classList.remove('hidden');
+      card.innerHTML = cardHTML(c, highlightRe);
+      if (sideEl) sideEl.classList.remove('hidden');
+      shown++;
+    } else {
+      card.classList.add('hidden');
+      if (sideEl) sideEl.classList.add('hidden');
+    }
+  });
+
+  document.getElementById('header-stats').textContent =
+    `${shown} of ${items.length} consilia`;
+
+  // Activate the first visible result
+  if (results.length) activate(results[0].id, true);
+}
+
+function clearSearch() {
+  highlightRe = null;
+  document.getElementById('search-clear').style.display = 'none';
+  document.getElementById('header-stats').textContent = `${items.length} consilia`;
+
+  items.forEach((c, i) => {
+    const card   = document.getElementById(`card-${i}`);
+    const sideEl = document.querySelector(`.sidebar-item[data-idx="${i}"]`);
+    if (card)   { card.classList.remove('hidden'); card.innerHTML = cardHTML(c, null); }
+    if (sideEl) sideEl.classList.remove('hidden');
+  });
+}
+
+// ── activation ────────────────────────────────────────────────────────────
+function activate(i, scrollSidebar) {
+  activeIndex = i;
+  srcPage     = 0;
+
+  document.querySelectorAll('.sidebar-item').forEach(el => {
+    el.classList.toggle('active', parseInt(el.dataset.idx) === i);
+  });
+  if (scrollSidebar) {
+    document.querySelector(`.sidebar-item[data-idx="${i}"]`)
+      ?.scrollIntoView({ block: 'nearest' });
+  }
+  updateImage();
+}
+
+function scrollCardTo(i) {
+  document.getElementById(`card-${i}`)
+    ?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+// ── image panel ────────────────────────────────────────────────────────────
+function updateImage() {
+  const c       = items[activeIndex];
+  const sources = c?.sources ?? [];
+  const total   = sources.length;
+
+  document.getElementById('page-prev').disabled = srcPage <= 0;
+  document.getElementById('page-next').disabled = srcPage >= total - 1;
+  document.getElementById('page-counter').textContent =
+    total > 1 ? `${srcPage + 1} / ${total}` : '';
+
+  if (!total) {
+    document.getElementById('page-label').textContent = '—';
+    document.getElementById('image-scroll').innerHTML =
+      '<span class="placeholder">no page source</span>';
+    return;
+  }
+
+  const stem = sources[srcPage].page.replace('.xml', '');
+  document.getElementById('page-label').textContent = `Page ${stem}`;
+
+  const scroll = document.getElementById('image-scroll');
+  scroll.innerHTML = '';
+  const img = document.createElement('img');
+  img.src     = `data/${c.volume}/${stem}.jpg`;
+  img.alt     = `Page ${stem}`;
+  img.loading = 'lazy';
+  scroll.appendChild(img);
+}
+
+document.getElementById('page-prev').addEventListener('click', () => {
+  if (srcPage > 0) { srcPage--; updateImage(); }
+});
+document.getElementById('page-next').addEventListener('click', () => {
+  const total = items[activeIndex]?.sources?.length ?? 0;
+  if (srcPage < total - 1) { srcPage++; updateImage(); }
+});
+
+// ── utility ────────────────────────────────────────────────────────────────
+function esc(s) {
+  return String(s ?? '')
+    .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+}
+</script>
+</body>
+</html>

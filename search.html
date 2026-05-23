@@ -1,0 +1,1166 @@
+<!DOCTYPE html>
+<html lang="la">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Consilia - Search</title>
+  <style>
+    :root {
+      --bg:        #faf8f4;
+      --paper:     #fffef9;
+      --text:      #2c2416;
+      --muted:     #7a6f5c;
+      --accent:    #7b4c1c;
+      --accent-lt: #a06330;
+      --border:    #e0d8cc;
+      --sidebar-bg:#f2ede5;
+      --active-bg: #e4d4be;
+      --header-h:  52px;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html, body {
+      min-height: 100%;
+      font-family: Georgia, 'Times New Roman', serif;
+      background: var(--bg);
+      color: var(--text);
+    }
+
+    /* ── Header ──────────────────────────────────────────── */
+    header {
+      height: var(--header-h);
+      background: var(--accent);
+      color: #fff;
+      display: flex;
+      align-items: center;
+      padding: 0 1.5rem;
+      gap: 1.5rem;
+      box-shadow: 0 2px 6px rgba(0,0,0,.25);
+      position: sticky;
+      top: 0;
+      z-index: 20;
+    }
+
+    header h1 {
+      font-size: 1.05rem;
+      font-weight: normal;
+      letter-spacing: .1em;
+    }
+
+    nav.topnav { display: flex; gap: .5rem; margin-left: auto; }
+
+    nav.topnav a {
+      color: rgba(255,255,255,.75);
+      text-decoration: none;
+      font-size: .82rem;
+      padding: .2rem .65rem;
+      border: 1px solid rgba(255,255,255,.3);
+      border-radius: 4px;
+      transition: background .12s, color .12s;
+    }
+    nav.topnav a:hover, nav.topnav a.active {
+      background: rgba(255,255,255,.2);
+      color: #fff;
+    }
+
+    /* ── Hero search ─────────────────────────────────────── */
+    .hero {
+      background: var(--accent);
+      padding: 2.5rem 1.5rem 2rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .hero-controls {
+      display: flex;
+      gap: .7rem;
+      width: 100%;
+      max-width: 680px;
+      align-items: center;
+    }
+
+    #volume-select {
+      background: rgba(255,255,255,.15);
+      color: #fff;
+      border: 1px solid rgba(255,255,255,.35);
+      border-radius: 4px;
+      padding: .5rem .7rem;
+      font-size: .85rem;
+      font-family: inherit;
+      cursor: pointer;
+      flex-shrink: 0;
+    }
+    #volume-select option { background: var(--accent); }
+
+    .search-box {
+      position: relative;
+      flex: 1;
+    }
+
+    #search-input {
+      width: 100%;
+      background: rgba(255,255,255,.18);
+      color: #fff;
+      border: 1px solid rgba(255,255,255,.45);
+      border-radius: 4px;
+      padding: .55rem 2.5rem .55rem .85rem;
+      font-size: 1rem;
+      font-family: inherit;
+      outline: none;
+      transition: background .15s, border-color .15s;
+    }
+    #search-input::placeholder { color: rgba(255,255,255,.5); }
+    #search-input:focus { background: rgba(255,255,255,.28); border-color: rgba(255,255,255,.8); }
+
+    #search-clear {
+      position: absolute;
+      right: .6rem; top: 50%; transform: translateY(-50%);
+      background: none; border: none;
+      color: rgba(255,255,255,.55);
+      font-size: 1.1rem; cursor: pointer; padding: 0;
+      display: none;
+    }
+    #search-clear:hover { color: #fff; }
+
+    .hint {
+      font-size: .75rem;
+      color: rgba(255,255,255,.5);
+      text-align: center;
+    }
+    .hint kbd {
+      background: rgba(255,255,255,.12);
+      border: 1px solid rgba(255,255,255,.2);
+      border-radius: 3px;
+      padding: 0 .35rem;
+      font-family: monospace;
+      font-size: .72rem;
+    }
+
+    /* ── Results layout ──────────────────────────────────── */
+    .results-layout {
+      display: grid;
+      grid-template-columns: 1fr 300px;
+      gap: 1.5rem;
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 1.75rem 1.5rem 3rem;
+    }
+    @media (max-width: 800px) {
+      .results-layout { grid-template-columns: 1fr; }
+      .stats-panel { order: -1; }
+    }
+
+    /* ── Results list ────────────────────────────────────── */
+    .results-list { display: flex; flex-direction: column; gap: 1rem; }
+
+    .result-card {
+      background: var(--paper);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 1.1rem 1.3rem;
+      text-decoration: none;
+      color: inherit;
+      display: block;
+      transition: border-color .12s, box-shadow .12s;
+    }
+    .result-card:hover {
+      border-color: var(--accent-lt);
+      box-shadow: 0 2px 8px rgba(0,0,0,.08);
+    }
+
+    .result-head {
+      display: flex;
+      align-items: baseline;
+      gap: .6rem;
+      margin-bottom: .35rem;
+    }
+
+    .result-n {
+      font-family: monospace;
+      font-size: .72rem;
+      color: var(--accent);
+      background: var(--active-bg);
+      padding: .1rem .4rem;
+      border-radius: 3px;
+      flex-shrink: 0;
+    }
+
+    .result-title {
+      font-size: .92rem;
+      font-weight: bold;
+      letter-spacing: .04em;
+      color: var(--accent);
+    }
+
+    .result-score {
+      margin-left: auto;
+      font-size: .68rem;
+      font-family: monospace;
+      color: var(--muted);
+      flex-shrink: 0;
+    }
+
+    .result-fields {
+      display: flex;
+      gap: .35rem;
+      margin-bottom: .5rem;
+    }
+
+    .field-tag {
+      font-size: .65rem;
+      text-transform: uppercase;
+      letter-spacing: .08em;
+      padding: .05rem .4rem;
+      border-radius: 2px;
+      background: var(--sidebar-bg);
+      color: var(--muted);
+      border: 1px solid var(--border);
+    }
+    .field-tag.matched {
+      background: #fef3cd;
+      color: #7a5c00;
+      border-color: #e8d47a;
+    }
+
+    .result-snippet {
+      font-size: .83rem;
+      line-height: 1.65;
+      color: var(--muted);
+      font-style: italic;
+    }
+
+    mark {
+      background: #ffe066;
+      color: inherit;
+      border-radius: 2px;
+      padding: 0 1px;
+      font-style: normal;
+    }
+
+    /* ── Empty / loading states ──────────────────────────── */
+    .state-msg {
+      color: var(--muted);
+      font-style: italic;
+      font-size: .9rem;
+      padding: 2rem 0;
+      text-align: center;
+    }
+
+    /* ── Stats panel ─────────────────────────────────────── */
+    .stats-panel {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .stat-block {
+      background: var(--paper);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 1rem 1.1rem;
+    }
+
+    .stat-block h3 {
+      font-size: .72rem;
+      text-transform: uppercase;
+      letter-spacing: .1em;
+      color: var(--muted);
+      margin-bottom: .65rem;
+    }
+
+    .big-number {
+      font-size: 2.2rem;
+      font-weight: bold;
+      color: var(--accent);
+      line-height: 1;
+    }
+    .big-sub {
+      font-size: .78rem;
+      color: var(--muted);
+      margin-top: .2rem;
+    }
+
+    /* field breakdown bars */
+    .field-row {
+      display: flex;
+      align-items: center;
+      gap: .5rem;
+      margin-bottom: .45rem;
+      font-size: .78rem;
+    }
+    .field-row .label {
+      width: 4.5rem;
+      color: var(--muted);
+      flex-shrink: 0;
+    }
+    .field-row .bar-track {
+      flex: 1;
+      background: var(--sidebar-bg);
+      border-radius: 2px;
+      height: 8px;
+      overflow: hidden;
+    }
+    .field-row .bar-fill {
+      height: 100%;
+      background: var(--accent);
+      border-radius: 2px;
+      transition: width .4s;
+    }
+    .field-row .count {
+      width: 2rem;
+      text-align: right;
+      color: var(--text);
+      font-family: monospace;
+      font-size: .72rem;
+    }
+
+    /* distribution chart */
+    .dist-chart {
+      width: 100%;
+      overflow: hidden;
+    }
+
+    .dist-bars {
+      display: flex;
+      align-items: flex-end;
+      gap: 2px;
+      height: 70px;
+      margin-bottom: .3rem;
+    }
+
+    .dist-bar {
+      flex: 1;
+      background: var(--accent);
+      opacity: .7;
+      border-radius: 1px 1px 0 0;
+      min-height: 1px;
+      transition: opacity .1s;
+      cursor: default;
+      position: relative;
+    }
+    .dist-bar:hover { opacity: 1; }
+
+    .dist-axis {
+      display: flex;
+      justify-content: space-between;
+      font-size: .62rem;
+      color: var(--muted);
+      font-family: monospace;
+    }
+
+    /* sort control */
+    .sort-row {
+      display: flex;
+      align-items: center;
+      gap: .5rem;
+      margin-bottom: .25rem;
+      font-size: .78rem;
+      color: var(--muted);
+    }
+    .sort-row select {
+      border: 1px solid var(--border);
+      border-radius: 3px;
+      background: var(--paper);
+      font-size: .78rem;
+      padding: .15rem .35rem;
+      cursor: pointer;
+      font-family: inherit;
+      color: var(--text);
+    }
+
+    /* timing */
+    .timing { font-size: .7rem; color: var(--muted); font-family: monospace; }
+
+    /* Semantic similarity bar */
+    .sem-bar-track {
+      height: 3px;
+      background: var(--border);
+      border-radius: 1px;
+      margin: .5rem 0 .45rem;
+      overflow: hidden;
+    }
+    .sem-bar-fill {
+      height: 100%;
+      border-radius: 1px;
+      transition: width .35s;
+    }
+
+    /* Mode toggle */
+    .mode-toggle { display: flex; gap: .3rem; }
+    .mode-btn {
+      background: rgba(255,255,255,.1);
+      color: rgba(255,255,255,.65);
+      border: 1px solid rgba(255,255,255,.22);
+      border-radius: 4px;
+      padding: .22rem .75rem;
+      font-size: .8rem;
+      font-family: inherit;
+      cursor: pointer;
+      transition: background .12s, color .12s, border-color .12s;
+    }
+    .mode-btn.active {
+      background: rgba(255,255,255,.28);
+      color: #fff;
+      border-color: rgba(255,255,255,.6);
+    }
+    .model-status {
+      font-size: .7rem;
+      color: rgba(255,255,255,.45);
+      font-family: monospace;
+      min-height: 1em;
+      text-align: center;
+    }
+    .model-status.busy  { color: rgba(255,215,80,.75); }
+    .model-status.ready { color: rgba(120,230,120,.75); }
+  </style>
+</head>
+<body>
+
+<header>
+  <h1>Consilia</h1>
+  <nav class="topnav">
+    <a href="index.html">Reader</a>
+    <a href="search.html" class="active">Search</a>
+  </nav>
+</header>
+
+<div class="hero">
+  <div class="hero-controls">
+    <select id="volume-select"></select>
+    <div class="search-box">
+      <input id="search-input" type="search" placeholder="Search consilia…" autocomplete="off" spellcheck="false">
+      <button id="search-clear" title="Clear">&#x2715;</button>
+    </div>
+  </div>
+  <div class="mode-toggle">
+    <button class="mode-btn active" id="btn-keyword" onclick="setMode('keyword')">Keyword</button>
+    <button class="mode-btn"        id="btn-semantic" onclick="setMode('semantic')">Semantic</button>
+  </div>
+  <p class="hint" id="search-hint">
+    Normalised &mdash;
+    <kbd>j</kbd>=<kbd>i</kbd> &nbsp; <kbd>v</kbd>=<kbd>u</kbd> &nbsp;
+    <kbd>ae</kbd>=<kbd>e</kbd> &nbsp;·&nbsp; prefix &amp; fuzzy
+  </p>
+  <div id="sem-controls" style="display:none;gap:.5rem;align-items:center;flex-wrap:wrap;justify-content:center">
+    <input id="hf-token" type="password"
+           placeholder="HuggingFace token (optional — raises rate limit)"
+           style="background:rgba(255,255,255,.12);color:#fff;border:1px solid rgba(255,255,255,.25);
+                  border-radius:4px;padding:.22rem .65rem;font-size:.75rem;font-family:monospace;
+                  width:22rem;outline:none;"
+           autocomplete="off" spellcheck="false">
+    <button id="btn-local-model" onclick="toggleLocalModel()"
+            style="background:rgba(255,255,255,.1);color:rgba(255,255,255,.7);
+                   border:1px solid rgba(255,255,255,.22);border-radius:4px;
+                   padding:.22rem .75rem;font-size:.75rem;font-family:inherit;cursor:pointer;
+                   white-space:nowrap;transition:background .12s,color .12s">
+      Download model to local machine (~130 MB)
+    </button>
+  </div>
+  <div class="model-status" id="model-status"></div>
+</div>
+
+<div class="results-layout" id="results-layout" style="display:none">
+
+  <section>
+    <div class="sort-row">
+      <span id="result-timing" class="timing"></span>
+      <span style="flex:1"></span>
+      Sort:
+      <select id="sort-select">
+        <option value="score">Relevance</option>
+        <option value="n">Sequence (n)</option>
+      </select>
+    </div>
+    <div class="results-list" id="results-list"></div>
+  </section>
+
+  <aside class="stats-panel">
+
+    <div class="stat-block">
+      <h3>Matches</h3>
+      <div class="big-number" id="stat-count">0</div>
+      <div class="big-sub" id="stat-pct"></div>
+    </div>
+
+    <div class="stat-block">
+      <h3>Fields matched</h3>
+      <div class="field-row">
+        <span class="label">Title</span>
+        <div class="bar-track"><div class="bar-fill" id="bar-title" style="width:0%"></div></div>
+        <span class="count" id="cnt-title">0</span>
+      </div>
+      <div class="field-row">
+        <span class="label">Summary</span>
+        <div class="bar-track"><div class="bar-fill" id="bar-summary" style="width:0%"></div></div>
+        <span class="count" id="cnt-summary">0</span>
+      </div>
+      <div class="field-row">
+        <span class="label">Body</span>
+        <div class="bar-track"><div class="bar-fill" id="bar-body" style="width:0%"></div></div>
+        <span class="count" id="cnt-body">0</span>
+      </div>
+    </div>
+
+    <div class="stat-block">
+      <h3>Distribution across volume</h3>
+      <div class="dist-chart">
+        <div class="dist-bars" id="dist-bars"></div>
+        <div class="dist-axis" id="dist-axis"></div>
+      </div>
+    </div>
+
+    <div class="stat-block">
+      <h3>Score range</h3>
+      <div class="field-row" style="margin:0">
+        <span class="label">Highest</span>
+        <span class="count" style="width:auto; font-size:.75rem" id="stat-score-max">—</span>
+      </div>
+      <div class="field-row" style="margin:.3rem 0 0">
+        <span class="label">Lowest</span>
+        <span class="count" style="width:auto; font-size:.75rem" id="stat-score-min">—</span>
+      </div>
+    </div>
+
+  </aside>
+</div>
+
+<div id="initial-msg" class="state-msg" style="padding-top:3rem">
+  Enter a search term above to find consilia.
+</div>
+
+<script src="vendor/minisearch.min.js"></script>
+<script>
+// ── normalisation (same as reader) ─────────────────────────────────────────
+function normalise(term) {
+  return term.toLowerCase()
+    .replace(/æ/g, 'e').replace(/ę/g, 'e').replace(/ae/g, 'e')
+    .replace(/j/g, 'i').replace(/v/g, 'u');
+}
+
+function termToRegexPart(nt) {
+  let p = '';
+  for (let i = 0; i < nt.length; i++) {
+    switch (nt[i]) {
+      case 'i': p += '[ij]'; break;
+      case 'u': p += '[uv]'; break;
+      case 'e': p += '(?:ae|[eæę])'; break;
+      default:  p += nt[i].replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+    }
+  }
+  return p;
+}
+
+function buildHighlightRe(rawQuery) {
+  const tokens = rawQuery.trim().split(/\s+/).filter(Boolean);
+  if (!tokens.length) return null;
+  const parts = tokens.map(t => termToRegexPart(normalise(t)));
+  return new RegExp(`(${parts.join('|')})`, 'gi');
+}
+
+function highlightText(text, re) {
+  if (!re || !text) return esc(text);
+  re.lastIndex = 0;
+  const out = []; let last = 0, m;
+  while ((m = re.exec(text)) !== null) {
+    out.push(esc(text.slice(last, m.index)));
+    out.push(`<mark>${esc(m[0])}</mark>`);
+    last = m.index + m[0].length;
+  }
+  out.push(esc(text.slice(last)));
+  return out.join('');
+}
+
+// Extract a snippet around the first match
+function snippet(text, re, ctx = 120) {
+  if (!text) return '';
+  re.lastIndex = 0;
+  const m = re.exec(text);
+  if (!m) return text.slice(0, ctx * 2);
+  const s = Math.max(0, m.index - ctx);
+  const e = Math.min(text.length, m.index + ctx);
+  return (s > 0 ? '…' : '') + text.slice(s, e) + (e < text.length ? '…' : '');
+}
+
+function esc(s) {
+  return String(s ?? '')
+    .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+}
+
+// ── state ──────────────────────────────────────────────────────────────────
+let consilia   = {};
+let miniSearch = null;
+let volume     = null;
+let items      = [];      // sorted array for current volume
+let lastResults = [];
+let searchTimer = null;
+
+// ── boot ───────────────────────────────────────────────────────────────────
+fetch('output/consilia.json')
+  .then(r => r.json())
+  .then(data => {
+    consilia = data.consilia;
+    const volumes = [...new Set(Object.values(consilia).map(c => c.volume))].sort();
+    const sel = document.getElementById('volume-select');
+    volumes.forEach(v => {
+      const o = document.createElement('option');
+      o.value = v; o.textContent = v.replace(/_/g, ' ');
+      sel.appendChild(o);
+    });
+    sel.addEventListener('change', () => loadVolume(sel.value));
+    loadVolume(volumes[0]);
+  })
+  .catch(err => {
+    document.getElementById('initial-msg').textContent =
+      'Could not load consilia.json: ' + err.message;
+  });
+
+// ── volume ─────────────────────────────────────────────────────────────────
+function loadVolume(v) {
+  volume = v;
+  items  = Object.values(consilia)
+    .filter(c => c.volume === v)
+    .sort((a, b) => a.n - b.n || a.id.localeCompare(b.id));
+
+  miniSearch = new MiniSearch({
+    fields: ['title', 'summary', 'body'],
+    idField: 'idx',
+    processTerm: normalise,
+    searchOptions: {
+      boost: { title: 3, summary: 1.5, body: 1 },
+      prefix: true,
+      fuzzy: term => term.length > 4 ? 0.15 : false,
+    },
+  });
+  miniSearch.addAll(items.map((c, i) => ({
+    idx: i,
+    title:   c.title   || '',
+    summary: c.summary || '',
+    body:    (c.body   || []).join(' '),
+  })));
+
+  // Re-run any existing query against the new volume
+  const q = document.getElementById('search-input').value.trim();
+  if (q) runSearch(q); else clearResults();
+}
+
+// ── search ─────────────────────────────────────────────────────────────────
+document.getElementById('search-input').addEventListener('input', e => {
+  clearTimeout(searchTimer);
+  const q = e.target.value;
+  document.getElementById('search-clear').style.display = q ? 'block' : 'none';
+  const delay = searchMode === 'semantic' ? 500 : 220;
+  searchTimer = setTimeout(() => {
+    if (!q.trim()) { clearResults(); return; }
+    if (searchMode === 'semantic') runSemanticSearch(q);
+    else runSearch(q);
+  }, delay);
+});
+
+document.getElementById('search-clear').addEventListener('click', () => {
+  document.getElementById('search-input').value = '';
+  document.getElementById('search-clear').style.display = 'none';
+  clearResults();
+});
+
+document.getElementById('sort-select').addEventListener('change', () => {
+  if (searchMode === 'semantic' && lastSemResults.length) {
+    renderSemanticResults(lastSemResults);
+  } else if (lastResults.length) {
+    renderResults(lastResults, buildHighlightRe(document.getElementById('search-input').value));
+  }
+});
+
+function runSearch(raw) {
+  const t0 = performance.now();
+  const results = miniSearch.search(raw);
+  const elapsed = performance.now() - t0;
+
+  lastResults = results;
+  const re = buildHighlightRe(raw);
+
+  document.getElementById('initial-msg').style.display = 'none';
+  document.getElementById('results-layout').style.display = '';
+  document.getElementById('result-timing').textContent =
+    `${results.length} result${results.length !== 1 ? 's' : ''} in ${elapsed.toFixed(1)} ms`;
+
+  restoreFieldRows();
+  renderStats(results);
+  renderResults(results, re);
+}
+
+function clearResults() {
+  lastResults = [];
+  lastSemResults = [];
+  document.getElementById('results-layout').style.display = 'none';
+  document.getElementById('initial-msg').style.display = '';
+  restoreFieldRows();
+}
+
+// ── render results ─────────────────────────────────────────────────────────
+function renderResults(results, re) {
+  const sort = document.getElementById('sort-select').value;
+  const sorted = [...results].sort((a, b) =>
+    sort === 'n' ? (items[a.id]?.n ?? 0) - (items[b.id]?.n ?? 0)
+                 : b.score - a.score
+  );
+
+  const list = document.getElementById('results-list');
+  list.innerHTML = '';
+
+  if (!sorted.length) {
+    list.innerHTML = '<div class="state-msg">No matching consilia.</div>';
+    return;
+  }
+
+  sorted.forEach(r => {
+    const c = items[r.id];
+    if (!c) return;
+
+    // Which fields matched?
+    const matchedFields = new Set(Object.values(r.match).flat());
+
+    // Best snippet: prefer title match, then summary, then body
+    let snippetHtml = '';
+    if (matchedFields.has('title')) {
+      snippetHtml = highlightText(c.title, re);
+    } else if (matchedFields.has('summary') && c.summary) {
+      snippetHtml = highlightText(snippet(c.summary, re), re);
+    } else if (matchedFields.has('body')) {
+      const bodyText = (c.body || []).join(' ');
+      snippetHtml = highlightText(snippet(bodyText, re), re);
+    }
+
+    const readerUrl = `index.html?n=${c.n}`;
+
+    const el = document.createElement('a');
+    el.className = 'result-card';
+    el.href      = readerUrl;
+
+    el.innerHTML = `
+      <div class="result-head">
+        <span class="result-n">n = ${c.n}</span>
+        <span class="result-title">${esc(c.title)}</span>
+        <span class="result-score">${r.score.toFixed(1)}</span>
+      </div>
+      <div class="result-fields">
+        ${['title','summary','body'].map(f =>
+          `<span class="field-tag ${matchedFields.has(f) ? 'matched' : ''}">${f}</span>`
+        ).join('')}
+      </div>
+      <div class="result-snippet">${snippetHtml}</div>
+    `;
+    list.appendChild(el);
+  });
+}
+
+// ── render stats ───────────────────────────────────────────────────────────
+function renderStats(results) {
+  const total = items.length;
+  const count = results.length;
+
+  document.getElementById('stat-count').textContent = count;
+  document.getElementById('stat-pct').textContent   =
+    `${((count / total) * 100).toFixed(1)}% of ${total} consilia`;
+
+  // Field breakdown
+  const fieldCounts = { title: 0, summary: 0, body: 0 };
+  results.forEach(r => {
+    const matched = new Set(Object.values(r.match).flat());
+    matched.forEach(f => { if (f in fieldCounts) fieldCounts[f]++; });
+  });
+  const maxField = Math.max(...Object.values(fieldCounts), 1);
+  ['title', 'summary', 'body'].forEach(f => {
+    document.getElementById(`cnt-${f}`).textContent = fieldCounts[f];
+    document.getElementById(`bar-${f}`).style.width  =
+      `${(fieldCounts[f] / maxField * 100).toFixed(1)}%`;
+  });
+
+  // Score range
+  if (results.length) {
+    const scores = results.map(r => r.score);
+    document.getElementById('stat-score-max').textContent = Math.max(...scores).toFixed(2);
+    document.getElementById('stat-score-min').textContent = Math.min(...scores).toFixed(2);
+  } else {
+    document.getElementById('stat-score-max').textContent = '—';
+    document.getElementById('stat-score-min').textContent = '—';
+  }
+
+  // Distribution histogram
+  renderDistribution(results);
+}
+
+// ── semantic search state ──────────────────────────────────────────────────
+let searchMode    = 'keyword';
+let semEmbeddings = null;   // Float32Array [N * D], normalized
+let semMeta       = null;   // {ids, ns, dims, n, model}
+let lastSemResults = [];    // [{c, score}]
+let semExtractor  = null;   // transformers.js pipeline (local ONNX model)
+let localModelState = '';   // '' | 'loading' | 'ready'
+
+function setMode(mode) {
+  searchMode = mode;
+  document.getElementById('btn-keyword').classList.toggle('active', mode === 'keyword');
+  document.getElementById('btn-semantic').classList.toggle('active', mode === 'semantic');
+  document.getElementById('sem-controls').style.display = mode === 'semantic' ? 'flex' : 'none';
+  if (mode !== 'semantic') setModelStatus('');
+  const hint = document.getElementById('search-hint');
+  if (mode === 'semantic') {
+    hint.innerHTML = 'BGE-M3 semantic search via HF API &mdash; Latin, German, or English';
+  } else {
+    hint.innerHTML = 'Normalised &mdash; <kbd>j</kbd>=<kbd>i</kbd> &nbsp; <kbd>v</kbd>=<kbd>u</kbd> &nbsp; <kbd>ae</kbd>=<kbd>e</kbd> &nbsp;·&nbsp; prefix &amp; fuzzy';
+  }
+  const q = document.getElementById('search-input').value.trim();
+  if (!q) { clearResults(); return; }
+  if (mode === 'semantic') runSemanticSearch(q);
+  else runSearch(q);
+}
+
+// Persist HF token and restore local model preference on load
+document.addEventListener('DOMContentLoaded', () => {
+  const inp = document.getElementById('hf-token');
+  const stored = localStorage.getItem('hf_token');
+  if (stored) inp.value = stored;
+  inp.addEventListener('input', () => {
+    const v = inp.value.trim();
+    if (v) localStorage.setItem('hf_token', v);
+    else localStorage.removeItem('hf_token');
+  });
+
+  // If the user previously downloaded the model, offer to reload it
+  if (localStorage.getItem('use_local_model')) {
+    setLocalModelBtn('Reload local model', false);
+  }
+});
+
+function setModelStatus(msg, cls = '') {
+  const el = document.getElementById('model-status');
+  el.textContent = msg;
+  el.className = 'model-status ' + cls;
+}
+
+// ── safetensors loader (minimal inline parser) ─────────────────────────────
+async function loadSafetensors(url) {
+  const buf = await fetch(url).then(r => r.arrayBuffer());
+  const view = new DataView(buf);
+  const headerLen = Number(view.getBigUint64(0, true));
+  const headerText = new TextDecoder().decode(new Uint8Array(buf, 8, headerLen));
+  const header = JSON.parse(headerText);
+  const dataStart = 8 + headerLen;
+  const result = {};
+  for (const [name, meta] of Object.entries(header)) {
+    if (name === '__metadata__') continue;
+    const [start, end] = meta.data_offsets;
+    const bytes = buf.slice(dataStart + start, dataStart + end);
+    result[name] = meta.dtype === 'F32' ? new Float32Array(bytes) : bytes;
+  }
+  return result;
+}
+
+async function ensureEmbeddings() {
+  if (semEmbeddings) return;
+  setModelStatus('Loading embeddings…', 'busy');
+  const [tensors, meta] = await Promise.all([
+    loadSafetensors('output/embeddings.safetensors'),
+    fetch('output/embeddings_meta.json').then(r => r.json()),
+  ]);
+  semEmbeddings = tensors.embeddings;
+  semMeta = meta;
+}
+
+// ── local ONNX model (transformers.js) ────────────────────────────────────
+async function toggleLocalModel() {
+  if (localModelState === 'ready') {
+    // Switch back to API mode
+    semExtractor = null;
+    localModelState = '';
+    localStorage.removeItem('use_local_model');
+    setLocalModelBtn('Download model (~130 MB)', false);
+    setModelStatus('Using HF API', '');
+    return;
+  }
+  if (localModelState === 'loading') return;
+  await loadLocalModel();
+}
+
+async function loadLocalModel() {
+  localModelState = 'loading';
+  setLocalModelBtn('Downloading…', false);
+  setModelStatus('Downloading BGE-M3 ONNX — first time only, cached after (~130 MB)…', 'busy');
+  try {
+    const { pipeline, env } =
+      await import('https://cdn.jsdelivr.net/npm/@xenova/transformers@2/dist/transformers.min.js');
+    env.allowRemoteModels = true;
+    semExtractor = await pipeline('feature-extraction', 'Xenova/bge-m3', {
+      quantized: true,
+      progress_callback: p => {
+        if (p.status === 'downloading' && p.total) {
+          const pct = ((p.loaded / p.total) * 100).toFixed(0);
+          setModelStatus(`Downloading ${p.name ?? 'model'} … ${pct}%`, 'busy');
+        }
+      },
+    });
+    localModelState = 'ready';
+    localStorage.setItem('use_local_model', '1');
+    setLocalModelBtn('Local model active ✓', true);
+    setModelStatus('Local model ready — queries run offline', 'ready');
+  } catch(e) {
+    localModelState = '';
+    setLocalModelBtn('Download model (~130 MB)', false);
+    setModelStatus('Download failed: ' + e.message);
+    throw e;
+  }
+}
+
+function setLocalModelBtn(text, active) {
+  const btn = document.getElementById('btn-local-model');
+  if (!btn) return;
+  btn.textContent = text;
+  btn.style.background = active ? 'rgba(120,230,120,.2)'  : 'rgba(255,255,255,.1)';
+  btn.style.color       = active ? 'rgba(150,255,150,.9)'  : 'rgba(255,255,255,.7)';
+  btn.style.borderColor = active ? 'rgba(120,230,120,.4)'  : 'rgba(255,255,255,.22)';
+}
+
+// Dispatch: use local ONNX model if loaded, otherwise HF API
+async function embedQuery(text) {
+  if (localModelState === 'ready' && semExtractor) {
+    const out = await semExtractor(text, { pooling: 'cls', normalize: true });
+    return out.data instanceof Float32Array ? out.data : new Float32Array(out.data);
+  }
+  return embedQueryViaAPI(text);
+}
+
+// ── HF Serverless Inference API (free tier) ────────────────────────────────
+// Embed a single query string via the HF Serverless Inference API (free tier).
+// Returns a normalized Float32Array of length 1024.
+async function embedQueryViaAPI(text) {
+  const token = localStorage.getItem('hf_token') || '';
+  const headers = { 'Content-Type': 'application/json' };
+  if (token) headers['Authorization'] = `Bearer ${token}`;
+
+  const resp = await fetch(
+    'https://api-inference.huggingface.co/models/BAAI/bge-m3',
+    { method: 'POST', headers, body: JSON.stringify({ inputs: text }) }
+  );
+
+  if (resp.status === 503) {
+    // Model cold-starting on HF servers — wait and retry once
+    const info = await resp.json().catch(() => ({}));
+    const wait = Math.min((info.estimated_time ?? 20) * 1000, 30000);
+    setModelStatus(`Model warming up (~${(wait / 1000).toFixed(0)} s)…`, 'busy');
+    await new Promise(r => setTimeout(r, wait));
+    return embedQueryViaAPI(text);
+  }
+
+  if (!resp.ok) {
+    const err = await resp.json().catch(() => ({}));
+    throw new Error(err.error || `HF API ${resp.status}`);
+  }
+
+  const data = await resp.json();
+
+  // Feature-extraction response: [[f0, …, f1023]] (batch-of-1 pooled vector)
+  // Flatten any outer batch dimension and handle both 1-D and 2-D responses.
+  let raw = data;
+  while (Array.isArray(raw) && Array.isArray(raw[0])) raw = raw[0];
+  const vec = new Float32Array(raw);
+
+  // Normalise to unit vector (matching Python-side normalize_embeddings=True)
+  let norm = 0;
+  for (let i = 0; i < vec.length; i++) norm += vec[i] * vec[i];
+  norm = Math.sqrt(norm);
+  if (norm > 0) for (let i = 0; i < vec.length; i++) vec[i] /= norm;
+  return vec;
+}
+
+// ── main semantic search ───────────────────────────────────────────────────
+async function runSemanticSearch(raw) {
+  if (!raw.trim()) { clearResults(); return; }
+
+  document.getElementById('initial-msg').style.display = 'none';
+  document.getElementById('results-layout').style.display = '';
+  document.getElementById('results-list').innerHTML =
+    '<div class="state-msg">Loading…</div>';
+
+  try {
+    await ensureEmbeddings();
+    setModelStatus('Calling HF API…', 'busy');
+    const t0 = performance.now();
+
+    const qVec = await embedQuery(raw);  // Float32Array [dims], normalised — API or local
+    const D = semMeta.dims;
+
+    // Dot product with each embedding (unit vectors → cosine similarity)
+    const results = [];
+    for (let i = 0; i < semMeta.n; i++) {
+      const id = semMeta.ids[i];
+      const c = consilia[id];
+      if (!c || c.volume !== volume) continue;
+      let sim = 0;
+      const off = i * D;
+      for (let d = 0; d < D; d++) sim += qVec[d] * semEmbeddings[off + d];
+      results.push({ c, score: sim });
+    }
+    results.sort((a, b) => b.score - a.score);
+    lastSemResults = results;
+
+    const elapsed = performance.now() - t0;
+    setModelStatus(`Done in ${elapsed.toFixed(0)} ms`, 'ready');
+
+    document.getElementById('result-timing').textContent =
+      `${results.length} consilia ranked in ${elapsed.toFixed(0)} ms (BGE-M3)`;
+
+    renderSemanticStats(results);
+    renderSemanticResults(results);
+
+  } catch(e) {
+    document.getElementById('results-list').innerHTML =
+      `<div class="state-msg">Error: ${esc(String(e.message ?? e))}</div>`;
+  }
+}
+
+function semScoreColor(score) {
+  if (score >= 0.65) return 'var(--accent)';
+  if (score >= 0.45) return '#b87c2a';
+  return 'var(--muted)';
+}
+
+function renderSemanticResults(results) {
+  const sort = document.getElementById('sort-select').value;
+  const sorted = sort === 'n'
+    ? [...results].sort((a, b) => (a.c.n ?? 0) - (b.c.n ?? 0))
+    : results;   // already sorted by score
+
+  const TOP = 20;
+  const topResults = sorted.slice(0, TOP);
+
+  // Normalise bars relative to the highest score so the top result is always full-width
+  const maxScore = topResults.reduce((m, r) => Math.max(m, r.score), 0) || 1;
+
+  const list = document.getElementById('results-list');
+  list.innerHTML = '';
+
+  topResults.forEach(({ c, score }) => {
+    const barPct   = (score / maxScore * 100).toFixed(1);
+    const color    = semScoreColor(score);
+
+    // Prefer summary for the snippet (most structured); fall back to body
+    const raw = (c.summary || (c.body || []).join(' ')).slice(0, 220);
+    const preview = esc(raw) + (raw.length >= 220 ? '…' : '');
+
+    const el = document.createElement('a');
+    el.className = 'result-card';
+    el.href = `index.html?n=${c.n}`;
+    el.innerHTML =
+      `<div class="result-head">
+         <span class="result-n">${c.n}</span>
+         <span class="result-title">${esc(c.title)}</span>
+         <span class="result-score" style="color:${color}">${score.toFixed(3)}</span>
+       </div>
+       <div class="sem-bar-track">
+         <div class="sem-bar-fill" style="width:${barPct}%;background:${color}"></div>
+       </div>
+       <div class="result-snippet">${preview}</div>`;
+    list.appendChild(el);
+  });
+
+  if (sorted.length > TOP) {
+    const info = document.createElement('div');
+    info.className = 'state-msg';
+    info.style.paddingTop = '.75rem';
+    info.textContent = `Showing top ${TOP} of ${sorted.length} scored consilia.`;
+    list.appendChild(info);
+  }
+}
+
+function renderSemanticStats(results) {
+  const total = items.length;
+  document.getElementById('stat-count').textContent = Math.min(results.length, 20);
+  document.getElementById('stat-pct').textContent =
+    `top 20 of ${total} consilia by similarity`;
+
+  // Hide field breakdown (not applicable for semantic)
+  document.querySelectorAll('#results-layout .field-row').forEach(r => r.style.display = 'none');
+
+  const scores = results.map(r => r.score);
+  document.getElementById('stat-score-max').textContent = scores[0]?.toFixed(4) ?? '—';
+  document.getElementById('stat-score-min').textContent =
+    scores[scores.length - 1]?.toFixed(4) ?? '—';
+
+  // Show n-distribution of top 20 results
+  renderDistribution(
+    results.slice(0, 20).map((r) => ({
+      id: items.findIndex(it => it.id === r.c.id),
+      score: r.score,
+    }))
+  );
+}
+
+function restoreFieldRows() {
+  document.querySelectorAll('#results-layout .field-row').forEach(r => r.style.display = '');
+}
+
+function renderDistribution(results) {
+  const BINS = 20;
+  const maxN  = Math.max(...items.map(c => c.n), 1);
+  const binSize = Math.ceil(maxN / BINS);
+
+  // Count matches per bin
+  const matchBins = new Array(BINS).fill(0);
+  const totalBins = new Array(BINS).fill(0);
+  items.forEach(c => {
+    const b = Math.min(Math.floor((c.n - 1) / binSize), BINS - 1);
+    totalBins[b]++;
+  });
+  results.forEach(r => {
+    const c = items[r.id];
+    if (!c) return;
+    const b = Math.min(Math.floor((c.n - 1) / binSize), BINS - 1);
+    matchBins[b]++;
+  });
+
+  const maxBar = Math.max(...totalBins, 1);
+
+  // Bars
+  const barsEl = document.getElementById('dist-bars');
+  barsEl.innerHTML = '';
+  matchBins.forEach((mc, i) => {
+    const total = totalBins[i];
+    const pct   = (total / maxBar * 100).toFixed(1);  // height relative to tallest bin
+    const fillPct = total ? (mc / total * 100).toFixed(1) : '0';
+
+    const wrap = document.createElement('div');
+    wrap.style.cssText = `flex:1; display:flex; flex-direction:column; align-items:stretch; height:100%; justify-content:flex-end;`;
+
+    // Grey background bar (total)
+    const bg = document.createElement('div');
+    bg.style.cssText = `height:${pct}%; background:var(--border); border-radius:1px 1px 0 0; position:relative; overflow:hidden;`;
+
+    // Coloured fill (matches)
+    const fill = document.createElement('div');
+    fill.style.cssText = `position:absolute; bottom:0; left:0; right:0; height:${fillPct}%; background:var(--accent); opacity:.85;`;
+    bg.appendChild(fill);
+
+    const rangeStart = i * binSize + 1;
+    const rangeEnd   = Math.min((i + 1) * binSize, maxN);
+    bg.title = `n ${rangeStart}–${rangeEnd}: ${mc}/${total} match`;
+
+    wrap.appendChild(bg);
+    barsEl.appendChild(wrap);
+  });
+
+  // Axis labels (first, middle, last)
+  const axisEl = document.getElementById('dist-axis');
+  axisEl.innerHTML = '';
+  [0, Math.floor(BINS / 2), BINS - 1].forEach((bi, pos) => {
+    const span = document.createElement('span');
+    span.textContent = bi * binSize + 1;
+    axisEl.appendChild(span);
+  });
+}
+</script>
+
+</body>
+</html>

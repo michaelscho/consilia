@@ -1,0 +1,1177 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<PcGts xmlns="http://schema.primaresearch.org/PAGE/gts/pagecontent/2013-07-15" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://schema.primaresearch.org/PAGE/gts/pagecontent/2013-07-15 http://schema.primaresearch.org/PAGE/gts/pagecontent/2013-07-15/pagecontent.xsd">
+    <Metadata>
+        <Creator>prov=READ-COOP:name=TrHtr:version=2.33.0:model_id=309593:date=30_10_2025_13:17</Creator>
+        <Created>2025-10-30T09:58:49.862+01:00</Created>
+        <LastChange>2026-05-19T12:45:04.171+02:00</LastChange>
+        <TranskribusMetadata docId="13119248" pageId="109937049" pageNr="4" tsid="287814186" status="GT" userId="19940" imgUrl="https://files.transkribus.eu/Get?fileType=view&amp;id=SWICBHCJJRFTHAJFMOXNSEEU" xmlUrl="https://files.transkribus.eu/Get?id=MUVXEKERCSSBIRZFSVFOCQBW" imageId="92653615"/>
+    </Metadata>
+    <Page imageFilename="0004.jpg" imageWidth="2945" imageHeight="4334">
+        <ReadingOrder>
+            <OrderedGroup id="ro_1779443611446" caption="Regions reading order">
+                <RegionRefIndexed index="0" regionRef="region_1763113104652_297"/>
+                <RegionRefIndexed index="1" regionRef="TextRegion_1763375521488_19"/>
+                <RegionRefIndexed index="2" regionRef="region_1761824991747_586"/>
+            </OrderedGroup>
+        </ReadingOrder>
+        <TextRegion type="header" id="region_1763113104652_297" custom="readingOrder {index:0;} structure {type:header;}">
+            <Coords points="1157,162 1976,162 1976,280 1157,280"/>
+            <TextLine id="line_1763113114677_301" custom="readingOrder {index:0;}">
+                <Coords points="1212,212 1914,209 1914,271 1212,274"/>
+                <Baseline points="1212,268 1914,264"/>
+                <TextEquiv>
+                    <Unicode>D. Baldi de Perusio</Unicode>
+                </TextEquiv>
+            </TextLine>
+            <TextEquiv>
+                <Unicode>D. Baldi de Perusio</Unicode>
+            </TextEquiv>
+        </TextRegion>
+        <TextRegion orientation="0.0" id="TextRegion_1763375521488_19" custom="readingOrder {index:1;} structure {type:column_1;}">
+            <Coords points="369,295 1594,298 1418,3908 369,3905"/>
+            <TextLine id="tr_1_tl_3" custom="readingOrder {index:0;} work {offset:0; length:38;} work {offset:63; length:7; continued:true;}">
+                <Coords points="537,361 1510,362 1497,308 537,311"/>
+                <Baseline points="510,363 593,355 642,353 690,353 739,353 786,353 835,353 884,353 933,353 980,353 1029,353 1077,353 1126,353 1174,353 1222,353 1271,353 1320,353 1367,353 1416,353 1465,353 1513,353"/>
+                <TextEquiv>
+                    <Unicode>l. si. ff. de condi. ob turpem causam. et leges sunt uulgares. ff. so.</Unicode>
+                </TextEquiv>
+            </TextLine>
+            <TextLine id="tr_1_tl_5" custom="readingOrder {index:1;} work {offset:0; length:43; continued:true;}">
+                <Coords points="542,416 1528,416 1528,371 542,381"/>
+                <Baseline points="504,411 598,405 646,405 696,405 745,405 794,405 843,405 892,405 941,405 991,402 1039,402 1088,402 1138,402 1187,402 1235,402 1285,402 1334,402 1383,402 1433,402 1481,402 1531,398"/>
+                <TextEquiv>
+                    <Unicode>ma. l. si uero. §. de uiro. ff. de uer. ob. quicquid astringendae. et</Unicode>
+                </TextEquiv>
+            </TextLine>
+            <TextLine id="line_1761824142239_137" custom="readingOrder {index:2;} work {offset:16; length:44;}">
+                <Coords points="531,465 1515,467 1515,421 531,425"/>
+                <Baseline points="506,459 569,456 600,453 632,453 663,453 695,453 726,453 758,453 943,450 973,452 1003,453 1034,451 1063,450 1094,450 1124,450 1154,450 1184,450 1214,450 1245,450 1275,450 1306,450 1335,450 1365,450 1396,450 1426,450 1456,452 1486,452 1517,450"/>
+                <TextEquiv>
+                    <Unicode>hoc dicit illa. l. no. ff. de acquir. haer. l. si seruum. §. non dixit prę¬</Unicode>
+                </TextEquiv>
+            </TextLine>
+            <TextLine id="tr_1_tl_13" custom="readingOrder {index:3;}">
+                <Coords points="531,514 1522,507 1522,469 531,481"/>
+                <Baseline points="510,509 587,504 637,502 685,502 735,502 784,502 834,502 883,502 933,502 981,502 1031,499 1080,498 1130,498 1178,498 1228,498 1277,498 1327,498 1376,498 1426,498 1474,498 1524,498"/>
+                <TextEquiv>
+                    <Unicode>tor. Item lege cauetur, quod prohibitio facta ad filium non ex¬</Unicode>
+                </TextEquiv>
+            </TextLine>
+            <TextLine id="tr_1_tl_16" custom="readingOrder {index:4;} work {offset:30; length:35; continued:true;}">
+                <Coords points="524,555 1218,576 1510,556 1512,513 524,539"/>
+                <Baseline points="504,557 580,552 628,552 678,552 727,552 776,552 826,549 874,549 923,549 973,545 1022,545 1070,545 1120,545 1169,545 1218,545 1268,545 1316,545 1365,545 1415,545 1464,545 1513,545"/>
+                <TextEquiv>
+                    <Unicode>tenditur ad nepotem. Iste est tex. et glo. singularis in Auth. de</Unicode>
+                </TextEquiv>
+            </TextLine>
+            <TextLine id="tr_1_tl_18" custom="readingOrder {index:5;} work {offset:0; length:18; continued:true;} work {offset:44; length:25;}">
+                <Coords points="527,609 1506,608 1486,556 527,584"/>
+                <Baseline points="504,604 583,600 632,600 681,600 729,597 778,597 827,597 876,597 924,597 973,597 1022,594 1070,593 1119,593 1168,593 1216,593 1265,593 1314,593 1363,594 1411,597 1460,597 1510,593"/>
+                <TextEquiv>
+                    <Unicode>resti. fideic. §. manifestum. ad hoc facit. ff. de excusa. tut. l. 2. ubi</Unicode>
+                </TextEquiv>
+            </TextLine>
+            <TextLine id="tr_1_tl_22" custom="readingOrder {index:6;}">
+                <Coords points="524,662 1510,651 1510,607 524,626"/>
+                <Baseline points="503,650 580,649 628,649 678,649 727,647 776,645 826,645 874,645 923,645 973,645 1022,642 1070,641 1120,641 1169,641 1218,641 1268,642 1316,645 1365,644 1415,641 1464,641 1513,641"/>
+                <TextEquiv>
+                    <Unicode>iurisconsultus dicit, quod ex significatione sumpta a voce non</Unicode>
+                </TextEquiv>
+            </TextLine>
+            <TextLine id="tr_1_tl_23" custom="readingOrder {index:7;} work {offset:39; length:36;}">
+                <Coords points="517,702 1492,704 1484,652 518,683"/>
+                <Baseline points="494,707 571,698 620,697 669,697 718,697 766,696 815,693 864,693 912,693 961,693 1010,693 1057,691 1106,689 1155,689 1203,692 1252,693 1301,693 1350,693 1398,693 1447,689 1496,689"/>
+                <TextEquiv>
+                    <Unicode>est idem, esse filii, et nepotis, idem no. insti. qui da. tuto. pos. §. fi.</Unicode>
+                </TextEquiv>
+            </TextLine>
+            <TextLine id="tr_1_tl_26" custom="readingOrder {index:8;}">
+                <Coords points="517,755 1503,761 1503,718 1282,702 517,724"/>
+                <Baseline points="493,751 573,747 621,745 671,745 720,745 769,745 819,741 867,741 916,741 966,739 1015,738 1063,738 1113,738 1162,740 1211,741 1260,740 1309,739 1358,741 1408,741 1456,741 1506,738"/>
+                <TextEquiv>
+                    <Unicode>Item priuilegium concessum filiis non extenditur ad nepotes: ergo</Unicode>
+                </TextEquiv>
+            </TextLine>
+            <TextLine id="tr_1_tl_28" custom="readingOrder {index:9;} work {offset:14; length:14;}">
+                <Coords points="513,796 1510,793 1510,766 513,773"/>
+                <Baseline points="490,803 569,796 619,794 669,792 719,792 769,792 817,788 867,788 917,788 967,788 1017,788 1066,788 1116,788 1165,788 1215,788 1265,788 1314,788 1364,787 1414,785 1464,785 1513,785"/>
+                <TextEquiv>
+                    <Unicode>nec odium: vt C. ad treb. I. iubemus. Item eadem ratione extende¬</Unicode>
+                </TextEquiv>
+            </TextLine>
+            <TextLine id="line_1761824145649_141" custom="readingOrder {index:10;} work {offset:48; length:18; continued:true;}">
+                <Coords points="513,852 1504,854 1504,820 1430,797 513,828"/>
+                <Baseline points="484,849 551,841 583,840 614,840 646,840 678,840 709,840 741,839 772,838 804,836 836,836 1329,836 1364,836 1399,836 1435,836 1471,836 1506,836"/>
+                <TextEquiv>
+                    <Unicode>retur. ad pronepotes, et omnes descendentes: vt ff. de postulando.</Unicode>
+                </TextEquiv>
+            </TextLine>
+            <TextLine id="tr_1_tl_36" custom="readingOrder {index:11;} work {offset:0; length:28; continued:true;} work {offset:52; length:18; continued:true;}">
+                <Coords points="508,896 1503,903 1503,859 1454,845 508,859"/>
+                <Baseline points="484,894 565,892 615,891 664,888 714,888 764,888 813,888 862,885 912,885 961,885 1011,885 1061,885 1110,885 1159,885 1209,885 1258,885 1308,885 1358,885 1407,885 1456,885 1506,885"/>
+                <TextEquiv>
+                    <Unicode>I. 1. in fi. cum. l. sequen. quod falsum est: vt in Auth. de non alie.</Unicode>
+                </TextEquiv>
+            </TextLine>
+            <TextLine id="tr_1_tl_37" custom="readingOrder {index:12;} work {offset:0; length:3; continued:true;}">
+                <Coords points="517,961 1496,941 1496,906 1414,894 517,906"/>
+                <Baseline points="490,943 573,940 621,940 670,939 719,936 767,935 816,933 865,933 914,933 962,933 1011,933 1060,935 1108,936 1157,936 1206,936 1255,936 1303,936 1352,935 1401,933 1449,933 1499,933"/>
+                <TextEquiv>
+                    <Unicode>§. emphyteusim. Preterea filius est prima persona descendens:</Unicode>
+                </TextEquiv>
+            </TextLine>
+            <TextLine id="line_1761824148782_145" custom="readingOrder {index:13;} work {offset:35; length:21;}">
+                <Coords points="513,1001 1497,992 1498,945 514,965"/>
+                <Baseline points="485,993 551,988 583,988 614,988 646,988 677,986 709,985 740,985 772,985 803,985 835,985 866,985 898,985 929,983 961,981 1276,985 1307,985 1339,985 1371,982 1403,982 1435,983 1467,983 1499,981"/>
+                <TextEquiv>
+                    <Unicode>nepos secunda: pronepos tertia, et c. vt ibi tex. dicit. sed quod pri¬</Unicode>
+                </TextEquiv>
+            </TextLine>
+            <TextLine id="tr_1_tl_43" custom="readingOrder {index:14;}">
+                <Coords points="506,1040 1506,1040 1506,1012 1370,991 506,1022"/>
+                <Baseline points="485,1041 565,1035 618,1034 670,1032 722,1032 775,1032 827,1032 880,1032 933,1032 985,1032 1037,1032 1089,1032 1142,1032 1195,1032 1247,1032 1300,1032 1352,1032 1404,1028 1456,1028 1510,1028"/>
+                <TextEquiv>
+                    <Unicode>ma persona sit secunda, et econtra, implicat impossibilitatem na¬</Unicode>
+                </TextEquiv>
+            </TextLine>
+            <TextLine id="tr_1_tl_45" custom="readingOrder {index:15;}">
+                <Coords points="508,1092 1499,1091 1483,1043 508,1067"/>
+                <Baseline points="434,1094 525,1088 615,1084 664,1082 714,1080 763,1080 813,1080 861,1080 911,1080 960,1080 1010,1080 1058,1080 1108,1080 1157,1080 1207,1080 1256,1080 1306,1079 1354,1077 1404,1080 1453,1080 1503,1076"/>
+                <TextEquiv>
+                    <Unicode>turae. † Quare de primo ad vltimum cocludendo non videtur neptis</Unicode>
+                </TextEquiv>
+            </TextLine>
+            <TextLine id="tr_1_tl_49" custom="readingOrder {index:16;}">
+                <Coords points="503,1147 1496,1138 1480,1092 503,1103"/>
+                <Baseline points="474,1132 558,1134 608,1130 657,1128 707,1128 757,1132 805,1132 855,1128 905,1128 954,1128 1004,1128 1054,1128 1102,1128 1152,1128 1202,1129 1251,1130 1301,1128 1351,1128 1399,1128 1449,1128 1499,1128"/>
+                <TextEquiv>
+                    <Unicode>significari. sed ego puto in isto statuto. neptem significari, licet</Unicode>
+                </TextEquiv>
+            </TextLine>
+            <TextLine id="tr_1_tl_52" custom="readingOrder {index:17;}">
+                <Coords points="492,1185 1496,1189 1496,1140 645,1142 492,1175"/>
+                <Baseline points="472,1183 549,1181 599,1180 649,1180 699,1180 748,1180 798,1179 848,1176 898,1176 948,1176 999,1176 1049,1176 1099,1176 1149,1176 1199,1176 1249,1179 1298,1176 1348,1176 1398,1176 1448,1176 1499,1176"/>
+                <TextEquiv>
+                    <Unicode>.n. statutum de filia faciat mentionem: tamen et de parentibus memi¬</Unicode>
+                </TextEquiv>
+            </TextLine>
+            <TextLine id="tr_1_tl_54" custom="readingOrder {index:18;} work {offset:34; length:36;}">
+                <Coords points="492,1244 1489,1234 1489,1198 492,1216"/>
+                <Baseline points="466,1235 548,1232 598,1232 647,1232 697,1228 747,1228 796,1228 846,1228 896,1228 946,1226 996,1224 1044,1227 1094,1226 1144,1224 1194,1226 1244,1228 1293,1228 1342,1228 1392,1228 1442,1228 1492,1228"/>
+                <TextEquiv>
+                    <Unicode>nit, quod est verbum generale. vt ff. de in ius voc. l. quinquibus. §. pa¬</Unicode>
+                </TextEquiv>
+            </TextLine>
+            <TextLine id="tr_1_tl_56" custom="readingOrder {index:19;}">
+                <Coords points="487,1279 1485,1289 1485,1240 487,1258"/>
+                <Baseline points="461,1280 544,1279 594,1275 644,1275 694,1275 744,1275 792,1275 842,1275 892,1275 942,1275 992,1275 1041,1275 1091,1275 1140,1275 1190,1275 1240,1275 1289,1275 1339,1275 1389,1275 1439,1275 1489,1273"/>
+                <TextEquiv>
+                    <Unicode>rentes. et ideo extenditur significatio filiorum per annexionem</Unicode>
+                </TextEquiv>
+            </TextLine>
+            <TextLine id="line_1761824152277_149" custom="readingOrder {index:20;} work {offset:13; length:43;}">
+                <Coords points="492,1349 1489,1338 1489,1298 492,1302"/>
+                <Baseline points="465,1342 529,1327 558,1327 589,1327 619,1327 649,1324 680,1323 709,1323 739,1323 770,1323 800,1323 829,1323 860,1323 890,1323 919,1323 950,1323 1247,1323 1277,1323 1308,1323 1339,1323 1370,1323 1399,1323 1430,1323 1461,1322 1492,1319"/>
+                <TextEquiv>
+                    <Unicode>parentum: vt ff. de iur. et fac. ign. l. regula. §. fi. Item hoc probatur</Unicode>
+                </TextEquiv>
+            </TextLine>
+            <TextLine id="tr_1_tl_62" custom="readingOrder {index:21;}">
+                <Coords points="498,1403 1489,1387 1473,1339 1241,1332 498,1357"/>
+                <Baseline points="456,1390 555,1375 605,1375 653,1375 703,1375 752,1371 802,1371 851,1371 900,1371 949,1371 999,1371 1048,1371 1098,1371 1146,1371 1196,1371 1245,1371 1295,1371 1344,1371 1393,1371 1442,1371 1492,1371"/>
+                <TextEquiv>
+                    <Unicode>per rationem absurditatis euitandae. pone.n. quod auus paternus</Unicode>
+                </TextEquiv>
+            </TextLine>
+            <TextLine id="tr_1_tl_64" custom="readingOrder {index:22;}">
+                <Coords points="482,1428 1483,1429 1474,1381 522,1390 482,1418"/>
+                <Baseline points="465,1428 538,1423 588,1423 638,1423 688,1423 738,1423 788,1423 838,1423 887,1423 937,1423 987,1421 1036,1420 1086,1421 1136,1423 1186,1422 1235,1420 1285,1420 1335,1420 1385,1420 1435,1420 1485,1420"/>
+                <TextEquiv>
+                    <Unicode>dotauit neptem. filia n. dotata non rumpit testamentum: et neptis ex fi¬</Unicode>
+                </TextEquiv>
+            </TextLine>
+            <TextLine id="tr_1_tl_66" custom="readingOrder {index:23;}">
+                <Coords points="485,1483 1478,1481 1478,1439 485,1441"/>
+                <Baseline points="456,1480 541,1475 590,1475 639,1475 689,1471 739,1471 788,1471 838,1468 887,1470 936,1469 986,1470 1036,1471 1085,1469 1135,1469 1184,1471 1233,1471 1283,1470 1333,1468 1382,1468 1432,1468 1481,1468"/>
+                <TextEquiv>
+                    <Unicode>lio rumpet filio praemortuo: quod est valde absurdum: quia non</Unicode>
+                </TextEquiv>
+            </TextLine>
+            <TextLine id="tr_1_tl_69" custom="readingOrder {index:24;} work {offset:52; length:13;}">
+                <Coords points="478,1526 1479,1526 1465,1478 478,1504"/>
+                <Baseline points="452,1530 526,1523 567,1523 608,1523 649,1523 690,1522 731,1520 772,1520 813,1520 854,1520 895,1520 935,1520 977,1520 1017,1520 1058,1520 1099,1520 1140,1520 1181,1520 1222,1520 1263,1520 1483,1522"/>
+                <TextEquiv>
+                    <Unicode>debet plus concedi vlterioribus, quam prioribus: vt C. de ma. l. si</Unicode>
+                </TextEquiv>
+            </TextLine>
+            <TextLine id="tr_1_tl_71" custom="readingOrder {index:25;}">
+                <Coords points="482,1578 1483,1575 1472,1525 482,1553"/>
+                <Baseline points="460,1578 538,1570 588,1570 638,1570 688,1570 738,1570 788,1567 838,1567 887,1567 937,1567 987,1567 1036,1567 1086,1567 1136,1567 1186,1567 1235,1567 1285,1565 1335,1564 1385,1567 1435,1567 1485,1567"/>
+                <TextEquiv>
+                    <Unicode>viua matre. vnde de mentali necessitate statuti neptis includi¬</Unicode>
+                </TextEquiv>
+            </TextLine>
+            <TextLine id="tr_1_tl_73" custom="readingOrder {index:26;} work {offset:62; length:2; continued:true;}">
+                <Coords points="478,1623 1486,1625 1486,1576 478,1609"/>
+                <Baseline points="458,1627 533,1622 582,1620 631,1618 680,1618 728,1617 777,1615 826,1615 874,1615 923,1615 972,1615 1019,1615 1068,1615 1117,1615 1165,1615 1214,1615 1263,1615 1312,1615 1360,1615 1409,1615 1481,1617"/>
+                <TextEquiv>
+                    <Unicode>tur. Item quia non debet dispositio legis esse imperfecta: vt C.</Unicode>
+                </TextEquiv>
+            </TextLine>
+            <TextLine id="line_1761824164205_154" custom="readingOrder {index:27;} work {offset:0; length:17; continued:true;}">
+                <Coords points="474,1680 1479,1672 1479,1635 571,1628 475,1657"/>
+                <Baseline points="444,1676 513,1670 544,1670 575,1670 606,1670 638,1670 669,1668 700,1667 731,1667 761,1667 794,1667 975,1663 1006,1663 1037,1663 1068,1663 1099,1663 1130,1663 1161,1663 1192,1663 1224,1663 1344,1663 1378,1663 1413,1663 1447,1662 1481,1659"/>
+                <TextEquiv>
+                    <Unicode>ad silla. l. pen. sed hic aduertendum, quod mulier excluditur</Unicode>
+                </TextEquiv>
+            </TextLine>
+            <TextLine id="tr_1_tl_80" custom="readingOrder {index:28;}">
+                <Coords points="475,1732 1474,1725 1474,1686 475,1699"/>
+                <Baseline points="451,1729 531,1719 581,1719 631,1719 681,1719 731,1715 781,1715 830,1715 880,1715 930,1715 980,1712 1029,1711 1079,1711 1129,1711 1178,1711 1228,1711 1278,1711 1328,1711 1378,1711 1428,1711 1478,1711"/>
+                <TextEquiv>
+                    <Unicode>quoniamque ratione femineitatis, quia mulier: vt si statutum diceret,</Unicode>
+                </TextEquiv>
+            </TextLine>
+            <TextLine id="tr_1_tl_82" custom="readingOrder {index:29;}">
+                <Coords points="472,1777 1472,1773 1472,1727 472,1746"/>
+                <Baseline points="443,1777 527,1769 577,1767 627,1767 677,1767 727,1763 777,1763 827,1763 877,1763 927,1763 977,1763 1025,1763 1075,1763 1125,1763 1175,1763 1225,1763 1275,1763 1325,1763 1374,1763 1424,1763 1474,1763"/>
+                <TextEquiv>
+                    <Unicode>quod filia foemina non succedat: et tunc includeret neptem, quod</Unicode>
+                </TextEquiv>
+            </TextLine>
+            <TextLine id="line_1761824167818_158" custom="readingOrder {index:30;}">
+                <Coords points="487,1846 1474,1822 1474,1784 487,1793"/>
+                <Baseline points="444,1824 526,1814 557,1814 588,1814 619,1814 651,1814 682,1814 713,1814 744,1814 776,1811 807,1810 838,1810 868,1810 900,1810 1301,1806 1335,1806 1371,1806 1407,1806 1442,1806 1478,1806"/>
+                <TextEquiv>
+                    <Unicode>potest esse favore venientium ab intestato. Item fauore haeredum</Unicode>
+                </TextEquiv>
+            </TextLine>
+            <TextLine id="tr_1_tl_88" custom="readingOrder {index:31;}">
+                <Coords points="468,1869 1473,1873 1473,1825 533,1825 468,1852"/>
+                <Baseline points="442,1870 525,1866 575,1866 625,1862 675,1862 725,1862 775,1862 824,1859 874,1858 924,1858 974,1858 1024,1858 1074,1858 1124,1858 1174,1858 1224,1858 1274,1858 1323,1858 1373,1858 1423,1858 1474,1858"/>
+                <TextEquiv>
+                    <Unicode>institutorum, vt non infringant testamentum. maior enim fauor debetur</Unicode>
+                </TextEquiv>
+            </TextLine>
+            <TextLine id="tr_1_tl_90" custom="readingOrder {index:32;} work {offset:41; length:24; continued:true;}">
+                <Coords points="475,1924 1365,1933 1459,1920 1460,1882 475,1894"/>
+                <Baseline points="444,1917 531,1914 580,1914 628,1911 677,1910 727,1910 776,1910 824,1910 873,1910 922,1910 972,1906 1020,1906 1069,1906 1118,1906 1167,1906 1216,1906 1265,1906 1314,1906 1363,1906 1411,1906 1461,1906"/>
+                <TextEquiv>
+                    <Unicode>testamento, quam legitimis hęredibus: vt no. ff. de lib. et pohu.</Unicode>
+                </TextEquiv>
+            </TextLine>
+            <TextLine id="line_1761824173404_162" custom="readingOrder {index:33;} work {offset:0; length:13; continued:true;}">
+                <Coords points="478,1974 1468,1969 1468,1930 1390,1914 478,1926"/>
+                <Baseline points="441,1969 516,1962 545,1962 576,1962 606,1962 636,1962 666,1962 918,1955 948,1955 979,1955 1010,1955 1041,1955 1072,1955 1102,1955 1133,1955 1164,1955 1195,1955 1233,1958 1263,1955 1293,1955 1322,1955 1352,1955 1382,1955 1411,1955 1441,1955 1471,1955"/>
+                <TextEquiv>
+                    <Unicode>l. Gallus. §. instituens. sed interdum statutum non excludit filiam</Unicode>
+                </TextEquiv>
+            </TextLine>
+            <TextLine id="tr_1_tl_97" custom="readingOrder {index:34;}">
+                <Coords points="464,2026 1472,2020 1473,1980 464,1988"/>
+                <Baseline points="441,2019 522,2014 571,2010 621,2010 671,2008 722,2006 772,2006 822,2006 872,2006 922,2006 973,2006 1023,2006 1073,2005 1123,2004 1173,2006 1224,2005 1274,2003 1323,2003 1373,2003 1423,2003 1474,2003"/>
+                <TextEquiv>
+                    <Unicode>simpliciter, sed dotatam filiam. et tunc non excludit filiam indo¬</Unicode>
+                </TextEquiv>
+            </TextLine>
+            <TextLine id="tr_1_tl_99" custom="readingOrder {index:35;}">
+                <Coords points="460,2072 1466,2060 1442,2019 1359,2011 462,2039"/>
+                <Baseline points="429,2063 518,2061 568,2057 618,2061 668,2057 718,2057 767,2057 817,2055 867,2053 917,2053 968,2053 1018,2053 1068,2053 1118,2053 1168,2053 1218,2052 1268,2050 1317,2050 1367,2050 1417,2050 1468,2050"/>
+                <TextEquiv>
+                    <Unicode>tatam: quia qualitas dotis non inest nepti: nec habet vllam pro¬</Unicode>
+                </TextEquiv>
+            </TextLine>
+            <TextLine id="tr_1_tl_101" custom="readingOrder {index:36;}">
+                <Coords points="460,2110 1465,2109 1454,2060 460,2089"/>
+                <Baseline points="442,2113 518,2109 568,2109 618,2109 668,2105 718,2105 767,2105 817,2105 867,2103 917,2102 968,2102 1018,2102 1068,2102 1118,2102 1168,2102 1218,2102 1268,2102 1317,2102 1367,2102 1417,2102 1468,2098"/>
+                <TextEquiv>
+                    <Unicode>uidentiam ab auo, qua possit dici succedere loco legitimae. et</Unicode>
+                </TextEquiv>
+            </TextLine>
+            <TextLine id="tr_1_tl_104" custom="readingOrder {index:37;}">
+                <Coords points="460,2167 1465,2160 1465,2121 460,2124"/>
+                <Baseline points="431,2163 518,2153 568,2153 618,2153 668,2153 718,2153 767,2153 817,2153 867,2153 917,2153 968,2153 1018,2151 1068,2150 1118,2150 1168,2150 1218,2150 1268,2148 1317,2146 1367,2146 1417,2146 1468,2146"/>
+                <TextEquiv>
+                    <Unicode>ideo secundum ea, quę proponuntur, dicta neptis habet ius rumpen¬</Unicode>
+                </TextEquiv>
+            </TextLine>
+            <TextLine id="tr_1_tl_106" custom="readingOrder {index:38;}">
+                <Coords points="454,2214 1458,2207 1443,2157 455,2183"/>
+                <Baseline points="426,2215 511,2205 561,2205 611,2205 661,2205 710,2202 760,2202 810,2202 860,2202 910,2202 961,2202 1011,2199 1061,2198 1111,2198 1161,2198 1211,2198 1260,2198 1310,2198 1360,2198 1410,2194 1461,2194"/>
+                <TextEquiv>
+                    <Unicode>di. dicet aliquis, ista neptis succedit in dote materna: ergo est</Unicode>
+                </TextEquiv>
+            </TextLine>
+            <TextLine id="tr_1_tl_108" custom="readingOrder {index:39;}">
+                <Coords points="449,2257 1440,2256 1440,2209 449,2236"/>
+                <Baseline points="423,2260 506,2257 556,2257 605,2255 655,2250 703,2250 753,2250 802,2250 852,2250 900,2250 950,2250 999,2250 1049,2247 1098,2246 1148,2246 1196,2246 1246,2246 1295,2246 1345,2246 1393,2246 1443,2246"/>
+                <TextEquiv>
+                    <Unicode>dotata etiam inuita matre: quia filiafami. non potest testari, et</Unicode>
+                </TextEquiv>
+            </TextLine>
+            <TextLine id="line_1761824179013_166" custom="readingOrder {index:40;}">
+                <Coords points="449,2307 1231,2321 1467,2307 1468,2257 449,2287"/>
+                <Baseline points="423,2312 487,2303 518,2300 549,2300 580,2300 609,2300 640,2300 671,2300 702,2300 733,2300 763,2298 794,2297 824,2297 855,2297 886,2297 1188,2294 1219,2295 1250,2294 1282,2294 1313,2294 1345,2294 1376,2294 1408,2294 1439,2293 1471,2291"/>
+                <TextEquiv>
+                    <Unicode>excludere filiam suam. ita secundum Bart. ista neptis debet im¬</Unicode>
+                </TextEquiv>
+            </TextLine>
+            <TextLine id="line_1761824186571_174" custom="readingOrder {index:41;}">
+                <Coords points="460,2381 1437,2356 1428,2307 460,2325"/>
+                <Baseline points="419,2358 498,2352 527,2352 558,2350 588,2349 618,2349 649,2349 678,2349 708,2349 739,2349 769,2347 798,2345 829,2347 859,2349 889,2349 919,2349 949,2349 979,2349 1010,2349 1319,2341 1348,2341 1379,2341 1409,2341 1440,2341"/>
+                <TextEquiv>
+                    <Unicode>putare sibi istam dotem in sua legitima deducenda de bonis aui:</Unicode>
+                </TextEquiv>
+            </TextLine>
+            <TextLine id="tr_1_tl_118" custom="readingOrder {index:42;} work {offset:10; length:21;}">
+                <Coords points="410,2414 1458,2404 1437,2356 412,2372"/>
+                <Baseline points="375,2412 469,2401 522,2401 574,2399 626,2397 678,2397 731,2397 783,2397 835,2397 887,2397 940,2397 991,2396 1043,2393 1095,2393 1148,2393 1200,2389 1252,2393 1304,2393 1357,2389 1409,2389 1461,2389"/>
+                <TextEquiv>
+                    <Unicode>6 vt ipse no. ff. ad l. fal. l. in quarta. † quia certe hoc non prouenit</Unicode>
+                </TextEquiv>
+            </TextLine>
+            <TextLine id="line_1761824182948_170" custom="readingOrder {index:43;} work {offset:35; length:24;}">
+                <Coords points="447,2462 1454,2455 1453,2418 1341,2401 447,2428"/>
+                <Baseline points="419,2456 484,2449 514,2449 545,2449 575,2449 606,2449 637,2449 666,2447 697,2445 728,2445 758,2445 789,2445 820,2445 849,2445 880,2445 911,2445 1167,2441 1199,2441 1231,2441 1263,2441 1295,2441 1328,2441 1360,2441 1392,2441 1424,2440 1458,2438"/>
+                <TextEquiv>
+                    <Unicode>iudicio aui: sed casu fortuito: vt ff. de l. 3. sed si sic. et ideo pro</Unicode>
+                </TextEquiv>
+            </TextLine>
+            <TextLine id="line_1761824190233_178" custom="readingOrder {index:44;}">
+                <Coords points="438,2502 1447,2497 1423,2450 438,2483"/>
+                <Baseline points="417,2501 476,2501 507,2498 537,2497 568,2497 599,2497 628,2497 659,2497 690,2497 720,2494 751,2493 782,2493 811,2493 842,2493 873,2493 903,2493 934,2493 965,2493 994,2493 1025,2493 1056,2493 1202,2489 1233,2489 1264,2489 1295,2489 1326,2488 1357,2486 1388,2487 1418,2489 1451,2489"/>
+                <TextEquiv>
+                    <Unicode>dicta nepte concludo, quod quia pręterita, potest rumpere testamentum.</Unicode>
+                </TextEquiv>
+            </TextLine>
+            <TextLine id="tr_1_tl_126" custom="readingOrder {index:45;}">
+                <Coords points="443,2557 1347,2561 1440,2554 1442,2506 443,2517"/>
+                <Baseline points="408,2551 499,2545 549,2545 599,2545 649,2545 699,2545 747,2541 797,2541 847,2541 897,2541 947,2541 996,2541 1045,2539 1095,2538 1145,2538 1195,2538 1244,2538 1294,2538 1344,2538 1393,2538 1443,2538"/>
+                <TextEquiv>
+                    <Unicode>licet Bar. in quodam loco dicat, quod in linea materna non requiritur,</Unicode>
+                </TextEquiv>
+            </TextLine>
+            <TextLine id="tr_1_tl_127" custom="readingOrder {index:46;}">
+                <Coords points="438,2599 1454,2593 1454,2559 438,2582"/>
+                <Baseline points="414,2605 497,2596 548,2596 598,2596 649,2593 699,2590 750,2588 800,2588 851,2588 900,2588 952,2588 1003,2588 1053,2588 1104,2587 1154,2585 1205,2585 1255,2585 1306,2585 1355,2585 1407,2585 1458,2585"/>
+                <TextEquiv>
+                    <Unicode>quod relinquatur iure institutionis: vt sic iura codicis in linea</Unicode>
+                </TextEquiv>
+            </TextLine>
+            <TextLine id="line_1761824194068_182" custom="readingOrder {index:47;}">
+                <Coords points="443,2655 1434,2641 1434,2603 443,2627"/>
+                <Baseline points="413,2646 480,2644 510,2644 541,2643 570,2640 601,2640 631,2640 662,2640 691,2640 722,2640 752,2640 783,2640 813,2639 843,2636 904,2636 939,2636 974,2636 1010,2636 1209,2636 1241,2634 1274,2636 1306,2634 1339,2633 1371,2633 1403,2633 1436,2633"/>
+                <TextEquiv>
+                    <Unicode>materna remaneant incorrecta: quia mater non dicitur propriae prae¬</Unicode>
+                </TextEquiv>
+            </TextLine>
+            <TextLine id="tr_1_tl_135" custom="readingOrder {index:48;} work {offset:11; length:31;}">
+                <Coords points="438,2699 1397,2691 1398,2660 440,2670"/>
+                <Baseline points="401,2703 494,2692 542,2692 589,2692 637,2690 684,2688 732,2687 781,2685 828,2685 876,2685 923,2685 971,2685 1018,2685 1066,2687 1114,2686 1162,2685 1209,2683 1257,2681 1304,2681 1352,2681 1447,2682"/>
+                <TextEquiv>
+                    <Unicode>terire: vt insti. de inoffi. te. §. mater. Sed contrarium est verius per §.</Unicode>
+                </TextEquiv>
+            </TextLine>
+            <TextLine id="tr_1_tl_138" custom="readingOrder {index:49;} work {offset:25; length:31;}">
+                <Coords points="435,2758 1447,2741 1447,2693 436,2720"/>
+                <Baseline points="405,2748 493,2744 543,2744 594,2740 644,2740 695,2740 745,2738 795,2737 846,2737 896,2737 947,2737 997,2737 1047,2735 1098,2733 1148,2733 1199,2732 1249,2729 1298,2729 1350,2729 1399,2729 1451,2729"/>
+                <TextEquiv>
+                    <Unicode>aliud quinque capitulum. in Auth. vt cum de appe. cogno. quia modo</Unicode>
+                </TextEquiv>
+            </TextLine>
+            <TextLine id="line_1761824198233_186" custom="readingOrder {index:50;}">
+                <Coords points="436,2798 1443,2790 1426,2739 436,2775"/>
+                <Baseline points="410,2796 474,2792 505,2792 536,2792 568,2792 599,2791 630,2788 661,2788 693,2788 723,2788 754,2787 786,2785 958,2785 987,2785 1018,2785 1049,2785 1080,2785 1110,2782 1140,2781 1171,2781 1202,2781 1232,2781 1263,2781 1294,2781 1325,2781 1354,2781 1385,2781 1416,2781 1447,2781"/>
+                <TextEquiv>
+                    <Unicode>etiam hodie dicitur pręterire: et redditur testamentum nullum. Ego Bal.</Unicode>
+                </TextEquiv>
+            </TextLine>
+            <TextLine id="line_1761824213516_191" custom="readingOrder {index:51;}">
+                <Coords points="625,2866 789,2881 813,2863 1074,2861 1129,2879 1149,2861 1218,2886 1219,2814 1066,2842 1030,2814 626,2821"/>
+                <Baseline points="594,2865 1221,2859"/>
+                <TextEquiv>
+                    <Unicode>CONSILIVM III.</Unicode>
+                </TextEquiv>
+            </TextLine>
+            <TextLine id="line_1761824226645_208" custom="readingOrder {index:52;}">
+                <Coords points="423,2944 1405,2928 1377,2892 821,2886 475,2900 424,2933"/>
+                <Baseline points="361,2942 1409,2924"/>
+                <TextEquiv>
+                    <Unicode>1 Stipulatio duplae, an, et quando, et qualiter locum habeat.</Unicode>
+                </TextEquiv>
+            </TextLine>
+            <TextLine id="line_1761824230201_213" custom="readingOrder {index:53;}">
+                <Coords points="412,2998 1445,2986 1415,2939 413,2959"/>
+                <Baseline points="367,2993 1446,2977"/>
+                <TextEquiv>
+                    <Unicode>2 Venditor non tenetur in se suscipere iudicium litis motae empto¬</Unicode>
+                </TextEquiv>
+            </TextLine>
+            <TextLine id="line_1761824233657_218" custom="readingOrder {index:54;}">
+                <Coords points="479,3047 1383,3048 1410,3005 803,2989 479,3016"/>
+                <Baseline points="449,3044 1413,3034"/>
+                <TextEquiv>
+                    <Unicode>ris animo nouandi iudicium. Et etiam de hoc in consilio. 23.</Unicode>
+                </TextEquiv>
+            </TextLine>
+            <TextLine id="line_1761825052908_592" custom="readingOrder {index:55;}">
+                <Coords points="428,3174 1102,3175 1102,3122 1079,3105 781,3120 732,3094 704,3121 567,3092 511,3121 484,3091 428,3102"/>
+                <Baseline points="412,3175 1106,3169"/>
+                <TextEquiv>
+                    <Unicode>In Christi nomine.</Unicode>
+                </TextEquiv>
+            </TextLine>
+            <TextLine id="line_1761825057590_597" custom="readingOrder {index:56;}">
+                <Coords points="1110,3126 1159,3136 1178,3124 1197,3136 1272,3136 1284,3124 1415,3136 1448,3118 1448,3101 1427,3101 1393,3074 1373,3085 1290,3079 1277,3092 1110,3079"/>
+                <Baseline points="1117,3128 1452,3128"/>
+                <TextEquiv>
+                    <Unicode>Titius vendidit. Se¬</Unicode>
+                </TextEquiv>
+            </TextLine>
+            <TextLine id="line_1761825060424_602" custom="readingOrder {index:57;}">
+                <Coords points="1102,3174 1136,3174 1151,3192 1175,3175 1209,3173 1298,3175 1326,3196 1347,3175 1433,3185 1433,3147 1391,3129 1312,3149 1287,3136 1145,3143 1102,3128"/>
+                <Baseline points="1111,3173 1434,3169"/>
+                <TextEquiv>
+                    <Unicode>io pro certo precio</Unicode>
+                </TextEquiv>
+            </TextLine>
+            <TextLine id="line_1761825064215_607" custom="readingOrder {index:58;}">
+                <Coords points="430,3234 1423,3226 1399,3175 650,3174 594,3200 543,3175 430,3204"/>
+                <Baseline points="399,3237 737,3227 1427,3220"/>
+                <TextEquiv>
+                    <Unicode>quoddam praedium, quod promisit dicto emptori defendere, et</Unicode>
+                </TextEquiv>
+            </TextLine>
+            <TextLine id="line_1761825066616_612" custom="readingOrder {index:59;}">
+                <Coords points="430,3286 1429,3274 1361,3226 432,3242"/>
+                <Baseline points="392,3283 1433,3273"/>
+                <TextEquiv>
+                    <Unicode>disbrigare suis propriis expensis, sub pęna dupli: mota prima</Unicode>
+                </TextEquiv>
+            </TextLine>
+            <TextLine id="line_1761825071028_617" custom="readingOrder {index:60;}">
+                <Coords points="435,3339 1433,3318 1398,3274 435,3295"/>
+                <Baseline points="392,3334 870,3320 1434,3317"/>
+                <TextEquiv>
+                    <Unicode>quaestione dicto emptori per quendam creditorem dicti vendi¬</Unicode>
+                </TextEquiv>
+            </TextLine>
+            <TextLine id="line_1761825075812_622" custom="readingOrder {index:61;}">
+                <Coords points="432,3378 1416,3372 1416,3335 432,3346"/>
+                <Baseline points="389,3379 739,3373 1067,3370 1418,3364"/>
+                <TextEquiv>
+                    <Unicode>toris super hypothecaria, dictus venditor per procuratorem</Unicode>
+                </TextEquiv>
+            </TextLine>
+            <TextLine id="line_1761825080260_627" custom="readingOrder {index:62;}">
+                <Coords points="429,3432 1408,3421 1379,3370 429,3383"/>
+                <Baseline points="390,3427 756,3415 1007,3419 1411,3419"/>
+                <TextEquiv>
+                    <Unicode>suum astitit liti: non tamen suscepit iudicium in se. et fuit lata sen¬</Unicode>
+                </TextEquiv>
+            </TextLine>
+            <TextLine id="line_1761825084973_632" custom="readingOrder {index:63;}">
+                <Coords points="429,3472 1417,3472 1417,3422 429,3433"/>
+                <Baseline points="393,3471 796,3464 1117,3463 1421,3463"/>
+                <TextEquiv>
+                    <Unicode>tentia contra emptorem, qua sententia lata dictus venditor cum</Unicode>
+                </TextEquiv>
+            </TextLine>
+            <TextLine id="line_1761825089994_637" custom="readingOrder {index:64;}">
+                <Coords points="426,3520 1415,3522 1405,3470 426,3489"/>
+                <Baseline points="392,3516 853,3509 1131,3515 1418,3512"/>
+                <TextEquiv>
+                    <Unicode>creditore concordauit, vt dictum praedium apud emptorem libere</Unicode>
+                </TextEquiv>
+            </TextLine>
+            <TextLine id="line_1761825094589_642" custom="readingOrder {index:65;}">
+                <Coords points="424,3572 1409,3563 1409,3524 424,3538"/>
+                <Baseline points="390,3562 703,3557 1019,3556 1413,3557"/>
+                <TextEquiv>
+                    <Unicode>remaneret. agit emptor ad poenam dupli ob rem non defensam</Unicode>
+                </TextEquiv>
+            </TextLine>
+            <TextLine id="line_1761825098464_647" custom="readingOrder {index:66;}">
+                <Coords points="426,3620 1410,3612 1399,3562 426,3582"/>
+                <Baseline points="339,3619 817,3610 1082,3610 1413,3612"/>
+                <TextEquiv>
+                    <Unicode>expensis propriis dicti venditoris. † Quaeritur, quid iuris. respon¬</Unicode>
+                </TextEquiv>
+            </TextLine>
+            <TextLine id="line_1761825103327_652" custom="readingOrder {index:67;}">
+                <Coords points="418,3659 1409,3659 1409,3622 418,3631"/>
+                <Baseline points="387,3661 725,3654 940,3651 1411,3659"/>
+                <TextEquiv>
+                    <Unicode>deo, natura stipulationis duplae est haec, quod non committitur</Unicode>
+                </TextEquiv>
+            </TextLine>
+            <TextLine id="line_1761825108553_657" custom="readingOrder {index:68;} work {offset:53; length:13; continued:true;}">
+                <Coords points="423,3710 1404,3708 1384,3659 423,3671"/>
+                <Baseline points="389,3705 754,3706 1087,3708 1408,3708"/>
+                <TextEquiv>
+                    <Unicode>stipulatio, si possessio remanet poenes emptorem: vt ff. de euict.</Unicode>
+                </TextEquiv>
+            </TextLine>
+            <TextLine id="line_1761825114317_662" custom="readingOrder {index:69;} work {offset:0; length:3; continued:true;} work {offset:39; length:21;}">
+                <Coords points="418,3760 1410,3758 1391,3708 418,3711"/>
+                <Baseline points="374,3755 769,3748 999,3748 1251,3751 1414,3747"/>
+                <TextEquiv>
+                    <Unicode>l. habere licere. ad hoc optime facit. ff. de exce. doli. l. fideius¬</Unicode>
+                </TextEquiv>
+            </TextLine>
+            <TextLine id="line_1761825118718_667" custom="readingOrder {index:70;} work {offset:19; length:16;}">
+                <Coords points="413,3819 1415,3809 1391,3751 415,3764"/>
+                <Baseline points="379,3807 682,3802 985,3793 1418,3797"/>
+                <TextEquiv>
+                    <Unicode>sor euictionis. et ff. mand. l. fi. Et ideo duplum precii non potest.</Unicode>
+                </TextEquiv>
+            </TextLine>
+            <TextEquiv>
+                <Unicode>l. si. ff. de condi. ob turpem causam. et leges sunt uulgares. ff. so.&#13;
+ma. l. si uero. §. de uiro. ff. de uer. ob. quicquid astringendae. et&#13;
+hoc dicit illa. l. no. ff. de acquir. haer. l. si seruum. §. non dixit prę¬&#13;
+tor. Item lege cauetur, quod prohibitio facta ad filium non ex¬&#13;
+tenditur ad nepotem. Iste est tex. et glo. singularis in Auth. de&#13;
+resti. fideic. §. manifestum. ad hoc facit. ff. de excusa. tut. l. 2. ubi&#13;
+iurisconsultus dicit, quod ex significatione sumpta a voce non&#13;
+est idem, esse filii, et nepotis, idem no. insti. qui da. tuto. pos. §. fi.&#13;
+Item priuilegium concessum filiis non extenditur ad nepotes: ergo&#13;
+nec odium: vt C. ad treb. I. iubemus. Item eadem ratione extende¬&#13;
+retur. ad pronepotes, et omnes descendentes: vt ff. de postulando.&#13;
+I. 1. in fi. cum. l. sequen. quod falsum est: vt in Auth. de non alie.&#13;
+§. emphyteusim. Preterea filius est prima persona descendens:&#13;
+nepos secunda: pronepos tertia, et c. vt ibi tex. dicit. sed quod pri¬&#13;
+ma persona sit secunda, et econtra, implicat impossibilitatem na¬&#13;
+turae. † Quare de primo ad vltimum cocludendo non videtur neptis&#13;
+significari. sed ego puto in isto statuto. neptem significari, licet&#13;
+.n. statutum de filia faciat mentionem: tamen et de parentibus memi¬&#13;
+nit, quod est verbum generale. vt ff. de in ius voc. l. quinquibus. §. pa¬&#13;
+rentes. et ideo extenditur significatio filiorum per annexionem&#13;
+parentum: vt ff. de iur. et fac. ign. l. regula. §. fi. Item hoc probatur&#13;
+per rationem absurditatis euitandae. pone.n. quod auus paternus&#13;
+dotauit neptem. filia n. dotata non rumpit testamentum: et neptis ex fi¬&#13;
+lio rumpet filio praemortuo: quod est valde absurdum: quia non&#13;
+debet plus concedi vlterioribus, quam prioribus: vt C. de ma. l. si&#13;
+viua matre. vnde de mentali necessitate statuti neptis includi¬&#13;
+tur. Item quia non debet dispositio legis esse imperfecta: vt C.&#13;
+ad silla. l. pen. sed hic aduertendum, quod mulier excluditur&#13;
+quoniamque ratione femineitatis, quia mulier: vt si statutum diceret,&#13;
+quod filia foemina non succedat: et tunc includeret neptem, quod&#13;
+potest esse favore venientium ab intestato. Item fauore haeredum&#13;
+institutorum, vt non infringant testamentum. maior enim fauor debetur&#13;
+testamento, quam legitimis hęredibus: vt no. ff. de lib. et pohu.&#13;
+l. Gallus. §. instituens. sed interdum statutum non excludit filiam&#13;
+simpliciter, sed dotatam filiam. et tunc non excludit filiam indo¬&#13;
+tatam: quia qualitas dotis non inest nepti: nec habet vllam pro¬&#13;
+uidentiam ab auo, qua possit dici succedere loco legitimae. et&#13;
+ideo secundum ea, quę proponuntur, dicta neptis habet ius rumpen¬&#13;
+di. dicet aliquis, ista neptis succedit in dote materna: ergo est&#13;
+dotata etiam inuita matre: quia filiafami. non potest testari, et&#13;
+excludere filiam suam. ita secundum Bart. ista neptis debet im¬&#13;
+putare sibi istam dotem in sua legitima deducenda de bonis aui:&#13;
+6 vt ipse no. ff. ad l. fal. l. in quarta. † quia certe hoc non prouenit&#13;
+iudicio aui: sed casu fortuito: vt ff. de l. 3. sed si sic. et ideo pro&#13;
+dicta nepte concludo, quod quia pręterita, potest rumpere testamentum.&#13;
+licet Bar. in quodam loco dicat, quod in linea materna non requiritur,&#13;
+quod relinquatur iure institutionis: vt sic iura codicis in linea&#13;
+materna remaneant incorrecta: quia mater non dicitur propriae prae¬&#13;
+terire: vt insti. de inoffi. te. §. mater. Sed contrarium est verius per §.&#13;
+aliud quinque capitulum. in Auth. vt cum de appe. cogno. quia modo&#13;
+etiam hodie dicitur pręterire: et redditur testamentum nullum. Ego Bal.&#13;
+CONSILIVM III.&#13;
+1 Stipulatio duplae, an, et quando, et qualiter locum habeat.&#13;
+2 Venditor non tenetur in se suscipere iudicium litis motae empto¬&#13;
+ris animo nouandi iudicium. Et etiam de hoc in consilio. 23.&#13;
+In Christi nomine.&#13;
+Titius vendidit. Se¬&#13;
+io pro certo precio&#13;
+quoddam praedium, quod promisit dicto emptori defendere, et&#13;
+disbrigare suis propriis expensis, sub pęna dupli: mota prima&#13;
+quaestione dicto emptori per quendam creditorem dicti vendi¬&#13;
+toris super hypothecaria, dictus venditor per procuratorem&#13;
+suum astitit liti: non tamen suscepit iudicium in se. et fuit lata sen¬&#13;
+tentia contra emptorem, qua sententia lata dictus venditor cum&#13;
+creditore concordauit, vt dictum praedium apud emptorem libere&#13;
+remaneret. agit emptor ad poenam dupli ob rem non defensam&#13;
+expensis propriis dicti venditoris. † Quaeritur, quid iuris. respon¬&#13;
+deo, natura stipulationis duplae est haec, quod non committitur&#13;
+stipulatio, si possessio remanet poenes emptorem: vt ff. de euict.&#13;
+l. habere licere. ad hoc optime facit. ff. de exce. doli. l. fideius¬&#13;
+sor euictionis. et ff. mand. l. fi. Et ideo duplum precii non potest.</Unicode>
+            </TextEquiv>
+        </TextRegion>
+        <TextRegion id="region_1761824991747_586" custom="readingOrder {index:2;} structure {type:column_2;}">
+            <Coords points="1587,294 2717,301 2621,3933 1443,3898"/>
+            <TextLine id="line_1761825127994_673" custom="readingOrder {index:0;}">
+                <Coords points="1607,388 2627,368 2628,301 1607,319"/>
+                <Baseline points="1616,368 2685,362"/>
+                <TextEquiv>
+                    <Unicode>peti virtute dictę stipulationis relatę ad rem ipsam venditam. Sed</Unicode>
+                </TextEquiv>
+            </TextLine>
+            <TextLine id="line_1761825130114_678" custom="readingOrder {index:1;}">
+                <Coords points="1616,419 2635,419 2636,369 1617,385"/>
+                <Baseline points="1623,408 2680,409"/>
+                <TextEquiv>
+                    <Unicode>certe nec pro sumptus non subministratos committitur stipulatio</Unicode>
+                </TextEquiv>
+            </TextLine>
+            <TextLine id="line_1761825133233_683" custom="readingOrder {index:2;} work {offset:48; length:16;}">
+                <Coords points="1611,472 2629,467 2629,415 1611,423"/>
+                <Baseline points="1618,457 2685,458"/>
+                <TextEquiv>
+                    <Unicode>duplę respectu totius rei: vt legitur, et nota. ff. de procu. l. qui ab¬</Unicode>
+                </TextEquiv>
+            </TextLine>
+            <TextLine id="line_1761825135719_688" custom="readingOrder {index:3;} work {offset:11; length:25;}">
+                <Coords points="1607,516 2627,516 2627,484 2543,466 1607,474"/>
+                <Baseline points="1616,508 2674,510"/>
+                <TextEquiv>
+                    <Unicode>sentem. et C. de euic. l. 1. id. n. iniquum esset, si res magni valoris,</Unicode>
+                </TextEquiv>
+            </TextLine>
+            <TextLine id="line_1761825138079_693" custom="readingOrder {index:4;}">
+                <Coords points="1611,579 2633,563 2602,516 2419,508 1611,529"/>
+                <Baseline points="1618,562 2678,561"/>
+                <TextEquiv>
+                    <Unicode>puta, mille, est vendita, et expensae, sunt 10. quod venditor te¬</Unicode>
+                </TextEquiv>
+            </TextLine>
+            <TextLine id="line_1761825141224_698" custom="readingOrder {index:5;} work {offset:30; length:41;}">
+                <Coords points="1603,610 2622,608 2622,561 1603,566"/>
+                <Baseline points="1610,610 2677,607"/>
+                <TextEquiv>
+                    <Unicode>neretur in duobus milibus: vt ff. de sen. quae pro eo. l. vnica. §. fi.</Unicode>
+                </TextEquiv>
+            </TextLine>
+            <TextLine id="line_1761825144166_703" custom="readingOrder {index:6;}">
+                <Coords points="1597,654 2628,656 2616,607 1597,628"/>
+                <Baseline points="1605,647 2676,654"/>
+                <TextEquiv>
+                    <Unicode>item iste venditor considerato fine defendisse, et disbrigasse. videtur</Unicode>
+                </TextEquiv>
+            </TextLine>
+            <TextLine id="line_1761825146756_708" custom="readingOrder {index:7;} work {offset:61; length:3; continued:true;}">
+                <Coords points="1605,707 2505,719 2614,704 2615,667 1606,657"/>
+                <Baseline points="1612,704 2667,704"/>
+                <TextEquiv>
+                    <Unicode>Et ideo propter solas expensas non committitur stipulatio duplę: ar.</Unicode>
+                </TextEquiv>
+            </TextLine>
+            <TextLine id="line_1761825151286_713" custom="readingOrder {index:8;} work {offset:0; length:47; continued:true;}">
+                <Coords points="1597,754 2624,754 2603,707 1597,708"/>
+                <Baseline points="1604,749 2674,748"/>
+                <TextEquiv>
+                    <Unicode>ff. de lib. leg. l. petitor. item licet. expen. possint peti nomine interesse</Unicode>
+                </TextEquiv>
+            </TextLine>
+            <TextLine id="line_1761825154530_718" custom="readingOrder {index:9;}">
+                <Coords points="1597,802 2623,803 2565,756 1597,765"/>
+                <Baseline points="1604,801 2667,804"/>
+                <TextEquiv>
+                    <Unicode>non potest tamen ad duplum agi: quia hoc non est de natura contractus,</Unicode>
+                </TextEquiv>
+            </TextLine>
+            <TextLine id="line_1761825157493_723" custom="readingOrder {index:10;}">
+                <Coords points="1594,854 2618,854 2611,806 1594,815"/>
+                <Baseline points="1601,848 2683,854"/>
+                <TextEquiv>
+                    <Unicode>nec etiam de mente contrahentium. nam stipulatio duplę concepta est</Unicode>
+                </TextEquiv>
+            </TextLine>
+            <TextLine id="line_1761825160333_728" custom="readingOrder {index:11;}">
+                <Coords points="1597,899 2612,901 2612,866 2478,849 1597,856"/>
+                <Baseline points="1605,896 2672,902"/>
+                <TextEquiv>
+                    <Unicode>sub conditione, si res non defendatur. Sed hic res etiam defensa: quia</Unicode>
+                </TextEquiv>
+            </TextLine>
+            <TextLine id="line_1761825162927_733" custom="readingOrder {index:12;} work {offset:28; length:39;}">
+                <Coords points="1587,949 2616,948 2616,914 2557,899 1587,907"/>
+                <Baseline points="1595,945 2665,947"/>
+                <TextEquiv>
+                    <Unicode>hypotecaria est sublata: vt ff. de pig. l. si fundus. §. si pluris. plus</Unicode>
+                </TextEquiv>
+            </TextLine>
+            <TextLine id="line_1761825165982_738" custom="readingOrder {index:13;}">
+                <Coords points="1586,997 2618,993 2593,946 1586,969"/>
+                <Baseline points="1593,996 2668,996"/>
+                <TextEquiv>
+                    <Unicode>dico, quod si venditor noluisset ad defensionem comparere, tamen id est</Unicode>
+                </TextEquiv>
+            </TextLine>
+            <TextLine id="line_1761825169662_743" custom="readingOrder {index:14;}">
+                <Coords points="1587,1050 2614,1050 2614,1002 2576,999 1587,996"/>
+                <Baseline points="1595,1040 2670,1043"/>
+                <TextEquiv>
+                    <Unicode>liberasset emptori, soluendo, et satisfaciendo creditori: quia</Unicode>
+                </TextEquiv>
+            </TextLine>
+            <TextLine id="line_1761825172305_748" custom="readingOrder {index:15;}">
+                <Coords points="1584,1095 2616,1092 2574,1043 1584,1058"/>
+                <Baseline points="1591,1092 2684,1088"/>
+                <TextEquiv>
+                    <Unicode>non interesset emptoris nisi ratione expensarum litis, non commit¬</Unicode>
+                </TextEquiv>
+            </TextLine>
+            <TextLine id="line_1761825175124_753" custom="readingOrder {index:16;} work {offset:35; length:29;}">
+                <Coords points="1586,1138 2608,1138 2574,1092 1586,1103"/>
+                <Baseline points="1593,1138 2664,1136"/>
+                <TextEquiv>
+                    <Unicode>teret stipulatio nisi in expensis: iuxta no. ff. de verb. ob. l. stipu¬</Unicode>
+                </TextEquiv>
+            </TextLine>
+            <TextLine id="line_1761825178382_758" custom="readingOrder {index:17;} work {offset:34; length:18;} work {offset:70; length:2; continued:true;}">
+                <Coords points="1584,1189 2608,1189 2595,1142 1584,1142"/>
+                <Baseline points="1591,1186 2661,1190"/>
+                <TextEquiv>
+                    <Unicode>latio ista, et in simili materia. ff. de iureiu. l. nam et postea. et l.</Unicode>
+                </TextEquiv>
+            </TextLine>
+            <TextLine id="line_1761825181149_763" custom="readingOrder {index:18;} work {offset:0; length:22; continued:true;}">
+                <Coords points="1578,1235 1780,1261 2611,1237 2576,1191 1578,1203"/>
+                <Baseline points="1585,1231 2659,1234"/>
+                <TextEquiv>
+                    <Unicode>alias, in magna gl. Ex quibus apparet, quod stipulatio duplae</Unicode>
+                </TextEquiv>
+            </TextLine>
+            <TextLine id="line_1761825183989_768" custom="readingOrder {index:19;}">
+                <Coords points="1576,1286 2615,1280 2592,1240 1576,1254"/>
+                <Baseline points="1584,1285 2653,1286"/>
+                <TextEquiv>
+                    <Unicode>non committitur, nisi re principali euicta, ita quod exacta: quia ca¬</Unicode>
+                </TextEquiv>
+            </TextLine>
+            <TextLine id="line_1761825186910_773" custom="readingOrder {index:20;} work {offset:13; length:6;}">
+                <Coords points="1578,1336 2605,1332 2568,1284 1578,1289"/>
+                <Baseline points="1586,1329 2659,1330"/>
+                <TextEquiv>
+                    <Unicode>sus, est, in d. l. habere licere. Item nemo dubitat, quod dolo fa¬</Unicode>
+                </TextEquiv>
+            </TextLine>
+            <TextLine id="line_1761825189509_778" custom="readingOrder {index:21;} work {offset:47; length:16; continued:true;}">
+                <Coords points="1578,1384 2592,1387 2592,1339 1578,1352"/>
+                <Baseline points="1586,1379 2644,1379"/>
+                <TextEquiv>
+                    <Unicode>cit emptor, qui rem habet, et duplum petit: vt ff. de conditio.</Unicode>
+                </TextEquiv>
+            </TextLine>
+            <TextLine id="line_1761825192519_783" custom="readingOrder {index:22;} work {offset:0; length:25; continued:true;}">
+                <Coords points="1576,1433 2602,1429 2581,1387 2457,1381 1576,1391"/>
+                <Baseline points="1584,1429 2650,1426"/>
+                <TextEquiv>
+                    <Unicode>sine causa. l. si fullo. amplius tractare hic, an venditor debeat in</Unicode>
+                </TextEquiv>
+            </TextLine>
+            <TextLine id="line_1761825199630_788" custom="readingOrder {index:23;}">
+                <Coords points="1574,1481 2599,1485 2599,1431 1574,1444"/>
+                <Baseline points="1581,1475 2654,1476"/>
+                <TextEquiv>
+                    <Unicode>se suscipere iudicium animo nouandi, necne, non est expediens</Unicode>
+                </TextEquiv>
+            </TextLine>
+            <TextLine id="line_1761825202230_793" custom="readingOrder {index:24;}">
+                <Coords points="1574,1526 2598,1538 2585,1483 1574,1500"/>
+                <Baseline points="1581,1526 2645,1522"/>
+                <TextEquiv>
+                    <Unicode>quantum ad propositum: sed veritas est; quod non tenetur, nec</Unicode>
+                </TextEquiv>
+            </TextLine>
+            <TextLine id="line_1761825204718_798" custom="readingOrder {index:25;} work {offset:25; length:42;}">
+                <Coords points="1573,1595 2598,1575 2568,1528 1573,1544"/>
+                <Baseline points="1580,1574 2649,1578"/>
+                <TextEquiv>
+                    <Unicode>potest inuito actore: vt no. ff. de sol. l. solutionem. et iudicium, ni¬</Unicode>
+                </TextEquiv>
+            </TextLine>
+            <TextLine id="line_1761825207289_803" custom="readingOrder {index:26;}">
+                <Coords points="1569,1621 2603,1625 2592,1575 1569,1595"/>
+                <Baseline points="1578,1621 2650,1622"/>
+                <TextEquiv>
+                    <Unicode>si cum ex persona sua habeat excipiendi: quia tunc actor tenetur</Unicode>
+                </TextEquiv>
+            </TextLine>
+            <TextLine id="line_1761825210045_808" custom="readingOrder {index:27;}">
+                <Coords points="1569,1670 2587,1672 2587,1626 1569,1636"/>
+                <Baseline points="1578,1668 2646,1672"/>
+                <TextEquiv>
+                    <Unicode>ipsum recipere quantum ad hunc effectum, vt possit excipere: vt</Unicode>
+                </TextEquiv>
+            </TextLine>
+            <TextLine id="line_1761825212753_813" custom="readingOrder {index:28;} work {offset:0; length:41;}">
+                <Coords points="1566,1720 2592,1720 2565,1677 1566,1679"/>
+                <Baseline points="1573,1719 2641,1716"/>
+                <TextEquiv>
+                    <Unicode>ff. de peti. haere. in l. sed si lege. §. sed si res distraxerit. loquor in</Unicode>
+                </TextEquiv>
+            </TextLine>
+            <TextLine id="line_1761825215780_818" custom="readingOrder {index:29;} work {offset:56; length:6; continued:true;}">
+                <Coords points="1567,1768 2598,1769 2572,1720 1567,1737"/>
+                <Baseline points="1575,1767 2637,1766"/>
+                <TextEquiv>
+                    <Unicode>exceptione peremptoria, non in declinatoria iudicii: vt ff. de</Unicode>
+                </TextEquiv>
+            </TextLine>
+            <TextLine id="line_1761825217974_823" custom="readingOrder {index:30;} work {offset:0; length:17; continued:true;} work {offset:47; length:26; continued:true;}">
+                <Coords points="1563,1822 2590,1821 2581,1769 1563,1782"/>
+                <Baseline points="1571,1816 2637,1811"/>
+                <TextEquiv>
+                    <Unicode>iud. l. venditor. et ita debet intelligi, quod no. ff. de neg. ge. l. li¬</Unicode>
+                </TextEquiv>
+            </TextLine>
+            <TextLine id="line_1761825220770_828" custom="readingOrder {index:31;} work {offset:0; length:28; continued:true;} work {offset:47; length:26;}">
+                <Coords points="1565,1872 2590,1863 2590,1824 1565,1826"/>
+                <Baseline points="1572,1864 2630,1868"/>
+                <TextEquiv>
+                    <Unicode>berto. §. fi. ff. de pac. l. si cum fundum. et C. vbi in rem actio. l. 1.</Unicode>
+                </TextEquiv>
+            </TextLine>
+            <TextLine id="line_1761825226825_833" custom="readingOrder {index:32;}">
+                <Coords points="1557,1917 2583,1915 2572,1866 1557,1877"/>
+                <Baseline points="1525,1910 2632,1913"/>
+                <TextEquiv>
+                    <Unicode>† † ex hoc apparet, quod non tenetur venditor. suscipere iudicium</Unicode>
+                </TextEquiv>
+            </TextLine>
+            <TextLine id="line_1761825229580_838" custom="readingOrder {index:33;}">
+                <Coords points="1559,1969 2578,1961 2578,1914 1559,1935"/>
+                <Baseline points="1567,1961 2639,1958"/>
+                <TextEquiv>
+                    <Unicode>animo nouandi, quia non potest, quia actor non consentit. et si</Unicode>
+                </TextEquiv>
+            </TextLine>
+            <TextLine id="line_1761825232140_843" custom="readingOrder {index:34;}">
+                <Coords points="1557,2030 2583,2009 2542,1959 1557,1977"/>
+                <Baseline points="1566,2011 2634,2009"/>
+                <TextEquiv>
+                    <Unicode>posset, adhuc non tenetur: sed satis est, quod assistat liti, et fa¬</Unicode>
+                </TextEquiv>
+            </TextLine>
+            <TextLine id="line_1761825234603_848" custom="readingOrder {index:35;} work {offset:25; length:46;}">
+                <Coords points="1562,2060 2573,2062 2562,2009 1562,2030"/>
+                <Baseline points="1569,2056 2620,2054"/>
+                <TextEquiv>
+                    <Unicode>ciat sumptus in lite: vt ff. de euict. l. si plus. §. mota. et l. 1. C.</Unicode>
+                </TextEquiv>
+            </TextLine>
+            <TextLine id="line_1761825237425_853" custom="readingOrder {index:36;}">
+                <Coords points="1556,2103 2574,2108 2574,2061 1556,2071"/>
+                <Baseline points="1563,2103 2626,2107"/>
+                <TextEquiv>
+                    <Unicode>vbi rei actio. et ita in pluribus locis notaui in lecturis meis tam</Unicode>
+                </TextEquiv>
+            </TextLine>
+            <TextLine id="line_1761825240355_858" custom="readingOrder {index:37;} work {offset:35; length:36;}">
+                <Coords points="1552,2160 2583,2156 2543,2109 1552,2119"/>
+                <Baseline points="1559,2157 2627,2157"/>
+                <TextEquiv>
+                    <Unicode>antiquis, quam modernis. et facit. ff. de euic. l. si rem. §. quolibet. et</Unicode>
+                </TextEquiv>
+            </TextLine>
+            <TextLine id="line_1761825243278_863" custom="readingOrder {index:38;} work {offset:5; length:51;}">
+                <Coords points="1548,2204 2579,2208 2579,2160 1548,2172"/>
+                <Baseline points="1555,2202 2627,2203"/>
+                <TextEquiv>
+                    <Unicode>quod no. ff. de ver. ob. l. venditores. et ff. depon. l. si actor malit. Con¬</Unicode>
+                </TextEquiv>
+            </TextLine>
+            <TextLine id="line_1761825245528_868" custom="readingOrder {index:39;}">
+                <Coords points="1542,2253 2579,2253 2524,2205 1542,2229"/>
+                <Baseline points="1549,2252 2621,2254"/>
+                <TextEquiv>
+                    <Unicode>sidera etiam, quod si teneretur iudicium animo nouandi in se transfer¬</Unicode>
+                </TextEquiv>
+            </TextLine>
+            <TextLine id="line_1761825249162_873" custom="readingOrder {index:40;}">
+                <Coords points="1544,2304 2573,2304 2547,2253 1544,2276"/>
+                <Baseline points="1552,2302 2624,2300"/>
+                <TextEquiv>
+                    <Unicode>re, cogeretur litem contestari: quod nullo iure cauetur. antecedens</Unicode>
+                </TextEquiv>
+            </TextLine>
+            <TextLine id="line_1761825252498_878" custom="readingOrder {index:41;} work {offset:9; length:70;}">
+                <Coords points="1544,2366 2572,2356 2572,2319 2508,2299 1544,2315"/>
+                <Baseline points="1552,2347 2624,2349"/>
+                <TextEquiv>
+                    <Unicode>probatur per. l. in iudicio. ff. fa. et c. et facit. ff. de procu. l. licet. §. ea</Unicode>
+                </TextEquiv>
+            </TextLine>
+            <TextLine id="line_1761825255392_883" custom="readingOrder {index:42;}">
+                <Coords points="1543,2404 2574,2412 2547,2358 1543,2366"/>
+                <Baseline points="1550,2399 2617,2400"/>
+                <TextEquiv>
+                    <Unicode>obligatio. et quia non habet ius declinandi forum, ideo non com¬</Unicode>
+                </TextEquiv>
+            </TextLine>
+            <TextLine id="line_1761825258101_888" custom="readingOrder {index:43;}">
+                <Coords points="1540,2460 2565,2462 2540,2407 2403,2401 1540,2419"/>
+                <Baseline points="1549,2445 2617,2444"/>
+                <TextEquiv>
+                    <Unicode>paret nomine proprio tantum, sed nomine emptoris: licet pro pro¬</Unicode>
+                </TextEquiv>
+            </TextLine>
+            <TextLine id="line_1761825261019_893" custom="readingOrder {index:44;} work {offset:19; length:42;}">
+                <Coords points="1542,2513 2567,2501 2567,2465 2477,2449 2369,2445 2319,2483 2271,2450 1542,2465"/>
+                <Baseline points="1549,2496 2605,2493"/>
+                <TextEquiv>
+                    <Unicode>prio interesse: vt l. 2. §. sed si alius. ff. quando ap. sit. Ego Baldus.</Unicode>
+                </TextEquiv>
+            </TextLine>
+            <TextLine id="line_1761825266838_898" custom="readingOrder {index:45;}">
+                <Coords points="1687,2572 2356,2583 2356,2555 2307,2523 1771,2523 1687,2548"/>
+                <Baseline points="1695,2571 2359,2567"/>
+                <TextEquiv>
+                    <Unicode>CONSILIVM IIII.</Unicode>
+                </TextEquiv>
+            </TextLine>
+            <TextLine id="line_1761825269689_903" custom="readingOrder {index:46;}">
+                <Coords points="1498,2649 2552,2646 2552,2601 1599,2590 1544,2630 1498,2604"/>
+                <Baseline points="1505,2641 2604,2647"/>
+                <TextEquiv>
+                    <Unicode>1 Fideiussores renunciando omnibus beneficiis, an intelligantur</Unicode>
+                </TextEquiv>
+            </TextLine>
+            <TextLine id="line_1761825272366_908" custom="readingOrder {index:47;}">
+                <Coords points="1576,2696 2545,2691 2545,2654 1576,2655"/>
+                <Baseline points="1584,2695 2600,2690"/>
+                <TextEquiv>
+                    <Unicode>renunciare beneficio epistolae diui Adriani: Et quid operetur</Unicode>
+                </TextEquiv>
+            </TextLine>
+            <TextLine id="line_1761825275515_913" custom="readingOrder {index:48;}">
+                <Coords points="1568,2750 2553,2740 2536,2691 1569,2712"/>
+                <Baseline points="1576,2741 2608,2728"/>
+                <TextEquiv>
+                    <Unicode>renunciatio generalis beneficiorum sibi competentium, vel</Unicode>
+                </TextEquiv>
+            </TextLine>
+            <TextLine id="line_1761825277895_918" custom="readingOrder {index:49;}">
+                <Coords points="1567,2790 1707,2802 1812,2791 1835,2811 1871,2791 2024,2792 2024,2767 1954,2741 1767,2761 1593,2743 1567,2760"/>
+                <Baseline points="1575,2788 2027,2793"/>
+                <TextEquiv>
+                    <Unicode>in contrarium operantium.</Unicode>
+                </TextEquiv>
+            </TextLine>
+            <TextLine id="line_1761825280469_923" custom="readingOrder {index:50;}">
+                <Coords points="1479,2847 2552,2840 2552,2800 1479,2807"/>
+                <Baseline points="1487,2844 2596,2835"/>
+                <TextEquiv>
+                    <Unicode>2 Clausulae speciales practicantur, vt intelligatur, quod clausu¬</Unicode>
+                </TextEquiv>
+            </TextLine>
+            <TextLine id="line_1761825282773_928" custom="readingOrder {index:51;}">
+                <Coords points="1561,2896 1831,2892 1853,2908 1898,2891 2018,2891 2018,2853 1934,2842 1852,2855 1736,2842 1717,2860 1597,2843 1561,2853"/>
+                <Baseline points="1568,2895 2020,2890"/>
+                <TextEquiv>
+                    <Unicode>lae generales non sufficiant.</Unicode>
+                </TextEquiv>
+            </TextLine>
+            <TextLine id="line_1761825285221_933" custom="readingOrder {index:52;}">
+                <Coords points="1472,2956 2554,2938 2528,2882 1472,2902"/>
+                <Baseline points="1479,2932 2591,2935"/>
+                <TextEquiv>
+                    <Unicode>3 Breuiloqua renunciatio generalis tantum valet de rigore iu¬</Unicode>
+                </TextEquiv>
+            </TextLine>
+            <TextLine id="line_1761825287568_938" custom="readingOrder {index:53;}">
+                <Coords points="1557,2992 1638,3008 1679,2990 2132,2987 2132,2958 2097,2931 2062,2950 1987,2938 1951,2955 1906,2938 1872,2953 1559,2950"/>
+                <Baseline points="1565,2992 2161,2985"/>
+                <TextEquiv>
+                    <Unicode>ris, quantum renunciatio specialis.</Unicode>
+                </TextEquiv>
+            </TextLine>
+            <TextLine id="line_1761825291836_943" custom="readingOrder {index:54;}">
+                <Coords points="1503,3120 2203,3124 2203,3090 2134,3054 1928,3070 1845,3042 1692,3090 1643,3043 1503,3097"/>
+                <Baseline points="1475,3082 1499,3084 1519,3121 2205,3124"/>
+                <TextEquiv>
+                    <Unicode>1 In Christi nomine.</Unicode>
+                </TextEquiv>
+            </TextLine>
+            <TextLine id="line_1763553699810_78" custom="readingOrder {index:55;}">
+                <Coords points="2225,3029 2241,3040 2321,3047 2342,3023 2359,3042 2540,3038 2540,3080 2336,3079 2299,3097 2262,3097 2236,3076 2225,3078"/>
+                <Baseline points="2207,3079 2594,3076"/>
+                <TextEquiv>
+                    <Unicode>† Quaeritur, vtrum</Unicode>
+                </TextEquiv>
+            </TextLine>
+            <TextLine id="line_1761825296425_953" custom="readingOrder {index:56;}">
+                <Coords points="2195,3129 2217,3138 2394,3126 2414,3136 2425,3126 2440,3141 2470,3124 2555,3124 2555,3100 2486,3079 2414,3097 2345,3081 2282,3100 2233,3080 2195,3092"/>
+                <Baseline points="2227,3124 2583,3120"/>
+                <TextEquiv>
+                    <Unicode>fideiussores, qui re¬</Unicode>
+                </TextEquiv>
+            </TextLine>
+            <TextLine id="line_1761825299239_958" custom="readingOrder {index:57;}">
+                <Coords points="1499,3184 2546,3173 2546,3138 1499,3159"/>
+                <Baseline points="1508,3183 2593,3174"/>
+                <TextEquiv>
+                    <Unicode>nunciauerunt generaliter omnibus beneficiis, possint oppone¬</Unicode>
+                </TextEquiv>
+            </TextLine>
+            <TextLine id="line_1761825302162_963" custom="readingOrder {index:58;}">
+                <Coords points="1504,3234 2535,3225 2495,3174 1504,3207"/>
+                <Baseline points="1511,3226 2584,3217"/>
+                <TextEquiv>
+                    <Unicode>re beneficium epistolae diui Adriani. Item quaeritur, nunquid plu¬</Unicode>
+                </TextEquiv>
+            </TextLine>
+            <TextLine id="line_1761825305861_968" custom="readingOrder {index:59;}">
+                <Coords points="1504,3284 2538,3270 2483,3225 1505,3248"/>
+                <Baseline points="1511,3283 2575,3264"/>
+                <TextEquiv>
+                    <Unicode>res debendi rei insolidum renunciando generaliter omnibus be¬</Unicode>
+                </TextEquiv>
+            </TextLine>
+            <TextLine id="line_1761825309292_973" custom="readingOrder {index:60;}">
+                <Coords points="1497,3328 2533,3325 2533,3269 1497,3285"/>
+                <Baseline points="1504,3327 2577,3315"/>
+                <TextEquiv>
+                    <Unicode>neficiis, et non expresso specialiter aliquo beneficio, intelligan¬</Unicode>
+                </TextEquiv>
+            </TextLine>
+            <TextLine id="line_1761825311674_978" custom="readingOrder {index:61;}">
+                <Coords points="1503,3377 2528,3365 2516,3325 2382,3318 1503,3335"/>
+                <Baseline points="1510,3375 2572,3363"/>
+                <TextEquiv>
+                    <Unicode>tur renunciasse beneficio nouae constitutionis de duobus reis:</Unicode>
+                </TextEquiv>
+            </TextLine>
+            <TextLine id="line_1761825314204_983" custom="readingOrder {index:62;}">
+                <Coords points="1504,3421 2543,3411 2509,3377 2302,3365 1504,3377"/>
+                <Baseline points="1511,3419 2579,3411"/>
+                <TextEquiv>
+                    <Unicode>et beneficio cedendarum actionum. et videtur, quod dicta renun¬</Unicode>
+                </TextEquiv>
+            </TextLine>
+            <TextLine id="line_1761825316994_988" custom="readingOrder {index:63;} work {offset:39; length:21;}">
+                <Coords points="1497,3472 2404,3477 2515,3462 2516,3414 1497,3437"/>
+                <Baseline points="1504,3470 2576,3458"/>
+                <TextEquiv>
+                    <Unicode>ciatio ita generalissima non valet: vt l. sed et si quis. §. quęsitum.</Unicode>
+                </TextEquiv>
+            </TextLine>
+            <TextLine id="line_1761825319397_993" custom="readingOrder {index:64;} work {offset:0; length:16;}">
+                <Coords points="1484,3515 2533,3515 2460,3464 1484,3494"/>
+                <Baseline points="1491,3515 2582,3507"/>
+                <TextEquiv>
+                    <Unicode>ff. si quis cau. In contrarium videtur, quia tantum operatur genus, quo ad ge¬</Unicode>
+                </TextEquiv>
+            </TextLine>
+            <TextLine id="line_1761825321611_998" custom="readingOrder {index:65;} work {offset:50; length:17; continued:true;}">
+                <Coords points="1497,3573 2543,3556 2496,3514 1497,3535"/>
+                <Baseline points="1504,3572 2571,3556"/>
+                <TextEquiv>
+                    <Unicode>nus, quantum operatur species, quo ad speciem: vt l. si duo. ff. de</Unicode>
+                </TextEquiv>
+            </TextLine>
+            <TextLine id="line_1761825324114_1003" custom="readingOrder {index:66;} work {offset:0; length:12; continued:true;}">
+                <Coords points="1490,3610 2523,3620 2523,3572 1490,3585"/>
+                <Baseline points="1498,3610 2585,3604"/>
+                <TextEquiv>
+                    <Unicode>admini. tut. Item certum est, quod istis beneficiis potest renuncia¬</Unicode>
+                </TextEquiv>
+            </TextLine>
+            <TextLine id="line_1761825326693_1008" custom="readingOrder {index:67;} work {offset:7; length:68;}">
+                <Coords points="1490,3657 2513,3659 2478,3612 1490,3627"/>
+                <Baseline points="1498,3653 2563,3647"/>
+                <TextEquiv>
+                    <Unicode>ri, vt no. in l. pe. et l. nisi. ff. de pac. et in Aut. de fideiu. in prin.</Unicode>
+                </TextEquiv>
+            </TextLine>
+            <TextLine id="line_1761825329479_1013" custom="readingOrder {index:68;}">
+                <Coords points="1487,3709 2520,3708 2496,3654 1487,3669"/>
+                <Baseline points="1494,3708 2571,3705"/>
+                <TextEquiv>
+                    <Unicode>sunt enim beneficia ista satis nota ipsis contrahentibus ab ipso</Unicode>
+                </TextEquiv>
+            </TextLine>
+            <TextLine id="line_1761825334622_1018" custom="readingOrder {index:69;}">
+                <Coords points="1487,3762 2516,3758 2486,3706 1487,3724"/>
+                <Baseline points="1494,3752 2556,3751"/>
+                <TextEquiv>
+                    <Unicode>principio, ita quod bene potuerunt praeuidere. et sic non ob.</Unicode>
+                </TextEquiv>
+            </TextLine>
+            <TextLine id="line_1761825337514_1023" custom="readingOrder {index:70;}">
+                <Coords points="1496,3809 2517,3825 2517,3761 1496,3771"/>
+                <Baseline points="1503,3805 2557,3802"/>
+                <TextEquiv>
+                    <Unicode>dictus. §. quaesitum. quia ibi loquitur in exceptionibus, quae a</Unicode>
+                </TextEquiv>
+            </TextLine>
+            <TextEquiv>
+                <Unicode>peti virtute dictę stipulationis relatę ad rem ipsam venditam. Sed&#13;
+certe nec pro sumptus non subministratos committitur stipulatio&#13;
+duplę respectu totius rei: vt legitur, et nota. ff. de procu. l. qui ab¬&#13;
+sentem. et C. de euic. l. 1. id. n. iniquum esset, si res magni valoris,&#13;
+puta, mille, est vendita, et expensae, sunt 10. quod venditor te¬&#13;
+neretur in duobus milibus: vt ff. de sen. quae pro eo. l. vnica. §. fi.&#13;
+item iste venditor considerato fine defendisse, et disbrigasse. videtur&#13;
+Et ideo propter solas expensas non committitur stipulatio duplę: ar.&#13;
+ff. de lib. leg. l. petitor. item licet. expen. possint peti nomine interesse&#13;
+non potest tamen ad duplum agi: quia hoc non est de natura contractus,&#13;
+nec etiam de mente contrahentium. nam stipulatio duplę concepta est&#13;
+sub conditione, si res non defendatur. Sed hic res etiam defensa: quia&#13;
+hypotecaria est sublata: vt ff. de pig. l. si fundus. §. si pluris. plus&#13;
+dico, quod si venditor noluisset ad defensionem comparere, tamen rem&#13;
+liberasset emptori, soluendo, et satisfaciendo creditori: quia&#13;
+non interesset emptoris nisi ratione expensarum litis, non commit¬&#13;
+teret stipulatio nisi in expensis: iuxta no. ff. de verb. ob. l. stipu¬&#13;
+latio ista, et in simili materia. ff. de iureiu. l. nam et postea. et l.&#13;
+alias, in magna gl. Ex quibus apparet, quod stipulatio duplae&#13;
+non committitur, nisi re principali euicta, ita quod exacta: quia ca¬&#13;
+sus, est, in d. l. habere licere. Item nemo dubitat, quod dolo fa¬&#13;
+cit emptor, qui rem habet, et duplum petit: vt ff. de conditio.&#13;
+sine causa. l. si fullo. amplius tractare hic, an venditor debeat in&#13;
+se suscipere iudicium animo nouandi, necne, non est expediens&#13;
+quantum ad propositum: sed veritas est; quod non tenetur, nec&#13;
+potest inuito actore: vt no. ff. de sol. l. solutionem. et iudicium, ni¬&#13;
+si cum ex persona sua habeat excipiendi: quia tunc actor tenetur&#13;
+ipsum recipere quantum ad hunc effectum, vt possit excipere: vt&#13;
+ff. de peti. haere. in l. sed si lege. §. sed si res distraxerit. loquor in&#13;
+exceptione peremptoria, non in declinatoria iudicii: vt ff. de&#13;
+iud. l. venditor. et ita debet intelligi, quod no. ff. de neg. ge. l. li¬&#13;
+berto. §. fi. ff. de pac. l. si cum fundum. et C. vbi in rem actio. l. 1.&#13;
+† † ex hoc apparet, quod non tenetur venditor. suscipere iudicium&#13;
+animo nouandi, quia non potest, quia actor non consentit. et si&#13;
+posset, adhuc non tenetur: sed satis est, quod assistat liti, et fa¬&#13;
+ciat sumptus in lite: vt ff. de euict. l. si plus. §. mota. et l. 1. C.&#13;
+vbi rei actio. et ita in pluribus locis notaui in lecturis meis tam&#13;
+antiquis, quam modernis. et facit. ff. de euic. l. si rem. §. quolibet. et&#13;
+quod no. ff. de ver. ob. l. venditores. et ff. depon. l. si actor malit. Con¬&#13;
+sidera etiam, quod si teneretur iudicium animo nouandi in se transfer¬&#13;
+re, cogeretur litem contestari: quod nullo iure cauetur. antecedens&#13;
+probatur per. l. in iudicio. ff. fa. et c. et facit. ff. de procu. l. licet. §. ea&#13;
+obligatio. et quia non habet ius declinandi forum, ideo non com¬&#13;
+paret nomine proprio tantum, sed nomine emptoris: licet pro pro¬&#13;
+prio interesse: vt l. 2. §. sed si alius. ff. quando ap. sit. Ego Baldus.&#13;
+CONSILIVM IIII.&#13;
+1 Fideiussores renunciando omnibus beneficiis, an intelligantur&#13;
+renunciare beneficio epistolae diui Adriani: Et quid operetur&#13;
+renunciatio generalis beneficiorum sibi competentium, vel&#13;
+in contrarium operantium.&#13;
+2 Clausulae speciales practicantur, vt intelligatur, quod clausu¬&#13;
+lae generales non sufficiant.&#13;
+3 Breuiloqua renunciatio generalis tantum valet de rigore iu¬&#13;
+ris, quantum renunciatio specialis.&#13;
+1 In Christi nomine.&#13;
+† Quaeritur, vtrum&#13;
+fideiussores, qui re¬&#13;
+nunciauerunt generaliter omnibus beneficiis, possint oppone¬&#13;
+re beneficium epistolae diui Adriani. Item quaeritur, nunquid plu¬&#13;
+res debendi rei insolidum renunciando generaliter omnibus be¬&#13;
+neficiis, et non expresso specialiter aliquo beneficio, intelligan¬&#13;
+tur renunciasse beneficio nouae constitutionis de duobus reis:&#13;
+et beneficio cedendarum actionum. et videtur, quod dicta renun¬&#13;
+ciatio ita generalissima non valet: vt l. sed et si quis. §. quęsitum.&#13;
+ff. si quis cau. In contrarium videtur, quia tantum operatur genus, quo ad ge¬&#13;
+nus, quantum operatur species, quo ad speciem: vt l. si duo. ff. de&#13;
+admini. tut. Item certum est, quod istis beneficiis potest renuncia¬&#13;
+ri, vt no. in l. pe. et l. nisi. ff. de pac. et in Aut. de fideiu. in prin.&#13;
+sunt enim beneficia ista satis nota ipsis contrahentibus ab ipso&#13;
+principio, ita quod bene potuerunt praeuidere. et sic non ob.&#13;
+dictus. §. quaesitum. quia ibi loquitur in exceptionibus, quae a</Unicode>
+            </TextEquiv>
+        </TextRegion>
+    </Page>
+</PcGts>
