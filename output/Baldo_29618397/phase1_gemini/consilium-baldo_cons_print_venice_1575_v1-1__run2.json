@@ -1,0 +1,7 @@
+{
+  "consilium_id": "consilium-baldo_cons_print_venice_1575_v1-1",
+  "run": 2,
+  "status": "cli_error",
+  "model": "gemini-3.1-flash-preview",
+  "error_excerpt": "Warning: True color (24-bit) support not detected. Using a terminal with true color enabled will result in a better visual experience.\nIgnore file not found: /home/micha/github/Consilia/.geminiignore, continue without it.\nKeychain initialization encountered an error: Failed to load keytar native addon, checked [\"../build/Release\",\"../prebuilds/linux-x64\",\"./prebuilds/linux-x64\"] on prebuilds/linux-x64\nUsing FileKeychain fallback for secure storage.\nLoaded cached credentials.\nExperiments loaded {"
+}

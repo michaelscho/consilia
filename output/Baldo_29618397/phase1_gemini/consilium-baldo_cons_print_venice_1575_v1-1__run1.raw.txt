@@ -1,0 +1,597 @@
+Warning: True color (24-bit) support not detected. Using a terminal with true color enabled will result in a better visual experience.
+Ignore file not found: /home/micha/github/Consilia/.geminiignore, continue without it.
+Keychain initialization encountered an error: Failed to load keytar native addon, checked ["../build/Release","../prebuilds/linux-x64","./prebuilds/linux-x64"] on prebuilds/linux-x64
+Using FileKeychain fallback for secure storage.
+Loaded cached credentials.
+Experiments loaded {
+  experimentIds: [
+    106018688,
+    105979538,
+    105979560,
+    106015337,
+    105979579,
+    105867471,
+    105979522,
+    105995634,
+    106121401,
+    106100625,
+    104638466,
+    101868197,
+    104817729,
+    105695344,
+    106064591,
+    104913215,
+    105821930,
+    104922093,
+    103012598,
+    106143956,
+    105856899,
+    102617194,
+    106064030,
+    105746183,
+    105757908,
+    104892493,
+    105723762,
+    105822884,
+    105785684,
+    105721273,
+    105897325,
+    105658071,
+    106240758,
+    105885552,
+    105864343,
+    105943702,
+    106106762,
+    106057393,
+    106106760,
+    105620019,
+    106038160,
+    106281951,
+    106264532,
+    106094629,
+    105887313,
+    105849474,
+    106032303,
+    106228452,
+    106113886,
+    106121607,
+    105979531,
+    105979553,
+    106015328,
+    105867469,
+    105979517,
+    106121399,
+    106100654,
+    104638459,
+    101551624,
+    104673683,
+    105695346,
+    106064590,
+    104913210,
+    105821928,
+    104922082,
+    103012592,
+    102519585,
+    106064028,
+    105746181,
+    104892490,
+    105011762,
+    105822881,
+    105721268,
+    105895316,
+    105658068,
+    106240748,
+    105885549,
+    105863625,
+    105943694,
+    106057389,
+    105620012,
+    106038153,
+    105887311,
+    106032301,
+    106113877,
+    106121604,
+    106018685
+  ],
+  flags: [
+    {
+      flagId: '45740196',
+      boolValue: true
+    },
+    {
+      flagId: '45740197',
+      floatValue: 0.7
+    },
+    {
+      flagId: '45740199',
+      stringValue: ''
+    },
+    {
+      flagId: '45740200',
+      stringValue: 'Gemini CLI is transitioning to the new Antigravity CLI for Google One and unpaid tier (Gemini Code Assist for individuals) users.\n' +
+        "What's Changing: We are unifying our tools into a single, multi-agent platform called Antigravity, with Antigravity CLI now available. Gemini CLI will stop serving requests for Google One and unpaid tiers starting June 18th. Please migrate to Antigravity CLI before this date to avoid disruption to your workflow.\n" +
+        'To learn more visit: https://goo.gle/gemini-cli-migration'
+    },
+    {
+      flagId: '45743869',
+      boolValue: true
+    },
+    {
+      flagId: '45750526',
+      boolValue: true
+    },
+    {
+      flagId: '45750527',
+      intValue: '95'
+    },
+    {
+      flagId: '45752213',
+      boolValue: true
+    },
+    {
+      flagId: '45760185',
+      boolValue: true
+    },
+    {
+      flagId: '45761848',
+      boolValue: true
+    },
+    {
+      flagId: '45771641',
+      boolValue: true
+    },
+    {
+      flagId: '45773036',
+      stringValue: ''
+    },
+    {
+      flagId: '45773134',
+      intValue: '300'
+    },
+    {
+      flagId: '45773135',
+      intValue: '600'
+    },
+    {
+      flagId: '45773187',
+      stringValue: ''
+    },
+    {
+      flagId: '45773188',
+      boolValue: false
+    },
+    {
+      flagId: '45773189',
+      intValue: '30'
+    },
+    {
+      flagId: '45773190',
+      intValue: '15'
+    },
+    {
+      flagId: '45774515',
+      intValue: '10'
+    },
+    {
+      flagId: '45784352',
+      boolValue: true
+    }
+  ]
+}
+Current heap size 7968.00 MB
+Ignore file not found: /home/micha/github/Consilia/.geminiignore, continue without it.
+Experiments loaded {
+  experimentIds: [
+    106018688,
+    105979538,
+    105979560,
+    106015337,
+    105979579,
+    105867471,
+    105979522,
+    105995634,
+    106121401,
+    106100625,
+    104638466,
+    101868197,
+    104817729,
+    105695344,
+    106064591,
+    104913215,
+    105821930,
+    104922093,
+    103012598,
+    106143956,
+    105856899,
+    102617194,
+    106064030,
+    105746183,
+    105757908,
+    104892493,
+    105723762,
+    105822884,
+    105785684,
+    105721273,
+    105897325,
+    105658071,
+    106240758,
+    105885552,
+    105864343,
+    105943702,
+    106106762,
+    106057393,
+    106106760,
+    105620019,
+    106038160,
+    106281951,
+    106264532,
+    106094629,
+    105887313,
+    105849474,
+    106032303,
+    106228452,
+    106113886,
+    106121607,
+    105979531,
+    105979553,
+    106015328,
+    105867469,
+    105979517,
+    106121399,
+    106100654,
+    104638459,
+    101551624,
+    104673683,
+    105695346,
+    106064590,
+    104913210,
+    105821928,
+    104922082,
+    103012592,
+    102519585,
+    106064028,
+    105746181,
+    104892490,
+    105011762,
+    105822881,
+    105721268,
+    105895316,
+    105658068,
+    106240748,
+    105885549,
+    105863625,
+    105943694,
+    106057389,
+    105620012,
+    106038153,
+    105887311,
+    106032301,
+    106113877,
+    106121604,
+    106018685
+  ],
+  flags: [
+    {
+      flagId: '45740196',
+      boolValue: true
+    },
+    {
+      flagId: '45740197',
+      floatValue: 0.7
+    },
+    {
+      flagId: '45740199',
+      stringValue: ''
+    },
+    {
+      flagId: '45740200',
+      stringValue: 'Gemini CLI is transitioning to the new Antigravity CLI for Google One and unpaid tier (Gemini Code Assist for individuals) users.\n' +
+        "What's Changing: We are unifying our tools into a single, multi-agent platform called Antigravity, with Antigravity CLI now available. Gemini CLI will stop serving requests for Google One and unpaid tiers starting June 18th. Please migrate to Antigravity CLI before this date to avoid disruption to your workflow.\n" +
+        'To learn more visit: https://goo.gle/gemini-cli-migration'
+    },
+    {
+      flagId: '45743869',
+      boolValue: true
+    },
+    {
+      flagId: '45750526',
+      boolValue: true
+    },
+    {
+      flagId: '45750527',
+      intValue: '95'
+    },
+    {
+      flagId: '45752213',
+      boolValue: true
+    },
+    {
+      flagId: '45760185',
+      boolValue: true
+    },
+    {
+      flagId: '45761848',
+      boolValue: true
+    },
+    {
+      flagId: '45771641',
+      boolValue: true
+    },
+    {
+      flagId: '45773036',
+      stringValue: ''
+    },
+    {
+      flagId: '45773134',
+      intValue: '300'
+    },
+    {
+      flagId: '45773135',
+      intValue: '600'
+    },
+    {
+      flagId: '45773187',
+      stringValue: ''
+    },
+    {
+      flagId: '45773188',
+      boolValue: false
+    },
+    {
+      flagId: '45773189',
+      intValue: '30'
+    },
+    {
+      flagId: '45773190',
+      intValue: '15'
+    },
+    {
+      flagId: '45774515',
+      intValue: '10'
+    },
+    {
+      flagId: '45784352',
+      boolValue: true
+    }
+  ]
+}
+[AgentRegistry] User policy exists for 'codebase_investigator', skipping dynamic registration.
+[AgentRegistry] User policy exists for 'cli_help', skipping dynamic registration.
+[AgentRegistry] Loaded with 3 agents.
+Ignore file not found: /home/micha/github/Consilia/.geminiignore, continue without it.
+Ripgrep is not available. Falling back to GrepTool.
+Flushing log events to Clearcut.
+Loading extension: google-workspace
+[DEBUG] [IDEConnectionUtils] Selected IDE connection file: gemini-ide-server-1235-45401.json
+ClearcutLogger: Flush already in progress, marking pending flush.
+ClearcutLogger: Flush already in progress, marking pending flush.
+Flushing log events to Clearcut.
+Error flushing log events: HTTP 400: Bad Request
+ClearcutLogger: Re-queued 2 events for retry (queue size: 2)
+[DEBUG] [MCP STDERR (google-workspace)]:  Google Workspace MCP Server is running (using . for tool names). Listening for requests...
+Registering notification handlers for server 'google-workspace'. Capabilities: { tools: { listChanged: true } }
+Server 'google-workspace' supports tool updates. Listening for changes...
+Scheduling MCP context refresh...
+Executing MCP context refresh...
+[DEBUG] [MemoryDiscovery] Loading server hierarchical memory for CWD: /home/micha/github/Consilia (importFormat: tree)
+[DEBUG] [MemoryDiscovery] Searching for GEMINI.md starting from CWD: /home/micha/github/Consilia
+[DEBUG] [MemoryDiscovery] Determined project root: /home/micha/github/Consilia
+[DEBUG] [MemoryDiscovery] deduplication: keeping /home/micha/.gemini/extensions/google-workspace/WORKSPACE-Context.md (dev: 2096, ino: 1054875)
+[DEBUG] [MemoryDiscovery] Successfully read and processed imports: /home/micha/.gemini/extensions/google-workspace/WORKSPACE-Context.md (Length: 5740)
+MCP context refresh complete.
+Hook registry initialized with 0 hook entries
+Hook system initialized successfully
+[DEBUG] [MemoryDiscovery] Loading environment memory for trusted root: /home/micha/github/Consilia (Stopping at git root: /home/micha/github/Consilia)
+[DEBUG] [MemoryDiscovery] Starting upward search from /home/micha/github/Consilia stopping at /home/micha/github/Consilia
+[DEBUG] [MemoryDiscovery] deduplication: keeping /home/micha/.gemini/extensions/google-workspace/WORKSPACE-Context.md (dev: 2096, ino: 1054875)
+[DEBUG] [MemoryDiscovery] Successfully read and processed imports: /home/micha/.gemini/extensions/google-workspace/WORKSPACE-Context.md (Length: 5740)
+[initializer] called with enabled=false, GEMINI_CONTEXT_TRACE_DIR=undefined
+[STARTUP] StartupProfiler.flush() called with 9 phases
+[STARTUP] Recording metric for phase: cli_startup duration: 2551.959811
+[STARTUP] Recording metric for phase: load_settings duration: 4.134102999999982
+[STARTUP] Recording metric for phase: cleanup_ops duration: 131.09893000000005
+[STARTUP] Recording metric for phase: parse_arguments duration: 9.099964999999997
+[STARTUP] Recording metric for phase: load_cli_config duration: 17.594595000000027
+[STARTUP] Recording metric for phase: setup_terminal duration: 0.20479000000023007
+[STARTUP] Recording metric for phase: initialize_app duration: 793.1361750000001
+[STARTUP] Recording metric for phase: authenticate duration: 787.794766
+[STARTUP] Recording metric for phase: discover_tools duration: 12.672489000000041
+Experiments loaded {
+  experimentIds: [
+    106018688,
+    105979538,
+    105979560,
+    106015337,
+    105979579,
+    105867471,
+    105979522,
+    105995634,
+    106121401,
+    106100625,
+    104638466,
+    101868197,
+    104817729,
+    105695344,
+    106064591,
+    104913215,
+    105821930,
+    104922093,
+    103012598,
+    106143956,
+    105856899,
+    102617194,
+    106064030,
+    105746183,
+    105757908,
+    104892493,
+    105723762,
+    105822884,
+    105785684,
+    105721273,
+    105897325,
+    105658071,
+    106240758,
+    105885552,
+    105864343,
+    105943702,
+    106106762,
+    106057393,
+    106106760,
+    105620019,
+    106038160,
+    106281951,
+    106264532,
+    106094629,
+    105887313,
+    105849474,
+    106032303,
+    106228452,
+    106113886,
+    106121607,
+    105979531,
+    105979553,
+    106015328,
+    105867469,
+    105979517,
+    106121399,
+    106100654,
+    104638459,
+    101551624,
+    104673683,
+    105695346,
+    106064590,
+    104913210,
+    105821928,
+    104922082,
+    103012592,
+    102519585,
+    106064028,
+    105746181,
+    104892490,
+    105011762,
+    105822881,
+    105721268,
+    105895316,
+    105658068,
+    106240748,
+    105885549,
+    105863625,
+    105943694,
+    106057389,
+    105620012,
+    106038153,
+    105887311,
+    106032301,
+    106113877,
+    106121604,
+    106018685
+  ],
+  flags: [
+    {
+      flagId: '45740196',
+      boolValue: true
+    },
+    {
+      flagId: '45740197',
+      floatValue: 0.7
+    },
+    {
+      flagId: '45740199',
+      stringValue: ''
+    },
+    {
+      flagId: '45740200',
+      stringValue: 'Gemini CLI is transitioning to the new Antigravity CLI for Google One and unpaid tier (Gemini Code Assist for individuals) users.\n' +
+        "What's Changing: We are unifying our tools into a single, multi-agent platform called Antigravity, with Antigravity CLI now available. Gemini CLI will stop serving requests for Google One and unpaid tiers starting June 18th. Please migrate to Antigravity CLI before this date to avoid disruption to your workflow.\n" +
+        'To learn more visit: https://goo.gle/gemini-cli-migration'
+    },
+    {
+      flagId: '45743869',
+      boolValue: true
+    },
+    {
+      flagId: '45750526',
+      boolValue: true
+    },
+    {
+      flagId: '45750527',
+      intValue: '95'
+    },
+    {
+      flagId: '45752213',
+      boolValue: true
+    },
+    {
+      flagId: '45760185',
+      boolValue: true
+    },
+    {
+      flagId: '45761848',
+      boolValue: true
+    },
+    {
+      flagId: '45771641',
+      boolValue: true
+    },
+    {
+      flagId: '45773036',
+      stringValue: ''
+    },
+    {
+      flagId: '45773134',
+      intValue: '300'
+    },
+    {
+      flagId: '45773135',
+      intValue: '600'
+    },
+    {
+      flagId: '45773187',
+      stringValue: ''
+    },
+    {
+      flagId: '45773188',
+      boolValue: false
+    },
+    {
+      flagId: '45773189',
+      intValue: '30'
+    },
+    {
+      flagId: '45773190',
+      intValue: '15'
+    },
+    {
+      flagId: '45774515',
+      intValue: '10'
+    },
+    {
+      flagId: '45784352',
+      boolValue: true
+    }
+  ]
+}
+Session ID: b25ff088-9a5c-40ea-8cb3-ab1ac6d1d024
+[Routing] Selected model: gemini-3.1-flash-preview (Source: agent-router/override, Latency: 0ms)
+	[Routing] Reasoning: Routing bypassed by forced model directive. Using: gemini-3.1-flash-preview
+Error when talking to Gemini API Full report available at: /tmp/gemini-client-error-Turn.run-sendMessageStream-2026-05-25T07-34-26-580Z.json ModelNotFoundError: Requested entity was not found.
+    at classifyGoogleError (file:///home/micha/.nvm/versions/node/v20.20.1/lib/node_modules/@google/gemini-cli/bundle/chunk-6DSAZLFF.js:269893:12)
+    at retryWithBackoff (file:///home/micha/.nvm/versions/node/v20.20.1/lib/node_modules/@google/gemini-cli/bundle/chunk-6DSAZLFF.js:270562:31)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async GeminiChat.makeApiCallAndProcessStream (file:///home/micha/.nvm/versions/node/v20.20.1/lib/node_modules/@google/gemini-cli/bundle/chunk-6DSAZLFF.js:293199:28)
+    at async GeminiChat.streamWithRetries (file:///home/micha/.nvm/versions/node/v20.20.1/lib/node_modules/@google/gemini-cli/bundle/chunk-6DSAZLFF.js:293037:29)
+    at async Turn.run (file:///home/micha/.nvm/versions/node/v20.20.1/lib/node_modules/@google/gemini-cli/bundle/chunk-6DSAZLFF.js:293564:24)
+    at async GeminiClient.processTurn (file:///home/micha/.nvm/versions/node/v20.20.1/lib/node_modules/@google/gemini-cli/bundle/chunk-6DSAZLFF.js:306115:22)
+    at async GeminiClient.sendMessageStream (file:///home/micha/.nvm/versions/node/v20.20.1/lib/node_modules/@google/gemini-cli/bundle/chunk-6DSAZLFF.js:306227:14)
+    at async file:///home/micha/.nvm/versions/node/v20.20.1/lib/node_modules/@google/gemini-cli/bundle/gemini-U6FSFXFH.js:10811:26
+    at async main (file:///home/micha/.nvm/versions/node/v20.20.1/lib/node_modules/@google/gemini-cli/bundle/gemini-U6FSFXFH.js:15885:5) {
+  code: 404
+}
+{
+  "session_id": "b25ff088-9a5c-40ea-8cb3-ab1ac6d1d024",
+  "error": {
+    "type": "Error",
+    "message": "Requested entity was not found.",
+    "code": 1
+  }
+}
