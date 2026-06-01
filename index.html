@@ -1,394 +1,344 @@
 <!DOCTYPE html>
-<html lang="la">
+<html lang="la" data-screen-label="Reader">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Consilia</title>
+  <title>Consilia — Reader</title>
+  <link rel="stylesheet" href="assets/consilia-theme.css">
+  <script src="assets/theme.js"></script>
   <style>
-    :root {
-      --sidebar-w: 230px;
-      --image-w:   700px;
-      --header-h:  52px;
-      --bg:        #faf8f4;
-      --paper:     #fffef9;
-      --text:      #2c2416;
-      --muted:     #7a6f5c;
-      --accent:    #7b4c1c;
-      --border:    #e0d8cc;
-      --sidebar-bg:#f2ede5;
-      --active-bg: #e4d4be;
-      --dark-bg:   #28201a;
-      --dark-bar:  #1c1610;
-      --dark-text: #c8b99a;
-    }
+    html, body { height: 100%; overflow: hidden; }
 
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
-    html, body {
-      height: 100%;
-      font-family: Georgia, 'Times New Roman', serif;
-      background: var(--bg);
-      color: var(--text);
-      overflow: hidden;
-    }
-
-    /* ── Header ──────────────────────────────────────────── */
-    header {
-      height: var(--header-h);
-      background: var(--accent);
-      color: #fff;
-      display: flex;
-      align-items: center;
-      padding: 0 1.25rem;
-      gap: .9rem;
-      flex-shrink: 0;
-      box-shadow: 0 2px 6px rgba(0,0,0,.25);
-      z-index: 20;
-    }
-
-    header h1 {
-      font-size: 1.05rem;
-      font-weight: normal;
-      letter-spacing: .1em;
-      white-space: nowrap;
-    }
-
-    #author-select, #volume-select {
-      background: rgba(255,255,255,.15);
-      color: #fff;
-      border: 1px solid rgba(255,255,255,.35);
-      border-radius: 4px;
-      padding: .25rem .55rem;
-      font-size: .85rem;
-      cursor: pointer;
-      font-family: inherit;
-      max-width: 240px;
-    }
-    #author-select option, #volume-select option { background: var(--accent); }
-
-    /* ── Search box ──────────────────────────────────────── */
-    .search-wrap {
-      position: relative;
-      display: flex;
-      align-items: center;
-      flex: 1;
-      max-width: 340px;
-    }
-
-    #search-input {
-      width: 100%;
-      background: rgba(255,255,255,.15);
-      color: #fff;
-      border: 1px solid rgba(255,255,255,.35);
-      border-radius: 4px;
-      padding: .28rem 2rem .28rem .65rem;
-      font-size: .85rem;
-      font-family: inherit;
-      outline: none;
-      transition: background .15s, border-color .15s;
-    }
-    #search-input::placeholder { color: rgba(255,255,255,.5); }
-    #search-input:focus {
-      background: rgba(255,255,255,.25);
-      border-color: rgba(255,255,255,.7);
-    }
-
-    #search-clear {
-      position: absolute;
-      right: .4rem;
-      background: none;
-      border: none;
-      color: rgba(255,255,255,.6);
-      font-size: 1rem;
-      cursor: pointer;
-      line-height: 1;
-      padding: 0 .15rem;
-      display: none;
-    }
-    #search-clear:hover { color: #fff; }
-
-    #header-stats {
-      font-size: .78rem;
-      opacity: .65;
-      margin-left: auto;
-      white-space: nowrap;
-    }
-
-    /* ── Layout ──────────────────────────────────────────── */
     .layout {
       display: flex;
       height: calc(100vh - var(--header-h));
       overflow: hidden;
     }
 
-    /* ── Sidebar ─────────────────────────────────────────── */
+    /* ── Sidebar (index of consilia) ─────────────────────────────────────── */
     .sidebar {
-      width: var(--sidebar-w);
-      background: var(--sidebar-bg);
+      width: 256px;
+      flex-shrink: 0;
+      background: var(--paper-2);
       border-right: 1px solid var(--border);
       overflow-y: auto;
-      flex-shrink: 0;
+      display: flex;
+      flex-direction: column;
     }
+    .sidebar-head {
+      position: sticky; top: 0;
+      background: var(--paper-2);
+      border-bottom: 1px solid var(--border);
+      padding: .7rem 1rem .6rem;
+      z-index: 2;
+    }
+    .sidebar-head .sh-label {
+      font-family: var(--font-ui);
+      font-size: .64rem; font-weight: 600;
+      letter-spacing: .16em; text-transform: uppercase;
+      color: var(--faint);
+    }
+    .sidebar-head .sh-count {
+      font-family: var(--font-read);
+      font-size: 1rem; color: var(--text-soft);
+      margin-top: .15rem;
+    }
+    .sidebar-head .sh-count b { color: var(--accent); font-weight: 600; }
 
     .sidebar-item {
-      display: flex;
-      align-items: baseline;
-      gap: .55rem;
-      padding: .42rem .9rem;
+      display: flex; align-items: baseline; gap: .6rem;
+      padding: .55rem 1rem;
       border-bottom: 1px solid var(--border);
       cursor: pointer;
-      font-size: .8rem;
-      transition: background .1s;
+      transition: background .12s;
     }
     .sidebar-item.hidden { display: none; }
-    .sidebar-item:hover  { background: var(--active-bg); }
+    .sidebar-item:hover { background: var(--accent-tint); }
     .sidebar-item.active {
-      background: var(--active-bg);
-      border-left: 3px solid var(--accent);
-      padding-left: calc(.9rem - 3px);
+      background: var(--accent-tint);
+      box-shadow: inset 3px 0 0 var(--accent);
     }
-
-    .sn {
-      font-family: monospace;
+    .sidebar-item .sn {
+      font-family: var(--font-mono);
+      font-size: .7rem;
       color: var(--accent);
-      min-width: 2.4rem;
-      font-size: .75rem;
+      min-width: 1.9rem;
+      flex-shrink: 0;
+      padding-top: .08rem;
     }
-    .stitle {
+    .sidebar-item .stitle {
+      font-family: var(--font-read);
+      font-size: .86rem;
+      line-height: 1.32;
       color: var(--muted);
       overflow: hidden;
-      white-space: nowrap;
-      text-overflow: ellipsis;
-      font-size: .78rem;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
     }
+    .sidebar-item.active .stitle { color: var(--text); }
 
-    /* ── Reader ──────────────────────────────────────────── */
+    /* ── Reader column ───────────────────────────────────────────────────── */
     .reader {
       flex: 1;
       overflow-y: auto;
-      padding: 1.75rem 1.75rem 3rem;
+      padding: 2.2rem clamp(1.25rem, 4vw, 3rem) 5rem;
+      scroll-behavior: smooth;
     }
+    .reader-inner { max-width: calc(var(--measure) + var(--card-pad-x) * 2 + 2px); margin: 0 auto; }
 
     .card {
       background: var(--paper);
       border: 1px solid var(--border);
-      border-radius: 6px;
-      padding: 1.75rem 2rem;
-      margin-bottom: 1.75rem;
-      max-width: 660px;
+      border-radius: var(--radius);
+      padding: var(--card-pad-y) var(--card-pad-x);
+      margin-bottom: 1.5rem;
+      box-shadow: var(--shadow-card);
       scroll-margin-top: 1rem;
     }
     .card.hidden { display: none; }
 
     .card-meta {
-      font-size: .72rem;
-      color: var(--muted);
-      font-family: monospace;
-      margin-bottom: .4rem;
+      display: flex; align-items: baseline; justify-content: space-between;
+      gap: 1rem;
+      padding-bottom: .85rem;
+      margin-bottom: 1.1rem;
+      border-bottom: 1px solid var(--border);
+    }
+    .card-meta .cm-n {
+      font-family: var(--font-ui);
+      font-size: .66rem; font-weight: 600;
+      letter-spacing: .18em; text-transform: uppercase;
+      color: var(--accent);
+    }
+    .card-meta .cm-id {
+      font-family: var(--font-mono);
+      font-size: .68rem;
+      color: var(--faint);
+      overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+    }
+    .card h2 {
+      font-family: var(--font-read);
+      font-weight: 600;
+      font-size: 1.62rem;
+      line-height: 1.22;
+      letter-spacing: -.005em;
+      color: var(--text);
+      text-wrap: balance;
+      margin-bottom: 1.4rem;
+    }
+    .section-label {
+      display: flex; align-items: center; gap: .6rem;
+      font-family: var(--font-ui);
+      font-size: .62rem; font-weight: 600;
+      letter-spacing: .18em; text-transform: uppercase;
+      color: var(--faint);
+      margin: 1.6rem 0 .7rem;
+    }
+    .section-label::after {
+      content: ""; flex: 1; height: 1px; background: var(--border);
+    }
+    .summary {
+      font-family: var(--font-read);
+      font-style: italic;
+      font-size: 1.02rem;
+      line-height: 1.7;
+      color: var(--text-soft);
+      padding-left: 1.1rem;
+      border-left: 2px solid var(--accent-2);
+    }
+    .body-section {
+      font-family: var(--font-read);
+      font-size: var(--read-size);
+      line-height: var(--read-lh);
+      color: var(--text);
+      margin-bottom: .9rem;
+      text-align: justify;
+      hyphens: auto;
+      text-wrap: pretty;
+    }
+    .body-section:first-of-type::first-letter {
+      float: left;
+      font-family: var(--font-read);
+      font-weight: 600;
+      font-size: 3.1rem;
+      line-height: .82;
+      padding: .12em .14em 0 0;
+      color: var(--accent);
     }
     .card-actions {
-      margin-top: 1.1rem;
-      padding-top: .55rem;
+      margin-top: 1.4rem;
+      padding-top: 1rem;
       border-top: 1px solid var(--border);
       display: flex;
       gap: .5rem;
     }
-    .action-link {
-      font-size: .72rem;
-      color: var(--muted);
-      text-decoration: none;
-      border: 1px solid var(--border);
-      border-radius: 4px;
-      padding: .18rem .6rem;
-      transition: color .12s, border-color .12s;
-      font-family: inherit;
-    }
-    .action-link:hover { color: var(--accent); border-color: var(--accent); }
-    .card h2 {
-      font-size: 1rem;
-      font-weight: bold;
-      letter-spacing: .06em;
-      color: var(--accent);
-      margin-bottom: 1rem;
-    }
-    .section-label {
-      font-size: .65rem;
-      text-transform: uppercase;
-      letter-spacing: .12em;
-      color: var(--muted);
-      margin: 1.1rem 0 .35rem;
-    }
-    .summary {
-      font-size: .85rem;
-      color: var(--muted);
-      line-height: 1.65;
-      font-style: italic;
-      padding-left: .85rem;
-      border-left: 2px solid var(--border);
-    }
-    .body-section {
-      font-size: .88rem;
-      line-height: 1.8;
-      margin-bottom: .65rem;
-    }
 
-    /* ── Search highlight ────────────────────────────────── */
-    mark {
-      background: #ffe066;
-      color: inherit;
-      border-radius: 2px;
-      padding: 0 1px;
-    }
-
-    /* ── Image panel ─────────────────────────────────────── */
+    /* ── Facsimile panel ─────────────────────────────────────────────────── */
     .image-panel {
-      width: var(--image-w);
-      background: var(--dark-bg);
-      border-left: 1px solid #111;
+      width: 540px;
+      flex-shrink: 0;
+      background: var(--field-screen);
+      border-left: 1px solid #000;
       display: flex;
       flex-direction: column;
-      flex-shrink: 0;
+      transition: background .35s ease;
     }
     .image-bar {
-      background: var(--dark-bar);
-      color: var(--dark-text);
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: .45rem .85rem;
-      font-size: .75rem;
-      flex-shrink: 0;
+      background: var(--field-bar);
+      color: var(--field-text);
+      display: flex; align-items: center; justify-content: space-between;
       gap: .5rem;
+      padding: .5rem .9rem;
+      flex-shrink: 0;
+      border-bottom: 1px solid rgba(0,0,0,.4);
     }
-    .page-nav { display: flex; align-items: center; gap: .35rem; }
+    .image-bar .pg-label {
+      font-family: var(--font-mono);
+      font-size: .74rem;
+      letter-spacing: .02em;
+    }
+    .image-bar .pg-tag {
+      font-family: var(--font-ui);
+      font-size: .58rem; font-weight: 600;
+      letter-spacing: .14em; text-transform: uppercase;
+      color: rgba(255,255,255,.32);
+      border: 1px solid rgba(255,255,255,.16);
+      border-radius: 100px;
+      padding: .12rem .55rem;
+    }
+    .page-nav { display: flex; align-items: center; gap: .4rem; }
     .page-nav button {
-      background: rgba(255,255,255,.08);
-      color: var(--dark-text);
-      border: 1px solid rgba(255,255,255,.15);
-      border-radius: 3px;
-      width: 1.6rem; height: 1.6rem;
-      cursor: pointer;
-      font-size: .85rem; line-height: 1;
+      width: 1.8rem; height: 1.8rem;
       display: flex; align-items: center; justify-content: center;
-      transition: background .1s;
+      background: rgba(255,255,255,.07);
+      color: var(--field-text);
+      border: 1px solid rgba(255,255,255,.14);
+      border-radius: var(--radius-sm);
+      cursor: pointer;
+      font-size: 1rem; line-height: 1;
+      transition: background .12s;
     }
-    .page-nav button:disabled { opacity: .3; cursor: default; }
-    .page-nav button:not(:disabled):hover { background: rgba(255,255,255,.18); }
-    .page-nav .counter { font-size: .7rem; min-width: 2rem; text-align: center; }
+    .page-nav button:disabled { opacity: .25; cursor: default; }
+    .page-nav button:not(:disabled):hover { background: rgba(255,255,255,.16); }
+    .page-nav .counter { font-family: var(--font-mono); font-size: .7rem; min-width: 2.6rem; text-align: center; }
 
-    .image-scroll {
+    .image-stage {
       flex: 1;
       overflow: auto;
       display: flex;
       align-items: flex-start;
       justify-content: center;
-      padding: .5rem;
+      padding: 1.4rem;
       min-height: 0;
     }
-    .image-scroll img {
-      max-height: 100%;
-      width: auto;
+    .image-stage img {
       max-width: 100%;
-      display: block;
+      width: auto;
+      height: auto;
+      max-height: 100%;
       border-radius: 2px;
+      box-shadow: 0 14px 40px -10px rgba(0,0,0,.7), 0 0 0 1px rgba(0,0,0,.3);
     }
-
-    .placeholder {
-      color: rgba(200,185,154,.35);
-      font-size: .85rem;
-      font-style: italic;
+    .image-stage .placeholder {
       margin: auto;
+      color: rgba(255,255,255,.3);
+      font-style: italic;
+      font-size: .9rem;
     }
 
-    /* ── Responsive ──────────────────────────────────────── */
-    @media (max-width: 1100px) { .image-panel { display: none; } }
-    @media (max-width:  700px) { .sidebar { display: none; } }
+    @media (max-width: 1180px) { .image-panel { display: none; } }
+    @media (max-width: 820px)  { .sidebar { display: none; } }
+    @media (max-width: 560px)  {
+      .mast-sub, #author-select, #volume-select, .mast-divider { display: none; }
+    }
   </style>
 </head>
 <body>
 
-<header>
-  <h1>Consilia</h1>
-  <select id="author-select"></select>
-  <select id="volume-select"></select>
-  <nav style="display:flex;gap:.5rem;">
-    <a href="index.html" style="color:rgba(255,255,255,.75);text-decoration:none;font-size:.82rem;padding:.2rem .65rem;border:1px solid rgba(255,255,255,.3);border-radius:4px;background:rgba(255,255,255,.2);color:#fff">Reader</a>
-    <a href="search.html" style="color:rgba(255,255,255,.75);text-decoration:none;font-size:.82rem;padding:.2rem .65rem;border:1px solid rgba(255,255,255,.3);border-radius:4px;transition:background .12s">Search</a>
-  </nav>
-  <div class="search-wrap">
+<header class="masthead">
+  <a class="wordmark" href="index.html">Consilia</a>
+  <span class="mast-sub">Baldo de Ubaldis</span>
+  <span class="mast-divider"></span>
+  <select id="author-select" class="field" title="Author"></select>
+  <select id="volume-select" class="field" title="Print / volume"></select>
+  <span style="flex:1"></span>
+  <div class="search-field" style="width:min(300px,34vw)">
+    <span class="s-glyph">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg>
+    </span>
     <input id="search-input" type="search" placeholder="Search… (j=i, v=u, ae=e)" autocomplete="off" spellcheck="false">
-    <button id="search-clear" title="Clear search">&#x2715;</button>
+    <button id="search-clear" class="s-clear" title="Clear">&#x2715;</button>
   </div>
-  <span id="header-stats"></span>
+  <nav class="topnav">
+    <a href="index.html" class="active">Reader</a>
+    <a href="search.html">Search</a>
+  </nav>
+  <button id="theme-toggle" class="icon-btn" title="Dark reading mode"></button>
 </header>
 
 <div class="layout">
-  <nav class="sidebar" id="sidebar"></nav>
+  <nav class="sidebar">
+    <div class="sidebar-head">
+      <div class="sh-label">Index</div>
+      <div class="sh-count" id="sh-count">—</div>
+    </div>
+    <div id="sidebar-list"></div>
+  </nav>
+
   <main class="reader" id="reader">
-    <div style="padding:4rem;color:var(--muted);font-style:italic;">Loading…</div>
+    <div class="reader-inner" id="reader-inner">
+      <div style="padding:4rem 0;color:var(--muted);font-style:italic;font-family:var(--font-read)">Loading consilia…</div>
+    </div>
   </main>
+
   <aside class="image-panel">
     <div class="image-bar">
-      <span id="page-label">—</span>
+      <span class="pg-label" id="page-label">—</span>
+      <span class="pg-tag" id="page-tag">facsimile</span>
       <div class="page-nav">
         <button id="page-prev" title="Previous page">&#8249;</button>
         <span class="counter" id="page-counter"></span>
         <button id="page-next" title="Next page">&#8250;</button>
       </div>
     </div>
-    <div class="image-scroll" id="image-scroll">
+    <div class="image-stage" id="image-stage">
       <span class="placeholder">select a consilium</span>
     </div>
   </aside>
 </div>
 
-<script src="vendor/minisearch.min.js"></script>
+<script src="assets/minisearch.min.js"></script>
+<script src="assets/sample-data.js"></script>
+<script src="assets/facsimile.js"></script>
 <script>
-// ── normalisation ──────────────────────────────────────────────────────────
-// Applied identically to indexed terms and query terms so the index is
-// consistent.  Order matters: ae→e before individual letter substitutions
-// to avoid double-processing.
+/* ── normalisation (j=i, v=u, ae=e) ─────────────────────────────────────── */
 function normalise(term) {
-  return term
-    .toLowerCase()
-    .replace(/æ/g, 'e')        // æ ligature
-    .replace(/ę/g, 'e')        // e caudata (U+0119)
-    .replace(/ae/g, 'e')       // digraph ae → e
-    .replace(/j/g, 'i')        // consonantal i
-    .replace(/v/g, 'u');       // consonantal u
+  return term.toLowerCase()
+    .replace(/æ/g, 'e').replace(/ę/g, 'e').replace(/ae/g, 'e')
+    .replace(/j/g, 'i').replace(/v/g, 'u');
 }
-
-// Build a RegExp that matches a *normalised* term in the *original* text,
-// accounting for all the equivalences above (in reverse).
-// The "ae/æ/ę → e" expansion must handle the two-char case first.
-function termToRegexPart(normTerm) {
+function termToRegexPart(t) {
   let pat = '';
-  for (let i = 0; i < normTerm.length; i++) {
-    switch (normTerm[i]) {
-      case 'i': pat += '[ij]';                    break;
-      case 'u': pat += '[uv]';                    break;
-      // 'e' in a normalised term could have come from e, ę, æ, or "ae"
-      case 'e': pat += '(?:ae|[eæę])';           break;
-      default:  pat += normTerm[i].replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+  for (let i = 0; i < t.length; i++) {
+    switch (t[i]) {
+      case 'i': pat += '[ij]'; break;
+      case 'u': pat += '[uv]'; break;
+      case 'e': pat += '(?:ae|[eæę])'; break;
+      default:  pat += t[i].replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
     }
   }
   return pat;
 }
-
-// Build one RegExp for all query tokens (alternation), case-insensitive.
-function buildHighlightRe(rawQuery) {
-  const tokens = rawQuery.trim().split(/\s+/).filter(Boolean);
-  if (!tokens.length) return null;
-  const parts = tokens.map(t => termToRegexPart(normalise(t)));
-  return new RegExp(`(${parts.join('|')})`, 'gi');
+function buildHighlightRe(raw) {
+  const toks = raw.trim().split(/\s+/).filter(Boolean);
+  if (!toks.length) return null;
+  return new RegExp(`(${toks.map(t => termToRegexPart(normalise(t))).join('|')})`, 'gi');
 }
-
-// Highlight occurrences of `re` in `text`, returning safe HTML.
 function highlightText(text, re) {
   if (!re) return esc(text);
   re.lastIndex = 0;
-  const parts = [];
-  let last = 0, m;
+  const parts = []; let last = 0, m;
   while ((m = re.exec(text)) !== null) {
     parts.push(esc(text.slice(last, m.index)));
     parts.push(`<mark>${esc(m[0])}</mark>`);
@@ -397,31 +347,28 @@ function highlightText(text, re) {
   parts.push(esc(text.slice(last)));
   return parts.join('');
 }
+function esc(s) {
+  return String(s ?? '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+}
 
-// ── state ──────────────────────────────────────────────────────────────────
-let consilia    = {};
-let authors     = {};       // output/authors.json
-let miniSearch  = null;
-let volume      = null;
-let items       = [];       // sorted array for current volume
-let activeIndex = 0;
-let srcPage     = 0;
-let observer    = null;
-let highlightRe = null;     // current highlight regex (null = no search)
-let searchTimer = null;
+/* ── state ───────────────────────────────────────────────────────────────── */
+let consilia = {}, authors = {}, miniSearch = null;
+let volume = null, items = [], activeIndex = 0, srcPage = 0;
+let observer = null, highlightRe = null, searchTimer = null, suppressObserver = false;
+let usingDemo = false;
 
-// ── boot ───────────────────────────────────────────────────────────────────
+/* ── boot: try real output JSON, fall back to baked sample corpus ────────── */
 Promise.all([
-  fetch('output/consilia.json').then(r => r.json()),
-  fetch('output/authors.json').then(r => r.json()).catch(() => ({})),
-]).then(([consiliaData, authorsData]) => {
-  consilia = consiliaData.consilia;
-  authors  = authorsData;
+  fetch('output/consilia.json').then(r => r.ok ? r.json() : Promise.reject()).catch(() => window.CONSILIA_DATA),
+  fetch('output/authors.json').then(r => r.ok ? r.json() : Promise.reject()).catch(() => window.AUTHORS_DATA),
+]).then(([cd, ad]) => {
+  usingDemo = !cd || cd === window.CONSILIA_DATA;
+  consilia = (cd || window.CONSILIA_DATA).consilia;
+  authors  = ad || window.AUTHORS_DATA;
 
-  // author dropdown
   const authSel = document.getElementById('author-select');
   const allOpt = document.createElement('option');
-  allOpt.value = ''; allOpt.textContent = 'All prints';
+  allOpt.value = ''; allOpt.textContent = 'All authors';
   authSel.appendChild(allOpt);
   Object.entries(authors).forEach(([viaf, info]) => {
     const o = document.createElement('option');
@@ -431,271 +378,214 @@ Promise.all([
   authSel.addEventListener('change', () => {
     populateVolumeSelect(authSel.value);
     const sel = document.getElementById('volume-select');
-    if (sel.options.length > 0) loadVolume(sel.options[0].value);
+    if (sel.options.length) loadVolume(sel.options[0].value);
   });
 
-  // volume dropdown
   populateVolumeSelect('');
   const sel = document.getElementById('volume-select');
   sel.addEventListener('change', () => loadVolume(sel.value));
 
-  // honour ?n=44 links from the search page
   const targetN = parseInt(new URLSearchParams(location.search).get('n'));
   loadVolume(sel.options[0].value);
-  if (targetN) {
-    // wait for items to be built, then jump
-    setTimeout(() => {
-      const idx = items.findIndex(c => c.n === targetN);
-      if (idx >= 0) { activate(idx, true); scrollCardTo(idx); }
-    }, 50);
-  }
+  if (targetN) setTimeout(() => {
+    const idx = items.findIndex(c => c.n === targetN);
+    if (idx >= 0) { activate(idx, true); scrollCardTo(idx); }
+  }, 60);
 }).catch(err => {
-  document.getElementById('reader').innerHTML =
-    `<p style="color:red;padding:2rem">Could not load consilia.json: ${err.message}</p>`;
+  document.getElementById('reader-inner').innerHTML =
+    `<p style="color:#a33;padding:2rem;font-family:var(--font-ui)">Could not load corpus: ${err}</p>`;
 });
 
-// ── populate volume dropdown ────────────────────────────────────────────────
+function volLabel(v) { return v.replace(/_/g, ' '); }
+
 function populateVolumeSelect(authorFilter) {
-  const allVolumes = [...new Set(Object.values(consilia).map(c => c.volume))].sort();
-  const filtered = authorFilter
-    ? allVolumes.filter(v => authors[authorFilter]?.prints?.includes(v))
-    : allVolumes;
+  const all = [...new Set(Object.values(consilia).map(c => c.volume))].sort();
+  const filtered = authorFilter ? all.filter(v => authors[authorFilter]?.prints?.includes(v)) : all;
   const sel = document.getElementById('volume-select');
   sel.innerHTML = '';
   filtered.forEach(v => {
     const o = document.createElement('option');
-    o.value = v; o.textContent = v.replace(/_/g, ' ');
+    o.value = v; o.textContent = volLabel(v);
     sel.appendChild(o);
   });
 }
 
-// ── volume ─────────────────────────────────────────────────────────────────
 function loadVolume(v) {
   volume = v;
-  items  = Object.values(consilia)
-    .filter(c => c.volume === v)
-    .sort((a, b) => a.n - b.n || a.id.localeCompare(b.id));
-
-  buildIndex();
-  buildSidebar();
-  buildReader();
-  clearSearch();
-  activate(0, false);
+  items = Object.values(consilia).filter(c => c.volume === v).sort((a, b) => a.n - b.n || a.id.localeCompare(b.id));
+  buildIndex(); buildSidebar(); buildReader(); clearSearch(); activate(0, false);
 }
 
-// ── MiniSearch index ───────────────────────────────────────────────────────
 function buildIndex() {
   miniSearch = new MiniSearch({
     fields: ['title', 'summary', 'body'],
     idField: 'idx',
     processTerm: normalise,
-    searchOptions: {
-      boost: { title: 3, summary: 1.5, body: 1 },
-      prefix: true,
-      fuzzy: term => term.length > 4 ? 0.15 : false,
-    },
+    searchOptions: { boost: { title: 3, summary: 1.5, body: 1 }, prefix: true, fuzzy: t => t.length > 4 ? 0.15 : false },
   });
-
   miniSearch.addAll(items.map((c, i) => ({
-    idx: i,
-    title:   c.title   || '',
-    summary: c.summary || '',
-    body:    (c.body   || []).join(' '),
+    idx: i, title: c.title || '', summary: c.summary || '', body: (c.body || []).join(' '),
   })));
 }
 
-// ── sidebar ────────────────────────────────────────────────────────────────
+function subtitle(c) { return c.title || (c.summary || '').split(/\s+/).slice(0, 7).join(' '); }
+
 function buildSidebar() {
-  const nav = document.getElementById('sidebar');
+  const nav = document.getElementById('sidebar-list');
   nav.innerHTML = '';
   items.forEach((c, i) => {
     const div = document.createElement('div');
-    div.className   = 'sidebar-item';
+    div.className = 'sidebar-item';
     div.dataset.idx = i;
-    div.innerHTML   =
-      `<span class="sn">${c.n || '?'}</span><span class="stitle">${esc(subtitle(c))}</span>`;
+    div.innerHTML = `<span class="sn">${c.n ?? '?'}</span><span class="stitle">${esc(subtitle(c))}</span>`;
     div.addEventListener('click', () => { activate(i, false); scrollCardTo(i); });
     nav.appendChild(div);
   });
 }
 
-function subtitle(c) {
-  return (c.summary || '').split(/\s+/).slice(0, 6).join(' ') || c.title;
-}
-
-// ── reader ─────────────────────────────────────────────────────────────────
 function buildReader() {
   if (observer) { observer.disconnect(); observer = null; }
-  const reader = document.getElementById('reader');
-  reader.innerHTML = '';
-
+  const inner = document.getElementById('reader-inner');
+  inner.innerHTML = '';
   items.forEach((c, i) => {
-    const card = document.createElement('div');
-    card.className   = 'card';
-    card.id          = `card-${i}`;
+    const card = document.createElement('article');
+    card.className = 'card';
+    card.id = `card-${i}`;
     card.dataset.idx = i;
-    card.innerHTML   = cardHTML(c, null);
-    reader.appendChild(card);
+    card.setAttribute('data-screen-label', `Consilium ${c.n}`);
+    card.innerHTML = cardHTML(c, null);
+    inner.appendChild(card);
   });
-
   observer = new IntersectionObserver(entries => {
+    if (suppressObserver) return;
     let top = null, topY = Infinity;
     entries.forEach(e => {
-      if (e.isIntersecting) {
-        const y = e.boundingClientRect.top;
-        if (y >= 0 && y < topY) { topY = y; top = e.target; }
-      }
+      if (e.isIntersecting) { const y = e.boundingClientRect.top; if (y >= -40 && y < topY) { topY = y; top = e.target; } }
     });
-    if (top) {
-      const i = parseInt(top.dataset.idx);
-      if (i !== activeIndex) activate(i, true);
-    }
-  }, { root: reader, threshold: 0.15 });
-
-  reader.querySelectorAll('.card').forEach(el => observer.observe(el));
+    if (top) { const i = parseInt(top.dataset.idx); if (i !== activeIndex) activate(i, true); }
+  }, { root: document.getElementById('reader'), threshold: 0.12 });
+  document.querySelectorAll('.card').forEach(el => observer.observe(el));
 }
 
-// Generate inner HTML for one card, with optional highlight regex.
 function cardHTML(c, re) {
   const h = re ? (t => highlightText(t, re)) : esc;
   let html =
-    `<div class="card-meta">Consilium ${c.n} &nbsp;·&nbsp; ${esc(c.id)}</div>` +
+    `<div class="card-meta"><span class="cm-n">Consilium ${c.n}</span><span class="cm-id">${esc(c.id)}</span></div>` +
     `<h2>${h(c.title)}</h2>`;
-  if (c.summary) {
-    html += `<div class="section-label">Summary</div><div class="summary">${h(c.summary)}</div>`;
-  }
+  if (c.summary) html += `<div class="section-label">Summarium</div><div class="summary">${h(c.summary)}</div>`;
   if (c.body && c.body.length) {
-    html += `<div class="section-label">Body</div>`;
-    c.body.forEach(s => { html += `<div class="body-section">${h(s)}</div>`; });
+    html += `<div class="section-label">Textus</div>`;
+    c.body.forEach(s => { html += `<p class="body-section">${h(s)}</p>`; });
   }
   const simUrl = `search.html?similar=${c.n}&vol=${encodeURIComponent(c.volume)}`;
-  html += `<div class="card-actions">
-    <a class="action-link" href="${simUrl}">≈ Find similar consilia</a>
-  </div>`;
+  html += `<div class="card-actions"><a class="btn" href="${simUrl}">&#8776;&nbsp; Find similar consilia</a></div>`;
   return html;
 }
 
-// ── search ─────────────────────────────────────────────────────────────────
+/* ── search ─────────────────────────────────────────────────────────────── */
 document.getElementById('search-input').addEventListener('input', e => {
   clearTimeout(searchTimer);
-  searchTimer = setTimeout(() => runSearch(e.target.value), 220);
+  searchTimer = setTimeout(() => runSearch(e.target.value), 200);
+});
+document.getElementById('search-clear').addEventListener('click', () => {
+  document.getElementById('search-input').value = ''; clearSearch();
 });
 
-document.getElementById('search-clear').addEventListener('click', () => {
-  document.getElementById('search-input').value = '';
-  clearSearch();
-});
+function setCount(shown) {
+  const el = document.getElementById('sh-count');
+  el.innerHTML = (shown != null && shown !== items.length)
+    ? `<b>${shown}</b> of ${items.length} consilia`
+    : `<b>${items.length}</b> consilia`;
+}
 
 function runSearch(raw) {
   const q = raw.trim();
   document.getElementById('search-clear').style.display = q ? 'block' : 'none';
-
   if (!q) { clearSearch(); return; }
-
   highlightRe = buildHighlightRe(q);
-
-  // Query MiniSearch — collect matching indices in a Set for O(1) lookup
-  const results  = miniSearch.search(q);
-  const matchSet = new Set(results.map(r => r.id));   // r.id is idx (number)
-
-  let shown = 0;
+  const matchSet = new Set(miniSearch.search(q).map(r => r.id));
+  let shown = 0, first = -1;
   items.forEach((c, i) => {
-    const card    = document.getElementById(`card-${i}`);
-    const sideEl  = document.querySelector(`.sidebar-item[data-idx="${i}"]`);
+    const card = document.getElementById(`card-${i}`);
+    const side = document.querySelector(`.sidebar-item[data-idx="${i}"]`);
     if (matchSet.has(i)) {
-      card.classList.remove('hidden');
-      card.innerHTML = cardHTML(c, highlightRe);
-      if (sideEl) sideEl.classList.remove('hidden');
-      shown++;
-    } else {
-      card.classList.add('hidden');
-      if (sideEl) sideEl.classList.add('hidden');
-    }
+      card.classList.remove('hidden'); card.innerHTML = cardHTML(c, highlightRe);
+      side?.classList.remove('hidden'); shown++; if (first < 0) first = i;
+    } else { card.classList.add('hidden'); side?.classList.add('hidden'); }
   });
-
-  document.getElementById('header-stats').textContent =
-    `${shown} of ${items.length} consilia`;
-
-  // Activate the first visible result
-  if (results.length) activate(results[0].id, true);
+  setCount(shown);
+  if (first >= 0) activate(first, true);
 }
 
 function clearSearch() {
   highlightRe = null;
   document.getElementById('search-clear').style.display = 'none';
-  document.getElementById('header-stats').textContent = `${items.length} consilia`;
-
+  setCount(null);
   items.forEach((c, i) => {
-    const card   = document.getElementById(`card-${i}`);
-    const sideEl = document.querySelector(`.sidebar-item[data-idx="${i}"]`);
-    if (card)   { card.classList.remove('hidden'); card.innerHTML = cardHTML(c, null); }
-    if (sideEl) sideEl.classList.remove('hidden');
+    const card = document.getElementById(`card-${i}`);
+    const side = document.querySelector(`.sidebar-item[data-idx="${i}"]`);
+    if (card) { card.classList.remove('hidden'); card.innerHTML = cardHTML(c, null); }
+    side?.classList.remove('hidden');
   });
 }
 
-// ── activation ────────────────────────────────────────────────────────────
+/* ── activation + facsimile ─────────────────────────────────────────────── */
 function activate(i, scrollSidebar) {
-  activeIndex = i;
-  srcPage     = 0;
-
-  document.querySelectorAll('.sidebar-item').forEach(el => {
-    el.classList.toggle('active', parseInt(el.dataset.idx) === i);
-  });
-  if (scrollSidebar) {
-    document.querySelector(`.sidebar-item[data-idx="${i}"]`)
-      ?.scrollIntoView({ block: 'nearest' });
-  }
+  activeIndex = i; srcPage = 0;
+  document.querySelectorAll('.sidebar-item').forEach(el => el.classList.toggle('active', parseInt(el.dataset.idx) === i));
+  if (scrollSidebar) document.querySelector(`.sidebar-item[data-idx="${i}"]`)?.scrollIntoView({ block: 'nearest' });
   updateImage();
 }
-
 function scrollCardTo(i) {
-  document.getElementById(`card-${i}`)
-    ?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  suppressObserver = true;
+  document.getElementById(`card-${i}`)?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  setTimeout(() => { suppressObserver = false; }, 650);
 }
 
-// ── image panel ────────────────────────────────────────────────────────────
 function updateImage() {
-  const c       = items[activeIndex];
+  const c = items[activeIndex];
   const sources = c?.sources ?? [];
-  const total   = sources.length;
-
+  const total = sources.length;
   document.getElementById('page-prev').disabled = srcPage <= 0;
   document.getElementById('page-next').disabled = srcPage >= total - 1;
-  document.getElementById('page-counter').textContent =
-    total > 1 ? `${srcPage + 1} / ${total}` : '';
-
+  document.getElementById('page-counter').textContent = total > 1 ? `${srcPage + 1} / ${total}` : '';
+  const stage = document.getElementById('image-stage');
   if (!total) {
     document.getElementById('page-label').textContent = '—';
-    document.getElementById('image-scroll').innerHTML =
-      '<span class="placeholder">no page source</span>';
+    stage.innerHTML = '<span class="placeholder">no page source</span>';
     return;
   }
-
   const stem = sources[srcPage].page.replace('.xml', '');
-  document.getElementById('page-label').textContent = `Page ${stem}`;
-
-  const scroll = document.getElementById('image-scroll');
-  scroll.innerHTML = '';
+  document.getElementById('page-label').textContent = `Folio ${stem}`;
+  stage.innerHTML = '';
   const img = document.createElement('img');
-  img.src     = `data/${c.author_viaf}/${c.volume}/${stem}.jpg`;
-  img.alt     = `Page ${stem}`;
-  img.loading = 'lazy';
-  scroll.appendChild(img);
+  img.alt = `Page ${stem}`;
+  const tag = document.getElementById('page-tag');
+  const useFacsimile = () => {
+    img.onerror = null;
+    img.src = window.facsimileSVG ? window.facsimileSVG(stem) : '';
+    tag.textContent = 'facsimile · demo';
+  };
+  if (usingDemo) {
+    // baked sample corpus → render the period-styled stand-in directly
+    useFacsimile();
+  } else {
+    // real deployment: prefer the scan, fall back on error or slow load
+    const realSrc = `data/${c.author_viaf}/${c.volume}/${stem}.jpg`;
+    let done = false;
+    const fail = setTimeout(() => { if (!done) useFacsimile(); }, 2500);
+    img.onerror = () => { done = true; clearTimeout(fail); useFacsimile(); };
+    img.onload  = () => { done = true; clearTimeout(fail); tag.textContent = 'facsimile'; };
+    img.src = realSrc;
+  }
+  stage.appendChild(img);
 }
 
-document.getElementById('page-prev').addEventListener('click', () => {
-  if (srcPage > 0) { srcPage--; updateImage(); }
-});
+document.getElementById('page-prev').addEventListener('click', () => { if (srcPage > 0) { srcPage--; updateImage(); } });
 document.getElementById('page-next').addEventListener('click', () => {
   const total = items[activeIndex]?.sources?.length ?? 0;
   if (srcPage < total - 1) { srcPage++; updateImage(); }
 });
-
-// ── utility ────────────────────────────────────────────────────────────────
-function esc(s) {
-  return String(s ?? '')
-    .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
-}
 </script>
 </body>
 </html>

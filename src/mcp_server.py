@@ -119,6 +119,7 @@ def search_consilia(
     query: str,
     top_k: int = 10,
     author_viaf: str | None = None,
+    volume: str | None = None,
 ) -> list[dict]:
     """Semantic search over the Consilia corpus using BGE-M3 embeddings.
 
@@ -128,7 +129,12 @@ def search_consilia(
     Args:
         query: Search query in any language.
         top_k: Number of results to return (default 10, max 50).
-        author_viaf: Optional filter by author directory name (e.g. 'Baldo_29618397').
+        author_viaf: Optional — filter by author directory name,
+                     e.g. 'Baldo_29618397'.
+        volume: Optional — filter by print volume, e.g.
+                'Baldo_Cons_Print_Venice_1575_v1',
+                'Baldo_Cons_Print_Venice_1575_v4', or
+                'Baldo_Cons_Print_Venice_1575_v5'.
     """
     top_k = min(max(1, top_k), 50)
 
@@ -142,6 +148,8 @@ def search_consilia(
         cid = META_IDS[i]
         c = CONSILIA.get(cid)
         if c is None:
+            continue
+        if volume and c.get("volume") != volume:
             continue
         snippet = c.get("summary") or (c.get("body") or [""])[0]
         results.append({

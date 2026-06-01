@@ -1,2134 +1,396 @@
 <!DOCTYPE html>
-<html lang="la">
+<html lang="la" data-screen-label="Search">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Consilia - Search</title>
+  <title>Consilia — Search</title>
+  <link rel="stylesheet" href="assets/consilia-theme.css">
+  <script src="assets/theme.js"></script>
   <style>
-    :root {
-      --bg:        #faf8f4;
-      --paper:     #fffef9;
-      --text:      #2c2416;
-      --muted:     #7a6f5c;
-      --accent:    #7b4c1c;
-      --accent-lt: #a06330;
-      --border:    #e0d8cc;
-      --sidebar-bg:#f2ede5;
-      --active-bg: #e4d4be;
-      --header-h:  52px;
-    }
+    body { min-height: 100%; }
 
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
-    html, body {
-      min-height: 100%;
-      font-family: Georgia, 'Times New Roman', serif;
-      background: var(--bg);
-      color: var(--text);
+    /* ── Search band ─────────────────────────────────────────────────────── */
+    .band {
+      background: var(--paper-2);
+      border-bottom: 1px solid var(--border);
+      padding: 2.1rem 1.5rem 1.7rem;
     }
-
-    /* ── Header ──────────────────────────────────────────── */
-    header {
-      height: var(--header-h);
-      background: var(--accent);
-      color: #fff;
-      display: flex;
-      align-items: center;
-      padding: 0 1.5rem;
-      gap: 1.5rem;
-      box-shadow: 0 2px 6px rgba(0,0,0,.25);
-      position: sticky;
-      top: 0;
-      z-index: 20;
+    .band-inner {
+      max-width: 720px; margin: 0 auto;
+      display: flex; flex-direction: column; align-items: center; gap: 1rem;
     }
-
-    header h1 {
-      font-size: 1.05rem;
-      font-weight: normal;
-      letter-spacing: .1em;
+    .band-eyebrow {
+      font-family: var(--font-ui);
+      font-size: .64rem; font-weight: 600;
+      letter-spacing: .22em; text-transform: uppercase;
+      color: var(--faint);
     }
-
-    nav.topnav { display: flex; gap: .5rem; margin-left: auto; }
-
-    nav.topnav a {
-      color: rgba(255,255,255,.75);
-      text-decoration: none;
-      font-size: .82rem;
-      padding: .2rem .65rem;
-      border: 1px solid rgba(255,255,255,.3);
-      border-radius: 4px;
-      transition: background .12s, color .12s;
+    .band-controls {
+      display: flex; gap: .6rem; width: 100%; align-items: stretch;
     }
-    nav.topnav a:hover, nav.topnav a.active {
-      background: rgba(255,255,255,.2);
-      color: #fff;
-    }
-
-    /* ── Hero search ─────────────────────────────────────── */
-    .hero {
-      background: var(--accent);
-      padding: 2.5rem 1.5rem 2rem;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 1rem;
-    }
-
-    .hero-controls {
-      display: flex;
-      gap: .7rem;
-      width: 100%;
-      max-width: 680px;
-      align-items: center;
-    }
-
-    #author-select, #volume-select {
-      background: rgba(255,255,255,.15);
-      color: #fff;
-      border: 1px solid rgba(255,255,255,.35);
-      border-radius: 4px;
-      padding: .5rem .7rem;
-      font-size: .85rem;
-      font-family: inherit;
-      cursor: pointer;
-      flex-shrink: 0;
-    }
-    #author-select option, #volume-select option { background: var(--accent); }
-
-    .search-box {
-      position: relative;
-      flex: 1;
-    }
-
-    #search-input {
-      width: 100%;
-      background: rgba(255,255,255,.18);
-      color: #fff;
-      border: 1px solid rgba(255,255,255,.45);
-      border-radius: 4px;
-      padding: .55rem 2.5rem .55rem .85rem;
-      font-size: 1rem;
-      font-family: inherit;
-      outline: none;
-      transition: background .15s, border-color .15s;
-    }
-    #search-input::placeholder { color: rgba(255,255,255,.5); }
-    #search-input:focus { background: rgba(255,255,255,.28); border-color: rgba(255,255,255,.8); }
-
-    #search-clear {
-      position: absolute;
-      right: .6rem; top: 50%; transform: translateY(-50%);
-      background: none; border: none;
-      color: rgba(255,255,255,.55);
-      font-size: 1.1rem; cursor: pointer; padding: 0;
-      display: none;
-    }
-    #search-clear:hover { color: #fff; }
+    .band-controls .search-field { flex: 1; }
+    .band-controls .search-field input { padding-top: .6rem; padding-bottom: .6rem; font-size: 1rem; }
+    .band-controls select.field { flex-shrink: 0; max-width: 12rem; }
 
     .hint {
-      font-size: .75rem;
-      color: rgba(255,255,255,.5);
-      text-align: center;
+      font-family: var(--font-ui);
+      font-size: .74rem; color: var(--muted); text-align: center;
     }
     .hint kbd {
-      background: rgba(255,255,255,.12);
-      border: 1px solid rgba(255,255,255,.2);
-      border-radius: 3px;
-      padding: 0 .35rem;
-      font-family: monospace;
-      font-size: .72rem;
+      font-family: var(--font-mono);
+      background: var(--paper-inset); border: 1px solid var(--border);
+      border-radius: 3px; padding: 0 .35rem; font-size: .7rem; color: var(--text-soft);
     }
 
-    /* ── Results layout ──────────────────────────────────── */
+    /* semantic / similar sub-panels */
+    .subpanel { width: 100%; max-width: 560px; display: none; flex-direction: column; align-items: center; gap: .7rem; }
+    .subpanel.show { display: flex; }
+    .embed-source { display: flex; gap: .4rem; }
+    .embed-tab {
+      font-family: var(--font-ui);
+      font-size: .76rem; text-align: center; line-height: 1.3;
+      padding: .35rem .9rem; border-radius: var(--radius-sm);
+      background: var(--paper); color: var(--muted);
+      border: 1px solid var(--border-strong); cursor: pointer; transition: all .14s;
+    }
+    .embed-tab:hover { border-color: var(--faint); color: var(--text); }
+    .embed-tab.active { background: var(--accent); color: #fff; border-color: var(--accent); }
+    [data-theme="dark"] .embed-tab.active { color: #1a140e; }
+    .embed-tab .tl { font-weight: 600; display: block; }
+    .embed-tab .th { font-size: .62rem; opacity: .7; display: block; }
+    .embed-note {
+      font-family: var(--font-ui); font-size: .72rem; color: var(--muted);
+      text-align: center; line-height: 1.55; max-width: 460px;
+    }
+    .embed-note .badge {
+      display: inline-block; font-size: .6rem; font-weight: 600; letter-spacing: .1em;
+      text-transform: uppercase; color: var(--accent); background: var(--accent-tint);
+      border-radius: 100px; padding: .1rem .5rem; margin-right: .35rem; vertical-align: middle;
+    }
+    .embed-panel { display: flex; flex-direction: column; align-items: center; gap: .45rem; width: 100%; }
+    .token-input {
+      font-family: var(--font-mono); font-size: .78rem; color: var(--text);
+      width: 22rem; max-width: 90vw; text-align: center;
+      background: var(--paper); border: 1px solid var(--border-strong);
+      border-radius: var(--radius-sm); padding: .4rem .7rem; outline: none;
+    }
+    .token-input:focus { border-color: var(--accent); box-shadow: 0 0 0 3px var(--accent-tint); }
+    .embed-hint { font-family: var(--font-ui); font-size: .68rem; color: var(--faint); text-align: center; line-height: 1.5; max-width: 440px; }
+    .embed-hint a { color: var(--accent); }
+
+    /* scope pills */
+    .scope-pills { display: flex; gap: .4rem; flex-wrap: wrap; justify-content: center; }
+    .scope-pill {
+      font-family: var(--font-ui); font-size: .76rem;
+      padding: .26rem .9rem; border-radius: 100px;
+      background: var(--paper); color: var(--muted);
+      border: 1px solid var(--border-strong); cursor: pointer; transition: all .14s;
+    }
+    .scope-pill:hover { color: var(--text); border-color: var(--faint); }
+    .scope-pill.active { background: var(--accent-tint); color: var(--accent); border-color: var(--accent-2); }
+
+    .sim-chip {
+      display: inline-flex; align-items: center; gap: .55rem;
+      background: var(--paper); border: 1px solid var(--border-strong);
+      border-radius: var(--radius); padding: .4rem .8rem; max-width: 460px;
+    }
+    .sim-chip .cn { font-family: var(--font-mono); font-size: .76rem; font-weight: 500; color: var(--accent); }
+    .sim-chip .ct { font-family: var(--font-read); font-style: italic; font-size: .82rem; color: var(--text-soft);
+      overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .sim-chip .cx { background: none; border: none; color: var(--faint); cursor: pointer; font-size: .9rem; line-height: 1; }
+    .sim-chip .cx:hover { color: var(--accent); }
+    .sim-prompt { font-family: var(--font-ui); font-size: .76rem; color: var(--muted); }
+    .sim-n-input {
+      font-family: var(--font-mono); width: 4.5rem; text-align: center;
+      background: var(--paper); color: var(--text);
+      border: 1px solid var(--border-strong); border-radius: var(--radius-sm); padding: .25rem .4rem; outline: none;
+    }
+    .status { font-family: var(--font-mono); font-size: .7rem; color: var(--muted); min-height: 1em; text-align: center; }
+    .status.busy { color: var(--accent-2); }
+    .status.ready { color: #3f8a4f; }
+    [data-theme="dark"] .status.ready { color: #7fc98f; }
+
+    /* ── Results layout ──────────────────────────────────────────────────── */
     .results-layout {
-      display: grid;
-      grid-template-columns: 1fr 300px;
-      gap: 1.5rem;
-      max-width: 1100px;
-      margin: 0 auto;
-      padding: 1.75rem 1.5rem 3rem;
+      display: grid; grid-template-columns: 1fr 318px; gap: 1.6rem;
+      max-width: 1120px; margin: 0 auto; padding: 1.8rem 1.5rem 4rem;
     }
-    @media (max-width: 800px) {
-      .results-layout { grid-template-columns: 1fr; }
-      .stats-panel { order: -1; }
-    }
+    @media (max-width: 880px) { .results-layout { grid-template-columns: 1fr; } .stats-col { order: -1; } }
 
-    /* ── Results list ────────────────────────────────────── */
-    .results-list { display: flex; flex-direction: column; gap: 1rem; }
+    .toolbar {
+      display: flex; align-items: center; gap: .7rem; margin-bottom: 1rem;
+      font-family: var(--font-ui); font-size: .76rem; color: var(--muted);
+    }
+    .toolbar .timing { font-family: var(--font-mono); font-size: .7rem; color: var(--faint); }
+    .toolbar select, .toolbar input[type="number"] {
+      font-family: var(--font-ui); font-size: .76rem; color: var(--text);
+      background: var(--paper); border: 1px solid var(--border-strong);
+      border-radius: var(--radius-sm); padding: .2rem .45rem; cursor: pointer;
+    }
+    .toolbar input[type="number"] { width: 3.6rem; }
+
+    .results-list { display: flex; flex-direction: column; gap: .85rem; }
 
     .result-card {
-      background: var(--paper);
-      border: 1px solid var(--border);
-      border-radius: 6px;
-      padding: 1.1rem 1.3rem;
-      text-decoration: none;
-      color: inherit;
-      display: block;
-      transition: border-color .12s, box-shadow .12s;
+      display: block; text-decoration: none; color: inherit;
+      background: var(--paper); border: 1px solid var(--border);
+      border-radius: var(--radius); padding: 1.05rem 1.25rem;
+      box-shadow: var(--shadow-card);
+      transition: border-color .14s, box-shadow .14s, transform .14s;
     }
-    .result-card:hover {
-      border-color: var(--accent-lt);
-      box-shadow: 0 2px 8px rgba(0,0,0,.08);
-    }
+    .result-card:hover { border-color: var(--accent-2); box-shadow: 0 4px 16px -6px rgba(60,40,15,.22); }
 
-    .result-head {
-      display: flex;
-      align-items: baseline;
-      gap: .6rem;
-      margin-bottom: .35rem;
+    .rc-head { display: flex; align-items: flex-start; gap: .6rem; margin-bottom: .6rem; }
+    .rc-n {
+      font-family: var(--font-mono); font-size: .68rem; color: var(--accent);
+      background: var(--accent-tint); border-radius: 4px; padding: .12rem .45rem; flex-shrink: 0;
+      margin-top: .18rem;
     }
-
-    .result-n {
-      font-family: monospace;
-      font-size: .72rem;
-      color: var(--accent);
-      background: var(--active-bg);
-      padding: .1rem .4rem;
-      border-radius: 3px;
-      flex-shrink: 0;
+    .rc-title {
+      font-family: var(--font-read); font-weight: 600; font-size: 1.04rem;
+      line-height: 1.3; color: var(--text); flex: 1; min-width: 0;
     }
-
-    .result-title {
-      font-size: .92rem;
-      font-weight: bold;
-      letter-spacing: .04em;
-      color: var(--accent);
-    }
-
-    .result-score {
-      margin-left: auto;
-      font-size: .68rem;
-      font-family: monospace;
-      color: var(--muted);
-      flex-shrink: 0;
-    }
-
-    .result-fields {
-      display: flex;
-      gap: .35rem;
-      margin-bottom: .5rem;
-    }
-
-    .field-tag {
-      font-size: .65rem;
-      text-transform: uppercase;
-      letter-spacing: .08em;
-      padding: .05rem .4rem;
-      border-radius: 2px;
-      background: var(--sidebar-bg);
-      color: var(--muted);
-      border: 1px solid var(--border);
-    }
-    .field-tag.matched {
-      background: #fef3cd;
-      color: #7a5c00;
-      border-color: #e8d47a;
-    }
-
-    .result-snippet {
-      font-size: .83rem;
-      line-height: 1.65;
-      color: var(--muted);
-      font-style: italic;
-    }
-
-    mark {
-      background: #ffe066;
-      color: inherit;
-      border-radius: 2px;
-      padding: 0 1px;
-      font-style: normal;
-    }
-
-    /* ── Empty / loading states ──────────────────────────── */
-    .state-msg {
-      color: var(--muted);
-      font-style: italic;
-      font-size: .9rem;
-      padding: 2rem 0;
-      text-align: center;
-    }
-
-    /* ── Stats panel ─────────────────────────────────────── */
-    .stats-panel {
-      display: flex;
-      flex-direction: column;
-      gap: 1rem;
-    }
-
-    .stat-block {
-      background: var(--paper);
-      border: 1px solid var(--border);
-      border-radius: 6px;
-      padding: 1rem 1.1rem;
-    }
-
-    .stat-block h3 {
-      font-size: .72rem;
-      text-transform: uppercase;
-      letter-spacing: .1em;
-      color: var(--muted);
-      margin-bottom: .65rem;
-    }
-
-    .big-number {
-      font-size: 2.2rem;
-      font-weight: bold;
-      color: var(--accent);
-      line-height: 1;
-    }
-    .big-sub {
-      font-size: .78rem;
-      color: var(--muted);
-      margin-top: .2rem;
-    }
-
-    /* field breakdown bars */
-    .field-row {
-      display: flex;
-      align-items: center;
-      gap: .5rem;
-      margin-bottom: .45rem;
-      font-size: .78rem;
-    }
-    .field-row .label {
-      width: 4.5rem;
-      color: var(--muted);
-      flex-shrink: 0;
-    }
-    .field-row .bar-track {
-      flex: 1;
-      background: var(--sidebar-bg);
-      border-radius: 2px;
-      height: 8px;
-      overflow: hidden;
-    }
-    .field-row .bar-fill {
-      height: 100%;
-      background: var(--accent);
-      border-radius: 2px;
-      transition: width .4s;
-    }
-    .field-row .count {
-      width: 2rem;
-      text-align: right;
-      color: var(--text);
-      font-family: monospace;
-      font-size: .72rem;
-    }
-
-    /* distribution chart */
-    .dist-chart {
-      width: 100%;
-      overflow: hidden;
-    }
-
-    .dist-bars {
-      display: flex;
-      align-items: flex-end;
-      gap: 2px;
-      height: 70px;
-      margin-bottom: .3rem;
-    }
-
-    .dist-bar {
-      flex: 1;
-      background: var(--accent);
-      opacity: .7;
-      border-radius: 1px 1px 0 0;
-      min-height: 1px;
-      transition: opacity .1s;
-      cursor: default;
-      position: relative;
-    }
-    .dist-bar:hover { opacity: 1; }
-
-    .dist-axis {
-      display: flex;
-      justify-content: space-between;
-      font-size: .62rem;
-      color: var(--muted);
-      font-family: monospace;
-    }
-
-    /* sort control */
-    .sort-row {
-      display: flex;
-      align-items: center;
-      gap: .5rem;
-      margin-bottom: .25rem;
-      font-size: .78rem;
-      color: var(--muted);
-    }
-    .sort-row select {
-      border: 1px solid var(--border);
-      border-radius: 3px;
-      background: var(--paper);
-      font-size: .78rem;
-      padding: .15rem .35rem;
-      cursor: pointer;
-      font-family: inherit;
-      color: var(--text);
-    }
-
-    /* timing */
-    .timing { font-size: .7rem; color: var(--muted); font-family: monospace; }
-
-    /* Scope / K controls (semantic mode) */
-    .sort-row input[type="number"] {
-      width: 3.2rem;
-      border: 1px solid var(--border);
-      border-radius: 3px;
-      background: var(--paper);
-      font-size: .78rem;
-      padding: .15rem .3rem;
-      font-family: inherit;
-      color: var(--text);
-      text-align: center;
-    }
-
-    /* ── Scope pills (Find Similar) ─────────────────── */
-    .scope-pills { display: flex; gap: .35rem; flex-wrap: wrap; justify-content: center; }
-    .scope-pill {
-      padding: .22rem .85rem;
-      border-radius: 20px;
-      border: 1px solid rgba(255,255,255,.2);
-      background: transparent;
-      color: rgba(255,255,255,.45);
-      font-size: .76rem;
-      cursor: pointer;
-      transition: all .15s;
-      font-family: inherit;
-      white-space: nowrap;
-    }
-    .scope-pill:hover { border-color: rgba(255,255,255,.45); color: rgba(255,255,255,.8); }
-    .scope-pill.active {
-      background: rgba(255,255,255,.22);
-      border-color: rgba(255,255,255,.55);
-      color: #fff;
-    }
-
-    /* Reference consilium chip */
-    .sim-chip {
-      display: inline-flex;
-      align-items: center;
-      gap: .45rem;
-      background: rgba(255,255,255,.12);
-      border: 1px solid rgba(255,255,255,.25);
-      border-radius: 6px;
-      padding: .3rem .75rem;
-      font-size: .78rem;
-      color: rgba(255,255,255,.85);
-      max-width: 420px;
-    }
-    .sim-chip .chip-n {
-      font-family: monospace;
-      font-weight: bold;
-      color: #fff;
-      white-space: nowrap;
-    }
-    .sim-chip .chip-title {
-      overflow: hidden;
-      text-overflow: ellipsis;
-      white-space: nowrap;
-      color: rgba(255,255,255,.65);
-      font-style: italic;
-      font-size: .72rem;
-    }
-    .sim-chip .chip-clear {
-      background: none; border: none; color: rgba(255,255,255,.4);
-      cursor: pointer; font-size: .85rem; padding: 0 0 0 .2rem; line-height: 1;
-      flex-shrink: 0;
-    }
-    .sim-chip .chip-clear:hover { color: rgba(255,255,255,.9); }
-    .sim-prompt {
-      font-size: .74rem;
-      color: rgba(255,255,255,.45);
-      font-style: italic;
-    }
-    .sim-n-input {
-      background: rgba(255,255,255,.1);
-      color: #fff;
-      border: 1px solid rgba(255,255,255,.25);
-      border-radius: 4px;
-      padding: .22rem .5rem;
-      font-size: .78rem;
-      font-family: monospace;
-      width: 4.5rem;
-      outline: none;
-      text-align: center;
-    }
-
-    /* ≈ icon button on result cards */
-    .sim-btn {
-      flex-shrink: 0;
-      background: none;
-      border: 1px solid var(--border);
-      border-radius: 4px;
-      color: var(--muted);
-      font-size: .68rem;
-      padding: .1rem .38rem;
-      cursor: pointer;
-      transition: all .12s;
-      font-family: inherit;
-      line-height: 1.3;
-    }
-    .sim-btn:hover { border-color: var(--accent); color: var(--accent); background: #fef3e8; }
-
-    /* PCA color-mode toggle */
-    .pca-color-toggle {
-      display: flex; gap: .25rem;
-    }
-    .pca-color-btn {
-      font-size: .62rem; font-family: inherit;
-      padding: .1rem .45rem; border-radius: 3px;
-      border: 1px solid var(--border);
-      background: var(--paper); color: var(--muted);
-      cursor: pointer; transition: all .1s;
-    }
-    .pca-color-btn.active {
-      background: var(--accent); color: #fff; border-color: var(--accent);
-    }
-
-    /* Volume badge on cross-print result cards */
     .vol-badge {
-      font-size: .62rem;
-      font-family: monospace;
-      background: var(--active-bg);
-      color: var(--muted);
-      border-radius: 3px;
-      padding: .05rem .4rem;
-      margin-left: .3rem;
-      vertical-align: middle;
+      font-family: var(--font-mono); font-size: .6rem; color: var(--muted);
+      background: var(--paper-inset); border: 1px solid var(--border);
+      border-radius: 3px; padding: .08rem .4rem; align-self: center;
     }
+    .rc-score { font-family: var(--font-mono); font-size: .72rem; color: var(--muted); flex-shrink: 0; margin-top: .25rem; }
+    .sim-btn {
+      flex-shrink: 0; font-family: var(--font-ui); font-size: .8rem;
+      background: var(--paper-2); border: 1px solid var(--border-strong);
+      border-radius: var(--radius-sm); color: var(--muted);
+      padding: .1rem .45rem; cursor: pointer; transition: all .12s; line-height: 1.2;
+    }
+    .sim-btn:hover { border-color: var(--accent); color: var(--accent); background: var(--accent-tint); }
 
-    #pca-canvas {
-      display: block;
-      width: 100%;
-      max-width: 100%;
-      height: auto;
-      border-radius: 4px;
-      cursor: crosshair;
+    .rc-fields { display: flex; gap: .35rem; margin-bottom: .55rem; }
+    .field-tag {
+      font-family: var(--font-ui); font-size: .58rem; font-weight: 600;
+      letter-spacing: .1em; text-transform: uppercase;
+      padding: .12rem .45rem; border-radius: 3px;
+      background: var(--paper-inset); color: var(--faint); border: 1px solid var(--border);
     }
-    .pca-legend {
-      display: flex;
-      gap: .75rem;
-      margin-top: .4rem;
-      flex-wrap: wrap;
-      font-size: .72rem;
-      color: var(--muted);
+    .field-tag.matched { background: var(--mark); color: var(--mark-text); border-color: transparent; }
+
+    /* relevance / similarity meter */
+    .rc-meter { height: 4px; background: var(--paper-inset); border-radius: 2px; overflow: hidden; margin-bottom: .55rem; }
+    .rc-meter-fill { height: 100%; border-radius: 2px; background: var(--accent); transition: width .4s; }
+
+    .rc-snippet {
+      font-family: var(--font-read); font-size: .9rem; line-height: 1.6;
+      color: var(--text-soft); font-style: italic;
     }
-    .pca-legend-dot {
-      display: inline-block;
-      width: 8px; height: 8px;
-      border-radius: 50%;
-      margin-right: .25rem;
-      vertical-align: middle;
+    .rc-snippet mark { font-style: normal; }
+
+    .state-msg { font-family: var(--font-read); font-style: italic; color: var(--muted); text-align: center; padding: 2.5rem 0; }
+
+    /* ── Stats column ────────────────────────────────────────────────────── */
+    .stats-col { display: flex; flex-direction: column; gap: 1rem; }
+    .stat-block {
+      background: var(--paper); border: 1px solid var(--border);
+      border-radius: var(--radius); padding: 1.05rem 1.15rem; box-shadow: var(--shadow-card);
     }
+    .stat-block h3 {
+      font-family: var(--font-ui); font-size: .62rem; font-weight: 600;
+      letter-spacing: .16em; text-transform: uppercase; color: var(--faint); margin-bottom: .7rem;
+    }
+    .big-number { font-family: var(--font-read); font-weight: 600; font-size: 2.4rem; line-height: 1; color: var(--accent); }
+    .big-sub { font-family: var(--font-ui); font-size: .76rem; color: var(--muted); margin-top: .35rem; }
+
+    .field-row { display: flex; align-items: center; gap: .55rem; margin-bottom: .5rem; font-family: var(--font-ui); font-size: .76rem; }
+    .field-row:last-child { margin-bottom: 0; }
+    .field-row .label { width: 4.4rem; color: var(--muted); flex-shrink: 0; }
+    .field-row .bar-track { flex: 1; background: var(--paper-inset); border-radius: 2px; height: 7px; overflow: hidden; }
+    .field-row .bar-fill { height: 100%; background: var(--accent); border-radius: 2px; transition: width .4s; }
+    .field-row .count { width: 2rem; text-align: right; font-family: var(--font-mono); font-size: .72rem; color: var(--text); }
+
+    .dist-bars { display: flex; align-items: flex-end; gap: 2px; height: 64px; margin-bottom: .35rem; }
+    .dist-bar { flex: 1; background: var(--accent); opacity: .55; border-radius: 1px 1px 0 0; min-height: 2px; transition: opacity .12s, height .4s; }
+    .dist-bar:hover { opacity: 1; }
+    .dist-axis { display: flex; justify-content: space-between; font-family: var(--font-mono); font-size: .6rem; color: var(--faint); }
+
+    .score-row { display: flex; justify-content: space-between; font-family: var(--font-ui); font-size: .76rem; color: var(--muted); margin-bottom: .35rem; }
+    .score-row:last-child { margin-bottom: 0; }
+    .score-row b { font-family: var(--font-mono); font-weight: 500; color: var(--text); }
+
+    /* PCA map */
+    .pca-head { display: flex; align-items: center; justify-content: space-between; margin-bottom: .6rem; }
+    .pca-toggle { display: flex; gap: .25rem; }
+    .pca-btn {
+      font-family: var(--font-ui); font-size: .6rem; padding: .12rem .45rem; border-radius: 3px;
+      background: var(--paper-2); color: var(--muted); border: 1px solid var(--border-strong); cursor: pointer;
+    }
+    .pca-btn.active { background: var(--accent); color: #fff; border-color: var(--accent); }
+    [data-theme="dark"] .pca-btn.active { color: #1a140e; }
+    #pca-canvas { display: block; width: 100%; height: auto; border-radius: var(--radius-sm); background: var(--paper-inset); cursor: crosshair; }
+    .pca-legend { display: flex; flex-direction: column; gap: .2rem; margin-top: .55rem; font-family: var(--font-ui); font-size: .66rem; color: var(--muted); }
+    .pca-legend span.row { display: flex; align-items: center; gap: .4rem; }
+    .pca-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
     #pca-tooltip {
-      position: fixed;
-      background: var(--text);
-      color: var(--bg);
-      font-size: .7rem;
-      padding: .25rem .55rem;
-      border-radius: 4px;
-      pointer-events: none;
-      display: none;
-      z-index: 100;
-      max-width: 260px;
-      line-height: 1.4;
+      position: fixed; z-index: 100; pointer-events: none; display: none;
+      background: var(--text); color: var(--paper);
+      font-family: var(--font-ui); font-size: .7rem; line-height: 1.4;
+      padding: .3rem .6rem; border-radius: var(--radius-sm); max-width: 240px;
+      box-shadow: var(--shadow-pop);
     }
+    #pca-tooltip .tn { font-family: var(--font-mono); }
 
-    /* Semantic similarity bar */
-    .sem-bar-track {
-      height: 3px;
-      background: var(--border);
-      border-radius: 1px;
-      margin: .5rem 0 .45rem;
-      overflow: hidden;
-    }
-    .sem-bar-fill {
-      height: 100%;
-      border-radius: 1px;
-      transition: width .35s;
-    }
-
-    /* Mode toggle */
-    .mode-toggle { display: flex; gap: .3rem; }
-    .mode-btn {
-      background: rgba(255,255,255,.1);
-      color: rgba(255,255,255,.65);
-      border: 1px solid rgba(255,255,255,.22);
-      border-radius: 4px;
-      padding: .22rem .75rem;
-      font-size: .8rem;
-      font-family: inherit;
-      cursor: pointer;
-      transition: background .12s, color .12s, border-color .12s;
-    }
-    .mode-btn.active {
-      background: rgba(255,255,255,.28);
-      color: #fff;
-      border-color: rgba(255,255,255,.6);
-    }
-    .model-status {
-      font-size: .7rem;
-      color: rgba(255,255,255,.45);
-      font-family: monospace;
-      min-height: 1em;
-      text-align: center;
-    }
-    .model-status.busy  { color: rgba(255,215,80,.75); }
-    .model-status.ready { color: rgba(120,230,120,.75); }
-
-    /* ── Embedding source selector ───────────────────── */
-    .embed-source {
-      display: flex;
-      gap: .4rem;
-      flex-wrap: wrap;
-      justify-content: center;
-    }
-    .embed-tab {
-      padding: .28rem .9rem;
-      border-radius: 4px;
-      border: 1px solid rgba(255,255,255,.18);
-      background: rgba(255,255,255,.05);
-      color: rgba(255,255,255,.5);
-      font-size: .78rem;
-      cursor: pointer;
-      transition: all .15s;
-      font-family: inherit;
-      text-align: center;
-      line-height: 1.3;
-      white-space: nowrap;
-    }
-    .embed-tab:hover { background: rgba(255,255,255,.13); color: rgba(255,255,255,.85); }
-    .embed-tab.active {
-      background: rgba(255,255,255,.2);
-      color: #fff;
-      border-color: rgba(255,255,255,.5);
-    }
-    .embed-tab .tab-label { font-weight: bold; font-size: .8rem; display: block; }
-    .embed-tab .tab-hint  { font-size: .63rem; opacity: .65; display: block; margin-top: .1rem; }
-    .embed-detail {
-      text-align: center;
-      color: rgba(255,255,255,.5);
-      font-size: .72rem;
-      max-width: 460px;
-      line-height: 1.5;
-    }
-    .embed-detail input[type="password"] {
-      display: block;
-      margin: 0 auto .3rem;
-      width: 22rem;
-      max-width: 90vw;
-      background: rgba(255,255,255,.1);
-      color: #fff;
-      border: 1px solid rgba(255,255,255,.25);
-      border-radius: 4px;
-      padding: .25rem .7rem;
-      font-size: .75rem;
-      font-family: monospace;
-      outline: none;
-    }
-    .embed-action-btn {
-      display: inline-block;
-      margin-bottom: .3rem;
-      background: rgba(255,255,255,.08);
-      color: rgba(255,255,255,.7);
-      border: 1px solid rgba(255,255,255,.2);
-      border-radius: 4px;
-      padding: .25rem .9rem;
-      font-size: .78rem;
-      font-family: inherit;
-      cursor: pointer;
-      transition: all .15s;
-    }
-    .embed-action-btn:hover:not(:disabled) { background: rgba(255,255,255,.16); color: #fff; }
-    .embed-action-btn.ready-state {
-      background: rgba(120,230,120,.15);
-      color: rgba(150,255,150,.85);
-      border-color: rgba(120,230,120,.35);
-      cursor: default;
-    }
+    .empty-hero { text-align: center; padding: 4rem 1.5rem; }
+    .empty-hero .eh-mark { font-family: var(--font-read); font-size: 2.6rem; color: var(--faint); margin-bottom: .5rem; }
+    .empty-hero p { font-family: var(--font-read); font-style: italic; color: var(--muted); font-size: 1.02rem; }
   </style>
 </head>
 <body>
 
-<header>
-  <h1>Consilia</h1>
+<header class="masthead">
+  <a class="wordmark" href="index.html">Consilia</a>
+  <span class="mast-sub">Baldo de Ubaldis</span>
+  <span style="flex:1"></span>
   <nav class="topnav">
     <a href="index.html">Reader</a>
     <a href="search.html" class="active">Search</a>
   </nav>
+  <button id="theme-toggle" class="icon-btn" title="Dark reading mode"></button>
 </header>
 
-<div class="hero">
-  <div class="hero-controls">
-    <select id="author-select"></select>
-    <select id="volume-select"></select>
-    <div class="search-box">
-      <input id="search-input" type="search" placeholder="Search consilia…" autocomplete="off" spellcheck="false">
-      <button id="search-clear" title="Clear">&#x2715;</button>
-    </div>
-  </div>
-  <div class="mode-toggle">
-    <button class="mode-btn active" id="btn-keyword"  onclick="setMode('keyword')">Keyword</button>
-    <button class="mode-btn"        id="btn-semantic" onclick="setMode('semantic')">Semantic</button>
-    <button class="mode-btn"        id="btn-similar"  onclick="setMode('similar')">≈ Similar</button>
-  </div>
-  <p class="hint" id="search-hint">
-    Normalised &mdash;
-    <kbd>j</kbd>=<kbd>i</kbd> &nbsp; <kbd>v</kbd>=<kbd>u</kbd> &nbsp;
-    <kbd>ae</kbd>=<kbd>e</kbd> &nbsp;·&nbsp; prefix &amp; fuzzy
-  </p>
-  <div id="sem-controls" style="display:none; flex-direction:column; align-items:center; gap:.5rem; width:100%; max-width:560px; margin-top:.2rem">
-
-    <div class="embed-source">
-      <button class="embed-tab active" id="etab-hf-api" onclick="setEmbedMode('hf-api')">
-        <span class="tab-label">HF API</span>
-        <span class="tab-hint">Free account · queries on HF servers</span>
-      </button>
-      <button class="embed-tab" id="etab-local" onclick="setEmbedMode('local')">
-        <span class="tab-label">Local model</span>
-        <span class="tab-hint">Offline · ~130 MB once</span>
-      </button>
-    </div>
-
-    <div class="embed-detail" id="epanel-hf-api">
-      <input id="hf-token" type="password" placeholder="HuggingFace token (hf_…)"
-             autocomplete="off" spellcheck="false">
-      A free token is required.
-      <a href="https://huggingface.co/settings/tokens" target="_blank"
-         style="color:rgba(255,200,100,.8);text-decoration:underline">
-        huggingface.co/settings/tokens</a>
-      — create a read token, paste it above.
-      Stored locally in your browser only.
-    </div>
-
-    <div class="embed-detail" id="epanel-local" style="display:none">
-      <button class="embed-action-btn" id="btn-local-model" onclick="activateLocalModel()">
-        Download BGE-M3 ONNX model (~130 MB)
-      </button>
-      Downloaded once, cached in your browser. No account needed.
-      All queries run locally — no data leaves your machine.
-    </div>
-
-    <div class="model-status" id="model-status"></div>
-  </div>
-
-  <!-- ── Similar-mode controls ───────────────────────────────────── -->
-  <div id="sim-controls" style="display:none; flex-direction:column; align-items:center; gap:.45rem; width:100%; max-width:560px; margin-top:.2rem">
-
-    <div id="sim-ref-row" style="display:flex;align-items:center;gap:.5rem;flex-wrap:wrap;justify-content:center">
-      <span class="sim-prompt">Choose a consilium — click ≈ on any result, or enter n =</span>
-      <input id="sim-n-input" class="sim-n-input" type="number" min="1" placeholder="n"
-             onchange="findSimilarByInput()" onkeydown="if(event.key==='Enter')findSimilarByInput()">
-    </div>
-    <div id="sim-chip-row" style="display:none">
-      <div class="sim-chip" id="sim-chip">
-        <span class="chip-n" id="chip-n"></span>
-        <span class="chip-title" id="chip-title"></span>
-        <button class="chip-clear" onclick="clearSimilar()" title="Clear">×</button>
+<div class="band">
+  <div class="band-inner">
+    <div class="band-eyebrow">Search the corpus</div>
+    <div class="band-controls">
+      <select id="author-select" class="field" title="Author"></select>
+      <select id="volume-select" class="field" title="Print / volume"></select>
+      <div class="search-field">
+        <span class="s-glyph">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg>
+        </span>
+        <input id="search-input" type="search" placeholder="Search consilia…" autocomplete="off" spellcheck="false">
+        <button id="search-clear" class="s-clear" title="Clear">&#x2715;</button>
       </div>
     </div>
 
-    <div class="scope-pills" id="scope-pills">
-      <button class="scope-pill active" id="spill-volume" onclick="setSimilarScope('volume')">In this print</button>
-      <button class="scope-pill"        id="spill-author" onclick="setSimilarScope('author')">All Baldo</button>
-      <button class="scope-pill"        id="spill-all"    onclick="setSimilarScope('all')">All corpus</button>
+    <div class="seg mode-toggle">
+      <button class="active" id="btn-keyword"  onclick="setMode('keyword')">Keyword</button>
+      <button id="btn-semantic" onclick="setMode('semantic')">Semantic</button>
+      <button id="btn-similar"  onclick="setMode('similar')">&#8776; Similar</button>
     </div>
 
-    <div class="model-status" id="sim-status"></div>
+    <p class="hint" id="search-hint">
+      Normalised &mdash; <kbd>j</kbd>=<kbd>i</kbd> &nbsp; <kbd>v</kbd>=<kbd>u</kbd> &nbsp; <kbd>ae</kbd>=<kbd>e</kbd>
+      &nbsp;·&nbsp; prefix &amp; fuzzy
+    </p>
+
+    <!-- semantic controls -->
+    <div class="subpanel" id="sem-controls">
+      <div class="embed-source">
+        <button class="embed-tab active" id="etab-hf"    onclick="setEmbedMode('hf')"><span class="tl">HF API</span><span class="th">free token · runs on HF servers</span></button>
+        <button class="embed-tab"        id="etab-local" onclick="setEmbedMode('local')"><span class="tl">Local model</span><span class="th">offline · ~130 MB once</span></button>
+      </div>
+      <div class="embed-panel" id="epanel-hf">
+        <input id="hf-token" class="token-input" type="password" placeholder="HuggingFace token (hf_…)" autocomplete="off" spellcheck="false">
+        <div class="embed-hint">A free read token from <a href="https://huggingface.co/settings/tokens" target="_blank" rel="noopener">huggingface.co/settings/tokens</a> is required for live queries. Stored only in this browser.</div>
+      </div>
+      <div class="embed-panel" id="epanel-local" style="display:none">
+        <button class="btn" id="btn-local-model" onclick="activateLocalModel()">Download BGE-M3 ONNX model (~130 MB)</button>
+        <div class="embed-hint">Downloaded once and cached. All queries run locally — no data leaves your machine.</div>
+      </div>
+      <div class="embed-note" id="embed-note" style="display:none"><span class="badge">Preview</span> No <code>embeddings.safetensors</code> found — using a synthetic projection so the interface stays explorable. Add the embeddings file to enable real BGE-M3 search.</div>
+      <div class="status" id="model-status"></div>
+    </div>
+
+    <!-- similar controls -->
+    <div class="subpanel" id="sim-controls">
+      <div id="sim-ref-row" style="display:flex;align-items:center;gap:.5rem;flex-wrap:wrap;justify-content:center">
+        <span class="sim-prompt">Choose a consilium — click &#8776; on any result, or enter n =</span>
+        <input id="sim-n-input" class="sim-n-input" type="number" min="1" placeholder="n"
+               onchange="findSimilarByInput()" onkeydown="if(event.key==='Enter')findSimilarByInput()">
+      </div>
+      <div id="sim-chip-row" style="display:none">
+        <div class="sim-chip">
+          <span class="cn" id="chip-n"></span>
+          <span class="ct" id="chip-title"></span>
+          <button class="cx" onclick="clearSimilar()" title="Clear">&#x2715;</button>
+        </div>
+      </div>
+      <div class="scope-pills">
+        <button class="scope-pill active" id="spill-volume" onclick="setSimilarScope('volume')">In this print</button>
+        <button class="scope-pill"        id="spill-author" onclick="setSimilarScope('author')">All by author</button>
+        <button class="scope-pill"        id="spill-all"    onclick="setSimilarScope('all')">All corpus</button>
+      </div>
+      <div class="status" id="sim-status"></div>
+    </div>
   </div>
 </div>
 
-<div class="results-layout" id="results-layout" style="display:none">
+<div id="empty-state" class="empty-hero">
+  <div class="eh-mark">&#8270;</div>
+  <p id="empty-text">Begin typing to search the consilia.</p>
+</div>
 
+<div class="results-layout" id="results-layout" style="display:none">
   <section>
-    <div class="sort-row">
-      <span id="result-timing" class="timing"></span>
+    <div class="toolbar">
+      <span class="timing" id="result-timing"></span>
       <span style="flex:1"></span>
-      <label id="scope-ctrl" style="display:none">
-        Scope:
-        <select id="scope-select" onchange="rerenderSemantic()">
+      <label id="scope-ctrl" style="display:none">Scope
+        <select id="scope-select" onchange="rerender()">
           <option value="volume">This print</option>
           <option value="all">All prints</option>
-        </select>
-      </label>
-      <label id="topk-ctrl" style="display:none">
-        Top&nbsp;K:
-        <input id="topk-input" type="number" min="5" max="500" value="20"
-               onchange="rerenderSemantic()">
-      </label>
-      Sort:
-      <select id="sort-select" onchange="rerenderSemantic()">
-        <option value="score">Relevance</option>
-        <option value="n">Sequence (n)</option>
-      </select>
+        </select></label>
+      <label id="topk-ctrl" style="display:none">Top&nbsp;K
+        <input id="topk-input" type="number" min="5" max="200" value="20" onchange="rerender()"></label>
+      <label>Sort
+        <select id="sort-select" onchange="rerender()">
+          <option value="score">Relevance</option>
+          <option value="n">Sequence (n)</option>
+        </select></label>
     </div>
     <div class="results-list" id="results-list"></div>
   </section>
-  <div id="pca-tooltip"></div>
 
-  <aside class="stats-panel">
-
+  <aside class="stats-col">
     <div class="stat-block">
-      <h3>Matches</h3>
+      <h3 id="count-head">Matches</h3>
       <div class="big-number" id="stat-count">0</div>
       <div class="big-sub" id="stat-pct"></div>
     </div>
 
-    <div class="stat-block">
+    <div class="stat-block" id="fields-block">
       <h3>Fields matched</h3>
-      <div class="field-row">
-        <span class="label">Title</span>
-        <div class="bar-track"><div class="bar-fill" id="bar-title" style="width:0%"></div></div>
-        <span class="count" id="cnt-title">0</span>
-      </div>
-      <div class="field-row">
-        <span class="label">Summary</span>
-        <div class="bar-track"><div class="bar-fill" id="bar-summary" style="width:0%"></div></div>
-        <span class="count" id="cnt-summary">0</span>
-      </div>
-      <div class="field-row">
-        <span class="label">Body</span>
-        <div class="bar-track"><div class="bar-fill" id="bar-body" style="width:0%"></div></div>
-        <span class="count" id="cnt-body">0</span>
-      </div>
+      <div class="field-row"><span class="label">Title</span><div class="bar-track"><div class="bar-fill" id="bar-title" style="width:0%"></div></div><span class="count" id="cnt-title">0</span></div>
+      <div class="field-row"><span class="label">Summary</span><div class="bar-track"><div class="bar-fill" id="bar-summary" style="width:0%"></div></div><span class="count" id="cnt-summary">0</span></div>
+      <div class="field-row"><span class="label">Body</span><div class="bar-track"><div class="bar-fill" id="bar-body" style="width:0%"></div></div><span class="count" id="cnt-body">0</span></div>
     </div>
 
     <div class="stat-block">
-      <h3>Distribution across volume</h3>
-      <div class="dist-chart">
-        <div class="dist-bars" id="dist-bars"></div>
-        <div class="dist-axis" id="dist-axis"></div>
-      </div>
+      <h3>Distribution across print</h3>
+      <div class="dist-bars" id="dist-bars"></div>
+      <div class="dist-axis" id="dist-axis"></div>
     </div>
 
     <div class="stat-block">
-      <h3>Score range</h3>
-      <div class="field-row" style="margin:0">
-        <span class="label">Highest</span>
-        <span class="count" style="width:auto; font-size:.75rem" id="stat-score-max">—</span>
-      </div>
-      <div class="field-row" style="margin:.3rem 0 0">
-        <span class="label">Lowest (top K)</span>
-        <span class="count" style="width:auto; font-size:.75rem" id="stat-score-min">—</span>
-      </div>
+      <h3 id="score-head">Score range</h3>
+      <div class="score-row"><span>Highest</span><b id="stat-score-max">—</b></div>
+      <div class="score-row"><span>Lowest (top K)</span><b id="stat-score-min">—</b></div>
     </div>
 
-    <div class="stat-block" id="sem-map-block" style="display:none">
-      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:.5rem">
-        <h3 style="margin:0">Semantic Map · PCA</h3>
-        <div class="pca-color-toggle">
-          <button class="pca-color-btn active" id="pcabtn-volume"  onclick="setPCAColor('volume')">Volume</button>
-          <button class="pca-color-btn"        id="pcabtn-cluster" onclick="setPCAColor('cluster')">Cluster k=<input id="k-input" type="number" min="3" max="20" value="12" style="width:2.2rem;border:none;background:transparent;font-size:.62rem;font-family:monospace;color:inherit;padding:0;outline:none" onclick="event.stopPropagation()" onchange="resetClusters()"></button>
-          <button class="pca-color-btn" onclick="resetClusters();if(pcaColorMode==='cluster')computeClusters();" title="Recompute clusters (random re-seed)">↺</button>
+    <div class="stat-block" id="pca-block" style="display:none">
+      <div class="pca-head">
+        <h3 style="margin:0">Semantic map</h3>
+        <div class="pca-toggle">
+          <button class="pca-btn active" id="pcb-cluster" onclick="setPcaColor('cluster')">Topic</button>
+          <button class="pca-btn"        id="pcb-volume"  onclick="setPcaColor('volume')">Print</button>
         </div>
       </div>
-      <canvas id="pca-canvas" width="520" height="380"
-              style="width:100%;height:auto;border-radius:3px;cursor:crosshair;display:block"></canvas>
-      <div class="pca-legend" id="pca-legend" style="margin-top:.4rem"></div>
-      <div style="font-size:.62rem;color:var(--muted);margin-top:.35rem;line-height:1.4">
-        Each dot = one consilium · color = print · <strong style="color:var(--accent)">highlighted</strong> = top-K results<br>
-        Hover for details · click to open
-      </div>
+      <canvas id="pca-canvas" width="560" height="420"></canvas>
+      <div class="pca-legend" id="pca-legend"></div>
     </div>
-
   </aside>
 </div>
-
-<div id="initial-msg" class="state-msg" style="padding-top:3rem">
-  Enter a search term above to find consilia.
-</div>
-
-<script src="vendor/minisearch.min.js"></script>
-<script>
-// ── normalisation (same as reader) ─────────────────────────────────────────
-function normalise(term) {
-  return term.toLowerCase()
-    .replace(/æ/g, 'e').replace(/ę/g, 'e').replace(/ae/g, 'e')
-    .replace(/j/g, 'i').replace(/v/g, 'u');
-}
-
-function termToRegexPart(nt) {
-  let p = '';
-  for (let i = 0; i < nt.length; i++) {
-    switch (nt[i]) {
-      case 'i': p += '[ij]'; break;
-      case 'u': p += '[uv]'; break;
-      case 'e': p += '(?:ae|[eæę])'; break;
-      default:  p += nt[i].replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-    }
-  }
-  return p;
-}
-
-function buildHighlightRe(rawQuery) {
-  const tokens = rawQuery.trim().split(/\s+/).filter(Boolean);
-  if (!tokens.length) return null;
-  const parts = tokens.map(t => termToRegexPart(normalise(t)));
-  return new RegExp(`(${parts.join('|')})`, 'gi');
-}
-
-function highlightText(text, re) {
-  if (!re || !text) return esc(text);
-  re.lastIndex = 0;
-  const out = []; let last = 0, m;
-  while ((m = re.exec(text)) !== null) {
-    out.push(esc(text.slice(last, m.index)));
-    out.push(`<mark>${esc(m[0])}</mark>`);
-    last = m.index + m[0].length;
-  }
-  out.push(esc(text.slice(last)));
-  return out.join('');
-}
-
-// Extract a snippet around the first match
-function snippet(text, re, ctx = 120) {
-  if (!text) return '';
-  re.lastIndex = 0;
-  const m = re.exec(text);
-  if (!m) return text.slice(0, ctx * 2);
-  const s = Math.max(0, m.index - ctx);
-  const e = Math.min(text.length, m.index + ctx);
-  return (s > 0 ? '…' : '') + text.slice(s, e) + (e < text.length ? '…' : '');
-}
-
-function esc(s) {
-  return String(s ?? '')
-    .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
-}
-
-// ── state ──────────────────────────────────────────────────────────────────
-let consilia   = {};
-let authors    = {};      // output/authors.json
-let miniSearch = null;
-let volume     = null;
-let items      = [];      // sorted array for current volume
-let lastResults = [];
-let searchTimer = null;
-
-// ── boot ───────────────────────────────────────────────────────────────────
-Promise.all([
-  fetch('output/consilia.json').then(r => r.json()),
-  fetch('output/authors.json').then(r => r.json()).catch(() => ({})),
-]).then(([consiliaData, authorsData]) => {
-  consilia = consiliaData.consilia;
-  authors  = authorsData;
-
-  // author dropdown
-  const authSel = document.getElementById('author-select');
-  const allOpt = document.createElement('option');
-  allOpt.value = ''; allOpt.textContent = 'All prints';
-  authSel.appendChild(allOpt);
-  Object.entries(authors).forEach(([viaf, info]) => {
-    const o = document.createElement('option');
-    o.value = viaf; o.textContent = info.name || viaf.replace(/_/g, ' ');
-    authSel.appendChild(o);
-  });
-  authSel.addEventListener('change', () => {
-    populateVolumeSelect(authSel.value);
-    const sel = document.getElementById('volume-select');
-    if (sel.options.length > 0) loadVolume(sel.options[0].value);
-  });
-
-  // volume dropdown
-  populateVolumeSelect('');
-  const sel = document.getElementById('volume-select');
-  sel.addEventListener('change', () => loadVolume(sel.value));
-  loadVolume(sel.options[0].value);
-
-  // Handle ?similar=N&vol=VOLUME from reader deep-link
-  const params = new URLSearchParams(location.search);
-  const simN   = parseInt(params.get('similar') ?? '', 10);
-  const simVol = params.get('vol');
-  if (simN && simVol) {
-    setMode('similar');
-    // Set volume select to match
-    const volOpt = [...sel.options].find(o => o.value === simVol);
-    if (volOpt) { sel.value = simVol; loadVolume(simVol); }
-    findSimilarByNVol(simN, simVol);
-  }
-}).catch(err => {
-  document.getElementById('initial-msg').textContent =
-    'Could not load consilia.json: ' + err.message;
-});
-
-// ── populate volume dropdown ────────────────────────────────────────────────
-function populateVolumeSelect(authorFilter) {
-  const allVolumes = [...new Set(Object.values(consilia).map(c => c.volume))].sort();
-  const filtered = authorFilter
-    ? allVolumes.filter(v => authors[authorFilter]?.prints?.includes(v))
-    : allVolumes;
-  const sel = document.getElementById('volume-select');
-  sel.innerHTML = '';
-  filtered.forEach(v => {
-    const o = document.createElement('option');
-    o.value = v; o.textContent = v.replace(/_/g, ' ');
-    sel.appendChild(o);
-  });
-}
-
-// ── volume ─────────────────────────────────────────────────────────────────
-function loadVolume(v) {
-  volume = v;
-  items  = Object.values(consilia)
-    .filter(c => c.volume === v)
-    .sort((a, b) => a.n - b.n || a.id.localeCompare(b.id));
-
-  miniSearch = new MiniSearch({
-    fields: ['title', 'summary', 'body'],
-    idField: 'idx',
-    processTerm: normalise,
-    searchOptions: {
-      boost: { title: 3, summary: 1.5, body: 1 },
-      prefix: true,
-      fuzzy: term => term.length > 4 ? 0.15 : false,
-    },
-  });
-  miniSearch.addAll(items.map((c, i) => ({
-    idx: i,
-    title:   c.title   || '',
-    summary: c.summary || '',
-    body:    (c.body   || []).join(' '),
-  })));
-
-  // Re-run any existing query against the new volume
-  const q = document.getElementById('search-input').value.trim();
-  if (q) runSearch(q); else clearResults();
-}
-
-// ── search ─────────────────────────────────────────────────────────────────
-document.getElementById('search-input').addEventListener('input', e => {
-  clearTimeout(searchTimer);
-  const q = e.target.value;
-  document.getElementById('search-clear').style.display = q ? 'block' : 'none';
-  const delay = searchMode === 'semantic' ? 500 : 220;
-  searchTimer = setTimeout(() => {
-    if (!q.trim()) { clearResults(); return; }
-    if (searchMode === 'semantic') runSemanticSearch(q);
-    else runSearch(q);
-  }, delay);
-});
-
-document.getElementById('search-clear').addEventListener('click', () => {
-  document.getElementById('search-input').value = '';
-  document.getElementById('search-clear').style.display = 'none';
-  clearResults();
-});
-
-document.getElementById('sort-select').addEventListener('change', () => {
-  if (searchMode === 'semantic' && lastSemResults.length) {
-    renderSemanticResults(lastSemResults);
-  } else if (lastResults.length) {
-    renderResults(lastResults, buildHighlightRe(document.getElementById('search-input').value));
-  }
-});
-
-function runSearch(raw) {
-  const t0 = performance.now();
-  const results = miniSearch.search(raw);
-  const elapsed = performance.now() - t0;
-
-  lastResults = results;
-  const re = buildHighlightRe(raw);
-
-  document.getElementById('initial-msg').style.display = 'none';
-  document.getElementById('results-layout').style.display = '';
-  document.getElementById('result-timing').textContent =
-    `${results.length} result${results.length !== 1 ? 's' : ''} in ${elapsed.toFixed(1)} ms`;
-
-  restoreFieldRows();
-  renderStats(results);
-  renderResults(results, re);
-}
-
-function clearResults() {
-  lastResults = [];
-  lastSemResults = [];
-  document.getElementById('results-layout').style.display = 'none';
-  document.getElementById('initial-msg').style.display = '';
-  restoreFieldRows();
-}
-
-// ── render results ─────────────────────────────────────────────────────────
-function renderResults(results, re) {
-  const sort = document.getElementById('sort-select').value;
-  const sorted = [...results].sort((a, b) =>
-    sort === 'n' ? (items[a.id]?.n ?? 0) - (items[b.id]?.n ?? 0)
-                 : b.score - a.score
-  );
-
-  const list = document.getElementById('results-list');
-  list.innerHTML = '';
-
-  if (!sorted.length) {
-    list.innerHTML = '<div class="state-msg">No matching consilia.</div>';
-    return;
-  }
-
-  sorted.forEach(r => {
-    const c = items[r.id];
-    if (!c) return;
-
-    // Which fields matched?
-    const matchedFields = new Set(Object.values(r.match).flat());
-
-    // Best snippet: prefer title match, then summary, then body
-    let snippetHtml = '';
-    if (matchedFields.has('title')) {
-      snippetHtml = highlightText(c.title, re);
-    } else if (matchedFields.has('summary') && c.summary) {
-      snippetHtml = highlightText(snippet(c.summary, re), re);
-    } else if (matchedFields.has('body')) {
-      const bodyText = (c.body || []).join(' ');
-      snippetHtml = highlightText(snippet(bodyText, re), re);
-    }
-
-    const readerUrl = `index.html?n=${c.n}`;
-
-    const el = document.createElement('a');
-    el.className = 'result-card';
-    el.href      = readerUrl;
-
-    el.innerHTML = `
-      <div class="result-head">
-        <span class="result-n">n = ${c.n}</span>
-        <span class="result-title">${esc(c.title)}</span>
-        <span class="result-score">${r.score.toFixed(1)}</span>
-        <button class="sim-btn" onclick="event.preventDefault();findSimilarFromCard(${c.n},'${c.volume}')" title="Find similar">≈</button>
-      </div>
-      <div class="result-fields">
-        ${['title','summary','body'].map(f =>
-          `<span class="field-tag ${matchedFields.has(f) ? 'matched' : ''}">${f}</span>`
-        ).join('')}
-      </div>
-      <div class="result-snippet">${snippetHtml}</div>
-    `;
-    list.appendChild(el);
-  });
-}
-
-// ── render stats ───────────────────────────────────────────────────────────
-function renderStats(results) {
-  const total = items.length;
-  const count = results.length;
-
-  document.getElementById('stat-count').textContent = count;
-  document.getElementById('stat-pct').textContent   =
-    `${((count / total) * 100).toFixed(1)}% of ${total} consilia`;
-
-  // Field breakdown
-  const fieldCounts = { title: 0, summary: 0, body: 0 };
-  results.forEach(r => {
-    const matched = new Set(Object.values(r.match).flat());
-    matched.forEach(f => { if (f in fieldCounts) fieldCounts[f]++; });
-  });
-  const maxField = Math.max(...Object.values(fieldCounts), 1);
-  ['title', 'summary', 'body'].forEach(f => {
-    document.getElementById(`cnt-${f}`).textContent = fieldCounts[f];
-    document.getElementById(`bar-${f}`).style.width  =
-      `${(fieldCounts[f] / maxField * 100).toFixed(1)}%`;
-  });
-
-  // Score range
-  if (results.length) {
-    const scores = results.map(r => r.score);
-    document.getElementById('stat-score-max').textContent = Math.max(...scores).toFixed(2);
-    document.getElementById('stat-score-min').textContent = Math.min(...scores).toFixed(2);
-  } else {
-    document.getElementById('stat-score-max').textContent = '—';
-    document.getElementById('stat-score-min').textContent = '—';
-  }
-
-  // Distribution histogram
-  renderDistribution(results);
-}
-
-// ── semantic search state ──────────────────────────────────────────────────
-let searchMode    = 'keyword';
-let semEmbeddings = null;   // Float32Array [N * D], normalized
-let semMeta       = null;   // {ids, ns, dims, n, model}
-let lastSemResults = [];    // [{c, score, idx}]
-let lastSimResults = [];    // [{c, score, idx}] — similar-mode results
-let semExtractor  = null;   // transformers.js pipeline (local ONNX model)
-let localModelState = '';   // '' | 'loading' | 'ready'
-let embedMode = 'hf-api';   // 'hf-api' | 'local'
-
-function setMode(mode) {
-  searchMode = mode;
-  document.getElementById('btn-keyword').classList.toggle('active', mode === 'keyword');
-  document.getElementById('btn-semantic').classList.toggle('active', mode === 'semantic');
-  document.getElementById('sem-controls').style.display = mode === 'semantic' ? 'flex' : 'none';
-  document.getElementById('sim-controls').style.display = mode === 'similar'  ? 'flex' : 'none';
-  document.getElementById('scope-ctrl').style.display   = mode === 'semantic' ? '' : 'none';
-  document.getElementById('topk-ctrl').style.display    = (mode === 'semantic' || mode === 'similar') ? '' : 'none';
-  ['keyword','semantic','similar'].forEach(m =>
-    document.getElementById('btn-' + m).classList.toggle('active', m === mode)
-  );
-  if (mode !== 'semantic' && mode !== 'similar') {
-    setModelStatus('');
-    document.getElementById('sem-map-block').style.display = 'none';
-  }
-  const hint = document.getElementById('search-hint');
-  if (mode === 'semantic') {
-    hint.innerHTML = 'BGE-M3 · 1 508 consilia · Latin, German, or English';
-    setEmbedMode(embedMode);
-  } else if (mode === 'similar') {
-    hint.innerHTML = 'Cosine similarity · BGE-M3 embeddings · choose reference consilium below';
-    if (simRefIdx !== null) runSimilarSearch();
-    return;
-  } else {
-    hint.innerHTML = 'Normalised &mdash; <kbd>j</kbd>=<kbd>i</kbd> &nbsp; <kbd>v</kbd>=<kbd>u</kbd> &nbsp; <kbd>ae</kbd>=<kbd>e</kbd> &nbsp;·&nbsp; prefix &amp; fuzzy';
-  }
-  const q = document.getElementById('search-input').value.trim();
-  if (!q) { clearResults(); return; }
-  if (mode === 'semantic') runSemanticSearch(q);
-  else runSearch(q);
-}
-
-function setEmbedMode(mode) {
-  embedMode = mode;
-  ['hf-api', 'local'].forEach(m => {
-    document.getElementById('etab-' + m).classList.toggle('active', m === mode);
-    document.getElementById('epanel-' + m).style.display = m === mode ? '' : 'none';
-  });
-  if (mode === 'hf-api') {
-    const hasToken = !!localStorage.getItem('hf_token');
-    setModelStatus(hasToken ? 'Ready · HF API with your token' : 'Enter your HF token above', '');
-  } else {
-    if (localModelState === 'ready') {
-      setModelStatus('Local model active · queries run offline', 'ready');
-    } else if (localStorage.getItem('use_local_model')) {
-      setModelStatus('Previously downloaded — click to reload', '');
-    } else {
-      setModelStatus('Download the model once to run queries offline', '');
-    }
-  }
-}
-
-// Restore preferences and wire up token input
-document.addEventListener('DOMContentLoaded', () => {
-  const inp = document.getElementById('hf-token');
-  const stored = localStorage.getItem('hf_token');
-  if (stored) inp.value = stored;
-  inp.addEventListener('input', () => {
-    const v = inp.value.trim();
-    if (v) localStorage.setItem('hf_token', v);
-    else localStorage.removeItem('hf_token');
-    setModelStatus(v ? 'Ready · HF API with your token' : 'Enter your HF token above', '');
-  });
-
-  // Restore last-used mode
-  if (localStorage.getItem('use_local_model')) {
-    embedMode = 'local';
-    const btn = document.getElementById('btn-local-model');
-    if (btn) btn.textContent = 'Reload local model';
-  }
-});
-
-function setModelStatus(msg, cls = '') {
-  const el = document.getElementById('model-status');
-  el.textContent = msg;
-  el.className = 'model-status ' + cls;
-}
-
-// ── safetensors loader (minimal inline parser) ─────────────────────────────
-async function loadSafetensors(url) {
-  const buf = await fetch(url).then(r => r.arrayBuffer());
-  const view = new DataView(buf);
-  const headerLen = Number(view.getBigUint64(0, true));
-  const headerText = new TextDecoder().decode(new Uint8Array(buf, 8, headerLen));
-  const header = JSON.parse(headerText);
-  const dataStart = 8 + headerLen;
-  const result = {};
-  for (const [name, meta] of Object.entries(header)) {
-    if (name === '__metadata__') continue;
-    const [start, end] = meta.data_offsets;
-    const bytes = buf.slice(dataStart + start, dataStart + end);
-    result[name] = meta.dtype === 'F32' ? new Float32Array(bytes) : bytes;
-  }
-  return result;
-}
-
-async function ensureEmbeddings() {
-  if (semEmbeddings) return;
-  setModelStatus('Loading embeddings…', 'busy');
-  const [tensors, meta] = await Promise.all([
-    loadSafetensors('output/embeddings.safetensors'),
-    fetch('output/embeddings_meta.json').then(r => r.json()),
-  ]);
-  semEmbeddings = tensors.embeddings;
-  semMeta = meta;
-}
-
-// ── local ONNX model (transformers.js) ────────────────────────────────────
-async function activateLocalModel() {
-  if (localModelState === 'ready') {
-    setModelStatus('Local model active · queries run offline', 'ready');
-    return;
-  }
-  if (localModelState === 'loading') return;
-  await loadLocalModel();
-}
-
-async function loadLocalModel() {
-  localModelState = 'loading';
-  const btn = document.getElementById('btn-local-model');
-  if (btn) { btn.textContent = 'Downloading…'; btn.disabled = true; }
-  setModelStatus('Downloading BGE-M3 ONNX — first time only, cached (~130 MB)…', 'busy');
-  try {
-    const { pipeline, env } =
-      await import('https://cdn.jsdelivr.net/npm/@xenova/transformers@2/dist/transformers.min.js');
-    env.allowRemoteModels = true;
-    semExtractor = await pipeline('feature-extraction', 'Xenova/bge-m3', {
-      quantized: true,
-      progress_callback: p => {
-        if (p.status === 'downloading' && p.total) {
-          const pct = ((p.loaded / p.total) * 100).toFixed(0);
-          setModelStatus(`Downloading ${p.name ?? 'model'} … ${pct}%`, 'busy');
-        }
-      },
-    });
-    localModelState = 'ready';
-    localStorage.setItem('use_local_model', '1');
-    if (btn) { btn.textContent = 'Local model active ✓'; btn.classList.add('ready-state'); btn.disabled = false; }
-    setModelStatus('Local model active · queries run offline', 'ready');
-  } catch(e) {
-    localModelState = '';
-    if (btn) { btn.textContent = 'Download BGE-M3 ONNX model (~130 MB)'; btn.disabled = false; }
-    setModelStatus('Download failed: ' + e.message, '');
-    throw e;
-  }
-}
-
-// Dispatch: local model if active, otherwise HF API
-async function embedQuery(text) {
-  if (embedMode === 'local' && localModelState === 'ready' && semExtractor) {
-    const out = await semExtractor(text, { pooling: 'cls', normalize: true });
-    return out.data instanceof Float32Array ? out.data : new Float32Array(out.data);
-  }
-  if (embedMode === 'local' && localModelState !== 'ready') {
-    throw new Error('Local model not loaded yet — click "Download BGE-M3 ONNX model" first.');
-  }
-  return embedQueryViaAPI(text);
-}
-
-// ── HF Serverless Inference API (free tier) ────────────────────────────────
-// Embed a single query string via the HF Serverless Inference API (free tier).
-// Returns a normalized Float32Array of length 1024.
-async function embedQueryViaAPI(text) {
-  const token = localStorage.getItem('hf_token') || '';
-  if (!token) {
-    throw new Error('No HF token set — enter your token in the HF API panel above.');
-  }
-  const headers = { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` };
-
-  const resp = await fetch(
-    'https://api-inference.huggingface.co/models/BAAI/bge-m3',
-    { method: 'POST', headers, body: JSON.stringify({ inputs: text }) }
-  );
-
-  if (resp.status === 503) {
-    // Model cold-starting on HF servers — wait and retry once
-    const info = await resp.json().catch(() => ({}));
-    const wait = Math.min((info.estimated_time ?? 20) * 1000, 30000);
-    setModelStatus(`Model warming up (~${(wait / 1000).toFixed(0)} s)…`, 'busy');
-    await new Promise(r => setTimeout(r, wait));
-    return embedQueryViaAPI(text);
-  }
-
-  if (resp.status === 401 || resp.status === 403) {
-    throw new Error('HF token missing or invalid — switch to "HF Token" and enter your token from huggingface.co/settings/tokens');
-  }
-
-  if (!resp.ok) {
-    const err = await resp.json().catch(() => ({}));
-    throw new Error(err.error || `HF API error ${resp.status}`);
-  }
-
-  const data = await resp.json();
-
-  // Feature-extraction response: [[f0, …, f1023]] (batch-of-1 pooled vector)
-  // Flatten any outer batch dimension and handle both 1-D and 2-D responses.
-  let raw = data;
-  while (Array.isArray(raw) && Array.isArray(raw[0])) raw = raw[0];
-  const vec = new Float32Array(raw);
-
-  // Normalise to unit vector (matching Python-side normalize_embeddings=True)
-  let norm = 0;
-  for (let i = 0; i < vec.length; i++) norm += vec[i] * vec[i];
-  norm = Math.sqrt(norm);
-  if (norm > 0) for (let i = 0; i < vec.length; i++) vec[i] /= norm;
-  return vec;
-}
-
-// ── main semantic search ───────────────────────────────────────────────────
-
-// Volume colour palette for PCA and badges
-const VOL_COLORS = ['#7b4c1c','#2a7b4c','#2a4c7b','#7b2a4c','#4c7b2a','#6b4c7b'];
-let volColorMap = {};  // volume → colour
-
-function volColor(vol) {
-  if (!volColorMap[vol]) {
-    const keys = Object.keys(volColorMap);
-    volColorMap[vol] = VOL_COLORS[keys.length % VOL_COLORS.length];
-  }
-  return volColorMap[vol];
-}
-
-function volShort(vol) {
-  // "Baldo_Cons_Print_Venice_1575_v4" → "v4"
-  return vol.replace(/.*_(v\d+)$/, '$1') || vol.slice(-4);
-}
-
-async function runSemanticSearch(raw) {
-  if (searchMode !== 'semantic') return;   // guard against race conditions
-  if (!raw.trim()) { clearResults(); return; }
-
-  document.getElementById('initial-msg').style.display = 'none';
-  document.getElementById('results-layout').style.display = '';
-  document.getElementById('results-list').innerHTML =
-    '<div class="state-msg">Loading…</div>';
-
-  try {
-    await ensureEmbeddings();
-    const modeLabel = embedMode === 'local' ? 'Local BGE-M3' : 'HF API';
-    setModelStatus(`Embedding via ${modeLabel}…`, 'busy');
-    const t0 = performance.now();
-
-    const qVec = await embedQuery(raw);
-    const D = semMeta.dims;
-
-    // Score ALL consilia — scope filter applied at render time
-    const results = [];
-    for (let i = 0; i < semMeta.n; i++) {
-      const id = semMeta.ids[i];
-      const c = consilia[id];
-      if (!c) continue;
-      let sim = 0;
-      const off = i * D;
-      for (let d = 0; d < D; d++) sim += qVec[d] * semEmbeddings[off + d];
-      results.push({ c, score: sim, idx: i });
-    }
-    results.sort((a, b) => b.score - a.score);
-    lastSemResults = results;
-
-    const elapsed = performance.now() - t0;
-    setModelStatus(`${modeLabel} · done in ${elapsed.toFixed(0)} ms`, 'ready');
-
-    document.getElementById('result-timing').textContent =
-      `${semMeta.n} consilia scored in ${elapsed.toFixed(0)} ms (BGE-M3)`;
-
-    renderSemanticStats(results);
-    renderSemanticResults(results);
-
-    // Show and render PCA map
-    document.getElementById('sem-map-block').style.display = '';
-    if (!pcaCoords) computeAndRenderPCA();
-    else renderPCAScatter();
-
-  } catch(e) {
-    let msg = String(e.message ?? e);
-    if (msg.toLowerCase().includes('networkerror') || msg.toLowerCase().includes('failed to fetch')) {
-      const hasToken = !!localStorage.getItem('hf_token');
-      if (hasToken) {
-        msg = 'Network error despite token — HuggingFace may be blocking requests from '
-            + 'http://localhost. Try the Local model option, or access the page via https://.';
-      } else {
-        msg = 'Network error — no HF token set. Enter a free token from '
-            + 'huggingface.co/settings/tokens, or use the Local model option.';
-      }
-    }
-    document.getElementById('results-list').innerHTML =
-      `<div class="state-msg">Error: ${esc(msg)}</div>`;
-  }
-}
-
-function rerenderSemantic() {
-  if (searchMode === 'semantic' && lastSemResults.length) {
-    renderSemanticStats(lastSemResults);
-    renderSemanticResults(lastSemResults);
-    if (pcaCoords) renderPCAScatter();
-  }
-}
-
-function semScoreColor(score) {
-  if (score >= 0.65) return 'var(--accent)';
-  if (score >= 0.45) return '#b87c2a';
-  return 'var(--muted)';
-}
-
-function renderSemanticResults(results) {
-  const sort  = document.getElementById('sort-select').value;
-  const scope = document.getElementById('scope-select')?.value ?? 'volume';
-  const topK  = Math.max(1, parseInt(document.getElementById('topk-input')?.value ?? '20', 10));
-
-  // Apply scope filter
-  const scoped = scope === 'all' ? results : results.filter(r => r.c.volume === volume);
-
-  const sorted = sort === 'n'
-    ? [...scoped].sort((a, b) => (a.c.n ?? 0) - (b.c.n ?? 0))
-    : scoped;
-
-  const topResults = sorted.slice(0, topK);
-  const maxScore = topResults.reduce((m, r) => Math.max(m, r.score), 0) || 1;
-
-  const list = document.getElementById('results-list');
-  list.innerHTML = '';
-
-  const queryRe = buildHighlightRe(document.getElementById('search-input').value);
-
-  topResults.forEach(({ c, score }) => {
-    const barPct = (score / maxScore * 100).toFixed(1);
-    const color  = semScoreColor(score);
-
-    // Prefer a snippet that contains a query term; fall back to summary start
-    const summaryText = c.summary || '';
-    const bodyText    = (c.body   || []).join(' ');
-    let preview;
-    if (queryRe) {
-      queryRe.lastIndex = 0;
-      if (queryRe.test(summaryText)) {
-        preview = highlightText(snippet(summaryText, queryRe), queryRe);
-      } else {
-        queryRe.lastIndex = 0;
-        if (queryRe.test(bodyText)) {
-          preview = highlightText(snippet(bodyText, queryRe), queryRe);
-        } else {
-          preview = esc(summaryText.slice(0, 220)) + (summaryText.length > 220 ? '…' : '');
-        }
-      }
-    } else {
-      const t = summaryText || bodyText;
-      preview = esc(t.slice(0, 220)) + (t.length > 220 ? '…' : '');
-    }
-
-    const volBadge = scope === 'all'
-      ? `<span class="vol-badge" style="background:${volColor(c.volume)}22;color:${volColor(c.volume)}">${volShort(c.volume)}</span>`
-      : '';
-
-    const el = document.createElement('a');
-    el.className = 'result-card';
-    el.href = `index.html?n=${c.n}&vol=${encodeURIComponent(c.volume)}`;
-    el.innerHTML =
-      `<div class="result-head">
-         <span class="result-n">${c.n}</span>
-         <span class="result-title">${esc(c.title)}${volBadge}</span>
-         <span class="result-score" style="color:${color}">${score.toFixed(3)}</span>
-       </div>
-       <div class="sem-bar-track">
-         <div class="sem-bar-fill" style="width:${barPct}%;background:${color}"></div>
-       </div>
-       <div class="result-snippet">${preview}</div>`;
-    list.appendChild(el);
-  });
-
-  if (scoped.length > topK) {
-    const info = document.createElement('div');
-    info.className = 'state-msg';
-    info.style.paddingTop = '.75rem';
-    info.textContent = `Showing top ${topK} of ${scoped.length} consilia in scope.`;
-    list.appendChild(info);
-  }
-}
-
-function renderSemanticStats(results) {
-  const topK  = Math.max(1, parseInt(document.getElementById('topk-input')?.value ?? '20', 10));
-  const scope = document.getElementById('scope-select')?.value ?? 'volume';
-  const scoped = scope === 'all' ? results : results.filter(r => r.c.volume === volume);
-  const total  = scope === 'all' ? Object.keys(consilia).length : items.length;
-  document.getElementById('stat-count').textContent = Math.min(scoped.length, topK);
-  document.getElementById('stat-pct').textContent =
-    `top ${topK} of ${total} consilia by similarity`;
-
-  // Hide field breakdown (not applicable for semantic)
-  document.querySelectorAll('#results-layout .field-row').forEach(r => r.style.display = 'none');
-
-  const topSlice = scoped.slice(0, topK);
-  document.getElementById('stat-score-max').textContent = topSlice[0]?.score.toFixed(4) ?? '—';
-  document.getElementById('stat-score-min').textContent = topSlice[topSlice.length - 1]?.score.toFixed(4) ?? '—';
-
-  // Distribution: top-K within scope
-  renderDistribution(
-    topSlice.map((r) => ({
-      id: items.findIndex(it => it.id === r.c.id),
-      score: r.score,
-    }))
-  );
-}
-
-function restoreFieldRows() {
-  document.querySelectorAll('#results-layout .field-row').forEach(r => r.style.display = '');
-}
-
-function renderDistribution(results) {
-  const BINS = 20;
-  const maxN  = Math.max(...items.map(c => c.n), 1);
-  const binSize = Math.ceil(maxN / BINS);
-
-  // Count matches per bin
-  const matchBins = new Array(BINS).fill(0);
-  const totalBins = new Array(BINS).fill(0);
-  items.forEach(c => {
-    const b = Math.min(Math.floor((c.n - 1) / binSize), BINS - 1);
-    totalBins[b]++;
-  });
-  results.forEach(r => {
-    const c = items[r.id];
-    if (!c) return;
-    const b = Math.min(Math.floor((c.n - 1) / binSize), BINS - 1);
-    matchBins[b]++;
-  });
-
-  const maxBar = Math.max(...totalBins, 1);
-
-  // Bars
-  const barsEl = document.getElementById('dist-bars');
-  barsEl.innerHTML = '';
-  matchBins.forEach((mc, i) => {
-    const total = totalBins[i];
-    const pct   = (total / maxBar * 100).toFixed(1);  // height relative to tallest bin
-    const fillPct = total ? (mc / total * 100).toFixed(1) : '0';
-
-    const wrap = document.createElement('div');
-    wrap.style.cssText = `flex:1; display:flex; flex-direction:column; align-items:stretch; height:100%; justify-content:flex-end;`;
-
-    // Grey background bar (total)
-    const bg = document.createElement('div');
-    bg.style.cssText = `height:${pct}%; background:var(--border); border-radius:1px 1px 0 0; position:relative; overflow:hidden;`;
-
-    // Coloured fill (matches)
-    const fill = document.createElement('div');
-    fill.style.cssText = `position:absolute; bottom:0; left:0; right:0; height:${fillPct}%; background:var(--accent); opacity:.85;`;
-    bg.appendChild(fill);
-
-    const rangeStart = i * binSize + 1;
-    const rangeEnd   = Math.min((i + 1) * binSize, maxN);
-    bg.title = `n ${rangeStart}–${rangeEnd}: ${mc}/${total} match`;
-
-    wrap.appendChild(bg);
-    barsEl.appendChild(wrap);
-  });
-
-  // Axis labels (first, middle, last)
-  const axisEl = document.getElementById('dist-axis');
-  axisEl.innerHTML = '';
-  [0, Math.floor(BINS / 2), BINS - 1].forEach((bi, pos) => {
-    const span = document.createElement('span');
-    span.textContent = bi * binSize + 1;
-    axisEl.appendChild(span);
-  });
-}
-
-// ── PCA Scatter (Explore panel) ────────────────────────────────────────────
-
-let pcaCoords = null;          // {raw, minX, maxX, minY, maxY, N} — computed once
-let pcaColorMode = 'volume';   // 'volume' | 'cluster'
-let clusterAssignments = null; // Int32Array[N]
-let clusterLabels = null;      // string[k]
-let simScope = 'volume';       // 'volume' | 'author' | 'all'
-let simRefIdx  = null;         // embedding index of reference consilium
-
-const CLUSTER_PALETTE = [
-  '#c0392b','#e67e22','#f39c12','#27ae60','#16a085',
-  '#2980b9','#8e44ad','#d35400','#1abc9c','#2c3e50',
-  '#7f8c8d','#e91e63',
-];
-const LAT_STOP = new Set([
-  // Latin function words & conjunctions
-  'an','de','et','in','ad','per','cum','non','sed','quia','quod','vel','aut',
-  'est','si','ut','ex','pro','qui','quae','dum','nam','iam','nec','neu',
-  'etiam','tamen','autem','vero','enim','ergo','ideo','item','idem','igitur',
-  'quando','quomodo','quoniam','quam','inter','post','ante','apud','sine',
-  'sive','atque','neque','quin','qua','quo','qua','ubi','unde','nisi',
-  // Ubiquitous legal question words (appear in almost every consilium)
-  'possit','potest','possint','potuit','posse','posset',
-  'debet','debetur','debeatur','debent','debere',
-  // "consilivm" heading — every title starts with it
-  'consilivm','consilium','consilii','consilio','consiliis',
-  // Common modal/copular verbs
-  'esse','fuit','sunt','fuerit','sit','sint','fuerat','fuisse','erat','erit',
-  'habet','habuit','habeat','habere','habens','habeatur','habentur',
-  // Very common verbs in propositions
-  'dici','dictum','dicta','dixit','dixerit','dicatur','dicendum',
-  'fieri','fieret','facta','factum','facti','facere','factus',
-  'tenetur','teneatur','teneri',
-  // Common question / indefinite pronouns
-  'quid','quis','aliquid','aliquis','aliqua','aliquam','alicui',
-  'ille','illa','illud','ipse','ipsa','ipsum','hoc','haec','hic',
-  'tale','talis','tale','idem','eadem','idem',
-  // Preposition-like words
-  'propter','contra','super','ultra','secundum','coram','circa',
-  // English/German (sometimes in summaries)
-  'the','of','and','to','is','are','that','from','this','with',
-  'for','not','but','when','by','be','oder','und','der','die','das',
-]);
-
-// ── thematic clustering ────────────────────────────────────────────────────
-
-function resetClusters() {
-  clusterAssignments = null;
-  clusterLabels = null;
-  if (pcaColorMode === 'cluster') renderPCAScatter();
-}
-
-function setPCAColor(mode) {
-  pcaColorMode = mode;
-  ['volume','cluster'].forEach(m => {
-    document.getElementById('pcabtn-' + m).classList.toggle('active', m === mode);
-  });
-  if (mode === 'cluster' && !clusterAssignments && pcaCoords) {
-    computeClusters();
-  } else {
-    renderPCAScatter();
-  }
-}
-
-function computeClusters() {
-  if (!pcaCoords) return;
-  const k  = Math.max(3, Math.min(20, parseInt(document.getElementById('k-input').value, 10) || 12));
-  const { raw: coords, N } = pcaCoords;
-
-  // k-means++ on 2D PCA coordinates
-  const cx = new Float32Array(k), cy = new Float32Array(k);
-
-  // Seed first center
-  const seed = Math.floor(Math.random() * N);
-  cx[0] = coords[seed * 2]; cy[0] = coords[seed * 2 + 1];
-
-  // k-means++ subsequent seeds
-  for (let ki = 1; ki < k; ki++) {
-    const dist2 = new Float32Array(N);
-    let total = 0;
-    for (let i = 0; i < N; i++) {
-      let minD = Infinity;
-      for (let j = 0; j < ki; j++) {
-        const dx = coords[i*2] - cx[j], dy = coords[i*2+1] - cy[j];
-        minD = Math.min(minD, dx*dx + dy*dy);
-      }
-      dist2[i] = minD; total += minD;
-    }
-    let r = Math.random() * total, acc = 0;
-    for (let i = 0; i < N; i++) {
-      acc += dist2[i];
-      if (acc >= r) { cx[ki] = coords[i*2]; cy[ki] = coords[i*2+1]; break; }
-    }
-  }
-
-  // Iterate
-  const asgn = new Int32Array(N);
-  for (let iter = 0; iter < 25; iter++) {
-    let changed = 0;
-    for (let i = 0; i < N; i++) {
-      let bestK = 0, bestD = Infinity;
-      for (let ki = 0; ki < k; ki++) {
-        const dx = coords[i*2] - cx[ki], dy = coords[i*2+1] - cy[ki];
-        const d = dx*dx + dy*dy;
-        if (d < bestD) { bestD = d; bestK = ki; }
-      }
-      if (asgn[i] !== bestK) { asgn[i] = bestK; changed++; }
-    }
-    if (changed === 0) break;
-    // Update centroids
-    const sumX = new Float32Array(k), sumY = new Float32Array(k), cnt = new Int32Array(k);
-    for (let i = 0; i < N; i++) {
-      const ki = asgn[i]; sumX[ki] += coords[i*2]; sumY[ki] += coords[i*2+1]; cnt[ki]++;
-    }
-    for (let ki = 0; ki < k; ki++) {
-      if (cnt[ki]) { cx[ki] = sumX[ki]/cnt[ki]; cy[ki] = sumY[ki]/cnt[ki]; }
-    }
-  }
-  clusterAssignments = asgn;
-  clusterLabels = buildClusterLabels(asgn, k);
-  renderPCAScatter();
-}
-
-function buildClusterLabels(asgn, k) {
-  const MIN_CORPUS_FREQ = 5;  // word must appear in ≥5 distinct consilia corpus-wide
-
-  // Step 1: per-cluster word counts + corpus-wide distinct-consilium count
-  const clusterFreq = Array.from({length: k}, () => ({}));
-  const corpusFreq  = {};   // word → number of distinct consilia containing it
-
-  asgn.forEach((ki, i) => {
-    const c = consilia[semMeta.ids[i]];
-    if (!c) return;
-    const titleClean = (c.title || '').replace(/CONSILI[VU]M?\s*[IVXLCDM\d\.]+\s*/i, '');
-    const text = titleClean + ' ' + (c.summary || '') + ' ' + (c.summary || '');
-    const seenHere = new Set();
-    text.toLowerCase()
-      .replace(/[^a-zäöüàáâãèéêëìíïòóôùúæœ\s]/g, ' ')
-      .split(/\s+/)
-      .forEach(w => {
-        if (w.length < 4 || LAT_STOP.has(w)) return;
-        clusterFreq[ki][w] = (clusterFreq[ki][w] || 0) + 1;
-        if (!seenHere.has(w)) {
-          corpusFreq[w] = (corpusFreq[w] || 0) + 1;
-          seenHere.add(w);
-        }
-      });
-  });
-
-  // Step 2: cluster document frequency (how many clusters contain the word)
-  const clusterDf = {};
-  clusterFreq.forEach(freq => {
-    Object.keys(freq).forEach(w => { clusterDf[w] = (clusterDf[w] || 0) + 1; });
-  });
-
-  // Step 3: TF-IDF, filtering out rare words (proper names, OCR fragments)
-  return clusterFreq.map(freq => {
-    const total = Object.values(freq).reduce((s, n) => s + n, 0) || 1;
-    const scored = Object.entries(freq)
-      .filter(([w]) => (corpusFreq[w] || 0) >= MIN_CORPUS_FREQ)  // drop rare / proper nouns
-      .map(([w, cnt]) => {
-        const idf = Math.log((k + 1) / (clusterDf[w] || 1));
-        return [w, (cnt / total) * idf];
-      })
-      .filter(([, s]) => s > 0.001);
-    scored.sort((a, b) => b[1] - a[1]);
-    return scored.slice(0, 4).map(([w]) => w).join(', ') || '—';
-  });
-}
-
-// ── find similar ───────────────────────────────────────────────────────────
-
-function setSimilarScope(scope) {
-  simScope = scope;
-  ['volume','author','all'].forEach(s => {
-    document.getElementById('spill-' + s).classList.toggle('active', s === scope);
-  });
-  if (simRefIdx !== null) runSimilarSearch();
-}
-
-function findSimilarFromCard(n, vol) {
-  // Switch to similar mode and trigger search
-  setMode('similar');
-  findSimilarByNVol(n, vol);
-}
-
-function findSimilarByInput() {
-  const n = parseInt(document.getElementById('sim-n-input').value, 10);
-  if (!n) return;
-  const c = Object.values(consilia).find(x => x.n === n && x.volume === volume);
-  if (c) findSimilarByNVol(c.n, c.volume);
-  else {
-    document.getElementById('sim-status').textContent = `n=${n} not found in current print`;
-  }
-}
-
-function findSimilarByNVol(n, vol) {
-  if (!semMeta) {
-    // Need embeddings — load them first
-    ensureEmbeddings().then(() => _doFindSimilar(n, vol)).catch(e => {
-      document.getElementById('sim-status').textContent = 'Error loading embeddings: ' + e.message;
-    });
-    return;
-  }
-  _doFindSimilar(n, vol);
-}
-
-function _doFindSimilar(n, vol) {
-  // Find the embedding index for this consilium
-  const id = Object.keys(consilia).find(k => consilia[k].n === n && consilia[k].volume === vol);
-  if (!id) {
-    document.getElementById('sim-status').textContent = `Consilium n=${n} not found`;
-    return;
-  }
-  const idx = semMeta.ids.indexOf(id);
-  if (idx === -1) {
-    document.getElementById('sim-status').textContent = `Embedding not found for n=${n}`;
-    return;
-  }
-  simRefIdx = idx;
-  const ref = consilia[id];
-
-  // Show chip
-  document.getElementById('sim-ref-row').style.display = 'none';
-  document.getElementById('sim-chip-row').style.display = '';
-  document.getElementById('chip-n').textContent = `n = ${ref.n}`;
-  document.getElementById('chip-title').textContent = ref.title;
-
-  runSimilarSearch();
-}
-
-function clearSimilar() {
-  simRefIdx = null;
-  document.getElementById('sim-chip-row').style.display = 'none';
-  document.getElementById('sim-ref-row').style.display = '';
-  document.getElementById('sim-n-input').value = '';
-  document.getElementById('sim-status').textContent = '';
-  clearResults();
-}
-
-function runSimilarSearch() {
-  if (simRefIdx === null || !semEmbeddings) return;
-
-  const D   = semMeta.dims;
-  const ref = consilia[semMeta.ids[simRefIdx]];
-  const refVol  = ref?.volume;
-  const refViaf = ref?.author_viaf;
-
-  const topK = Math.max(1, parseInt(document.getElementById('topk-input')?.value ?? '20', 10));
-  const t0 = performance.now();
-  const ri = simRefIdx * D;
-
-  const results = [];
-  for (let i = 0; i < semMeta.n; i++) {
-    if (i === simRefIdx) continue;
-    const c = consilia[semMeta.ids[i]];
-    if (!c) continue;
-    if (simScope === 'volume' && c.volume !== refVol) continue;
-    if (simScope === 'author' && c.author_viaf !== refViaf) continue;
-    let dot = 0;
-    const ci = i * D;
-    for (let d = 0; d < D; d++) dot += semEmbeddings[ri + d] * semEmbeddings[ci + d];
-    results.push({ c, score: dot, idx: i });
-  }
-  results.sort((a, b) => b.score - a.score);
-
-  const elapsed = performance.now() - t0;
-  const scopeLabel = simScope === 'volume' ? `${volShort(refVol)}` : simScope === 'author' ? 'All Baldo' : 'All corpus';
-  document.getElementById('sim-status').textContent =
-    `${results.length} consilia ranked in ${elapsed.toFixed(0)} ms · ${scopeLabel}`;
-
-  document.getElementById('initial-msg').style.display = 'none';
-  document.getElementById('results-layout').style.display = '';
-  document.getElementById('result-timing').textContent =
-    `Top similar to n=${ref.n} · ${scopeLabel}`;
-
-  lastSimResults = results;
-  renderSimilarResults(results.slice(0, topK), ref);
-  renderSemanticStats(results);
-
-  document.getElementById('sem-map-block').style.display = '';
-  if (!pcaCoords) computeAndRenderPCA();
-  else renderPCAScatter();
-}
-
-function renderSimilarResults(results, ref) {
-  const sort  = document.getElementById('sort-select').value;
-  const scope = simScope;
-  const sorted = sort === 'n'
-    ? [...results].sort((a, b) => (a.c.n ?? 0) - (b.c.n ?? 0))
-    : results;
-
-  const maxScore = sorted[0]?.score || 1;
-  const list = document.getElementById('results-list');
-  list.innerHTML = '';
-
-  sorted.forEach(({ c, score }) => {
-    const barPct = (score / maxScore * 100).toFixed(1);
-    const color  = semScoreColor(score);
-    const raw    = (c.summary || (c.body || []).join(' ')).slice(0, 220);
-    const volBadge = scope !== 'volume'
-      ? `<span class="vol-badge" style="background:${volColor(c.volume)}22;color:${volColor(c.volume)}">${volShort(c.volume)}</span>`
-      : '';
-
-    const el = document.createElement('a');
-    el.className = 'result-card';
-    el.href = `index.html?n=${c.n}&vol=${encodeURIComponent(c.volume)}`;
-    el.innerHTML =
-      `<div class="result-head">
-         <span class="result-n">${c.n}</span>
-         <span class="result-title">${esc(c.title)}${volBadge}</span>
-         <span class="result-score" style="color:${color}">${score.toFixed(3)}</span>
-         <button class="sim-btn" onclick="event.preventDefault();findSimilarFromCard(${c.n},'${c.volume}')" title="Find similar">≈</button>
-       </div>
-       <div class="sem-bar-track"><div class="sem-bar-fill" style="width:${barPct}%;background:${color}"></div></div>
-       <div class="result-snippet">${esc(raw)}${raw.length >= 220 ? '…' : ''}</div>`;
-    list.appendChild(el);
-  });
-}
-
-async function computeAndRenderPCA() {
-  const canvas = document.getElementById('pca-canvas');
-  const ctx = canvas.getContext('2d');
-  ctx.clearRect(0, 0, canvas.width, canvas.height);
-  ctx.fillStyle = '#aaa';
-  ctx.font = '13px monospace';
-  ctx.fillText('Computing PCA…', 16, canvas.height / 2);
-
-  // Yield to browser so the message renders, then compute
-  await new Promise(r => setTimeout(r, 0));
-
-  const N = semMeta.n;
-  const D = semMeta.dims;
-  const X = semEmbeddings;   // Float32Array N×D
-
-  // Power-iteration for top-2 principal components
-  // Center data (mean subtraction)
-  const mean = new Float32Array(D);
-  for (let i = 0; i < N; i++) {
-    const off = i * D;
-    for (let d = 0; d < D; d++) mean[d] += X[off + d];
-  }
-  for (let d = 0; d < D; d++) mean[d] /= N;
-
-  // 2 principal components via power iteration (5 steps each)
-  const u = [new Float32Array(D), new Float32Array(D)];
-  // Random init
-  for (let k = 0; k < 2; k++) {
-    for (let d = 0; d < D; d++) u[k][d] = Math.random() - 0.5;
-    let n = 0; for (let d = 0; d < D; d++) n += u[k][d] ** 2;
-    n = Math.sqrt(n); for (let d = 0; d < D; d++) u[k][d] /= n;
-  }
-
-  for (let iter = 0; iter < 6; iter++) {
-    for (let k = 0; k < 2; k++) {
-      // v = X_c^T (X_c u_k)
-      const a = new Float32Array(N);
-      for (let i = 0; i < N; i++) {
-        const off = i * D; let s = 0;
-        for (let d = 0; d < D; d++) s += (X[off + d] - mean[d]) * u[k][d];
-        a[i] = s;
-      }
-      const v = new Float32Array(D);
-      for (let i = 0; i < N; i++) {
-        const off = i * D;
-        for (let d = 0; d < D; d++) v[d] += a[i] * (X[off + d] - mean[d]);
-      }
-      // Deflate: remove projections onto previous components
-      for (let j = 0; j < k; j++) {
-        let dot = 0; for (let d = 0; d < D; d++) dot += v[d] * u[j][d];
-        for (let d = 0; d < D; d++) v[d] -= dot * u[j][d];
-      }
-      let n = 0; for (let d = 0; d < D; d++) n += v[d] ** 2;
-      n = Math.sqrt(n);
-      if (n > 0) for (let d = 0; d < D; d++) u[k][d] = v[d] / n;
-    }
-  }
-
-  // Project all points
-  const coords = new Float32Array(N * 2);
-  let minX = Infinity, maxX = -Infinity, minY = Infinity, maxY = -Infinity;
-  for (let i = 0; i < N; i++) {
-    const off = i * D; let px = 0, py = 0;
-    for (let d = 0; d < D; d++) {
-      const x = X[off + d] - mean[d];
-      px += x * u[0][d]; py += x * u[1][d];
-    }
-    coords[i * 2] = px; coords[i * 2 + 1] = py;
-    minX = Math.min(minX, px); maxX = Math.max(maxX, px);
-    minY = Math.min(minY, py); maxY = Math.max(maxY, py);
-  }
-
-  // Store normalised [0,1]
-  pcaCoords = { raw: coords, minX, maxX, minY, maxY, N };
-  renderPCAScatter();
-}
-
-function renderPCAScatter() {
-  if (!pcaCoords || !semMeta) return;
-  const canvas = document.getElementById('pca-canvas');
-  const W = canvas.width, H = canvas.height;
-  const ctx = canvas.getContext('2d');
-  ctx.clearRect(0, 0, W, H);
-
-  const { raw, minX, maxX, minY, maxY, N } = pcaCoords;
-  const pad = 24;
-  const scaleX = (x) => pad + (x - minX) / (maxX - minX) * (W - 2 * pad);
-  const scaleY = (y) => H - pad - (y - minY) / (maxY - minY) * (H - 2 * pad);
-
-  // Colour-by function
-  const useCluster = pcaColorMode === 'cluster' && clusterAssignments;
-  const pointColor = (i) => {
-    if (useCluster) return CLUSTER_PALETTE[clusterAssignments[i] % CLUSTER_PALETTE.length];
-    const vol = semMeta.ids[i] ? consilia[semMeta.ids[i]]?.volume : null;
-    return vol ? volColor(vol) : '#888';
-  };
-
-  // Build highlight set from active results (semantic or similar)
-  const topK = Math.max(1, parseInt(document.getElementById('topk-input')?.value ?? '20', 10));
-  const activeResults = searchMode === 'similar' ? lastSimResults : lastSemResults;
-  const highlightIdx  = new Set(activeResults.slice(0, topK).map(r => r.idx));
-  // Also highlight simRef point
-  if (simRefIdx !== null) highlightIdx.add(simRefIdx);
-
-  // Draw background points
-  for (let i = 0; i < N; i++) {
-    const color = pointColor(i);
-    const px = scaleX(raw[i * 2]), py = scaleY(raw[i * 2 + 1]);
-    ctx.beginPath();
-    ctx.arc(px, py, 2.5, 0, 2 * Math.PI);
-    ctx.fillStyle = (highlightIdx.size && !highlightIdx.has(i)) ? color + '30' : color + 'aa';
-    ctx.fill();
-  }
-
-  // Draw highlighted points on top
-  highlightIdx.forEach(i => {
-    if (i >= N) return;
-    const isRef = (i === simRefIdx);
-    const color = pointColor(i);
-    const px = scaleX(raw[i * 2]), py = scaleY(raw[i * 2 + 1]);
-    ctx.beginPath();
-    ctx.arc(px, py, isRef ? 7 : 5, 0, 2 * Math.PI);
-    ctx.fillStyle = isRef ? '#fff' : color;
-    ctx.fill();
-    ctx.strokeStyle = isRef ? color : '#fff';
-    ctx.lineWidth = isRef ? 2 : 1.2;
-    ctx.stroke();
-  });
-
-  // Legend
-  const legend = document.getElementById('pca-legend');
-  if (useCluster) {
-    const k = CLUSTER_PALETTE.length;
-    legend.innerHTML = clusterLabels.map((lbl, ki) =>
-      `<span><span class="pca-legend-dot" style="background:${CLUSTER_PALETTE[ki % CLUSTER_PALETTE.length]}"></span>${ki+1}: ${lbl}</span>`
-    ).join('');
-  } else {
-    const vols = [...new Set(semMeta.ids.map(id => consilia[id]?.volume).filter(Boolean))];
-    legend.innerHTML = vols.map(v =>
-      `<span><span class="pca-legend-dot" style="background:${volColor(v)}"></span>${volShort(v)} — ${v.replace(/_/g,' ')}</span>`
-    ).join('');
-  }
-
-  // Tooltip on hover
-  canvas.onmousemove = (e) => {
-    const rect = canvas.getBoundingClientRect();
-    const mx = (e.clientX - rect.left) * (W / rect.width);
-    const my = (e.clientY - rect.top)  * (H / rect.height);
-    let best = null, bestDist = 64;
-    for (let i = 0; i < N; i++) {
-      const px = scaleX(raw[i * 2]), py = scaleY(raw[i * 2 + 1]);
-      const d = (px - mx) ** 2 + (py - my) ** 2;
-      if (d < bestDist) { bestDist = d; best = i; }
-    }
-    const tip = document.getElementById('pca-tooltip');
-    if (best !== null) {
-      const c   = consilia[semMeta.ids[best]];
-      const hit = lastSemResults.find(r => r.idx === best);
-      tip.innerHTML = `<strong>n=${c?.n}</strong> ${esc(c?.title ?? '')}` +
-        (hit ? `<br>score: ${hit.score.toFixed(4)}` : '') +
-        `<br><span style="opacity:.6">${volShort(c?.volume ?? '')}</span>`;
-      tip.style.display = 'block';
-      tip.style.left = (e.clientX + 12) + 'px';
-      tip.style.top  = (e.clientY - 8)  + 'px';
-    } else {
-      tip.style.display = 'none';
-    }
-  };
-  canvas.onmouseleave = () => { document.getElementById('pca-tooltip').style.display = 'none'; };
-  canvas.onclick = (e) => {
-    const rect = canvas.getBoundingClientRect();
-    const mx = (e.clientX - rect.left) * (W / rect.width);
-    const my = (e.clientY - rect.top)  * (H / rect.height);
-    let best = null, bestDist = 100;
-    for (let i = 0; i < N; i++) {
-      const px = scaleX(raw[i * 2]), py = scaleY(raw[i * 2 + 1]);
-      const d = (px - mx) ** 2 + (py - my) ** 2;
-      if (d < bestDist) { bestDist = d; best = i; }
-    }
-    if (best !== null) {
-      const c = consilia[semMeta.ids[best]];
-      if (c) window.open(`index.html?n=${c.n}&vol=${encodeURIComponent(c.volume)}`, '_blank');
-    }
-  };
-}
-</script>
-
+<div id="pca-tooltip"></div>
+
+<script src="assets/minisearch.min.js"></script>
+<script src="assets/sample-data.js"></script>
+<script src="assets/search-app.js"></script>
 </body>
 </html>
