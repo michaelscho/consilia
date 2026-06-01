@@ -18,6 +18,7 @@ from __future__ import annotations
 
 import logging
 import re
+import statistics
 from dataclasses import dataclass, field
 from pathlib import Path
 from typing import Iterator, Optional
@@ -129,15 +130,18 @@ _RE_ARABIC_HEADING = re.compile(
 
 # Pure Roman numeral / word-fragment patterns to reject from geometric fallback
 _RE_PURE_NUMERAL = re.compile(r"^[IVXLCDM\s.]+$", re.IGNORECASE)
-_RE_WORD_FRAGMENT = re.compile(r"^(?:VM|LVM|IVM|LIVM|LIVM?)\b", re.IGNORECASE)
+_RE_WORD_FRAGMENT = re.compile(
+    r"^(?:VM|LVM|IVM|LIVM|LIVM?|CONSIL\.?)\b",  # tail fragments + truncated CONSILIVM
+    re.IGNORECASE,
+)
 
 # Section labels that are NOT consilium headings — they belong to surrounding content.
 #   CASVS / CNSVS / OASVS  — OCR variants of "casus" (legal case description)
 #   ADDITIO BAL. / ADDIIIO RAL. — OCR variants of "Additio Bal[di]" (author addendum)
 _RE_SECTION_LABEL = re.compile(
     r"^(?:"
-    r"[A-Z]{0,2}[AC][ANO]?SVS"        # CASVS, CNSVS, OASVS …
-    r"|ADDI[A-Z]{1,3}O\s+[A-Z]{2,4}"  # ADDITIO BAL., ADDIIIO RAL. …
+    r"[A-Z]{0,2}[AC][ANO]?SI?V[SU]?"    # CASVS, CASIVS, CASV, CNSVS …
+    r"|ADDI[A-Z]{1,3}O(?:\s+[A-Z]{2,4})?"  # ADDITIO BAL., ADDITIO. (standalone) …
     r")\s*\.?\s*$",
     re.IGNORECASE,
 )
@@ -145,14 +149,28 @@ _RE_SECTION_LABEL = re.compile(
 _RE_SUMMARY_ITEM = re.compile(r"^\d+\s+[A-Z]")  # "1 Feudum an …"
 
 # Body openers: "In Christi nomine", "In nomine Christi / Dei / Domini", …
-# Optionally preceded by a paragraph number ("1 IN Christi nomine.")
+# "NOMI" (not "NOMINE") catches soft-hyphenated "N Christi Nomi¬" fragments.
+# Extended with formulae common in v4/v5 prints.
 _RE_BODY_OPENER = re.compile(
-    r"(?:CHRISTI\s+NOMINE"
+    r"(?:CHRIST[A-Z]\s+NOMI"        # "Christi Nomine", "Christr Nomi¬" (OCR variants)
     r"|NOMINE\s+CHRISTI"
     r"|IN\s+NOMINE\s+(?:CHRISTI|DEI|DOMINI|SANCTI)"
-    r"|IN\s+CHRISTI\s+NOMINE)",
+    r"|IN\s+CHRIST[A-Z]\s+NOMI"     # "In Christi Nomine" incl. OCR typos
+    r"|IN\s+DEI\s+NOMI"             # "In Dei Nomine" or "In Dei Nomi¬"
+    r"|AD\s+EU?IDENT"               # "Ad evidentiam / Ad euidentiam"
+    r"|PR[AĘ]EMITTEND"              # "praemittendum / praemittendi est"
+    r"|PRIMO\s+PUNCT[OI]"           # "primo puncto dicendum est"
+    r"|CONSIDER[AAIO]T[OAIS]"       # "considerato / considerata / consideratis"
+    r"|PUNCT[VU][MS]\s*,?\s*(?:QUAES|VTRUM|UTRUM)"  # "Punctus quaestionis / Punctus vtrum"
+    r")",
     re.IGNORECASE,
 )
+
+# Ratio above the running median height of summary lines that triggers a
+# geometric body-opener detection.
+_TALL_LINE_RATIO = 1.3
+# Minimum number of summary lines needed before attempting geometric detection.
+_GEO_OPENER_MIN_CONTEXT = 3
 
 # Dagger paragraph marker — reliable body indicator when leading a line
 _RE_DAGGER_LEAD = re.compile(r"^[††]")
@@ -375,6 +393,13 @@ class LineRef:
     def width_ratio(self) -> float:
         return _width_ratio(self.line_coords, self.region_coords)
 
+    @property
+    def height(self) -> int:
+        if not self.line_coords:
+            return 0
+        ys = [p[1] for p in self.line_coords]
+        return max(ys) - min(ys)
+
 
 # ---------------------------------------------------------------------------
 # Output data structure
@@ -572,6 +597,7 @@ class ConsiliumSegmenter:
         self._body_lines: list[LineRef] = []
         self._spans: list[RegionSpan] = []
         self._current_span: Optional[RegionSpan] = None
+        self._section_heights: list[int] = []  # heights of lines seen in current summary
 
     def _start_heading(self, text: str, roman: str, n: int, n2: int = 0) -> None:
         self._title = text
@@ -582,6 +608,7 @@ class ConsiliumSegmenter:
         self._body_lines = []
         self._spans = []
         self._current_span = None
+        self._section_heights = []
         self._state = "SUMMARY"
 
     def _track_span(self, lr: LineRef) -> None:
@@ -673,10 +700,84 @@ class ConsiliumSegmenter:
             return []
 
         if not self._body_lines:
-            log.warning(
-                "No body found for '%s' (n=%d); storing all content as summary.",
-                self._title, self._n,
-            )
+            # Recovery: scan summary lines for a deferred body-opener that was
+            # missed during streaming (OCR errors, novel phrases, page artifacts).
+            split_at: int | None = None
+            _n_sum = len(self._summary_lines)
+
+            # Pass 1: text-based opener or leading dagger (most reliable)
+            for i, lr in enumerate(self._summary_lines):
+                if self._is_body_opener(lr.text):
+                    split_at = i
+                    break
+                if _RE_DAGGER_LEAD.match(lr.text):
+                    split_at = i
+                    break
+
+            # Pass 2: page artifact (running header like "Consilia.") followed by
+            # body text that starts with a lowercase letter.
+            _RE_PAGE_HDR = re.compile(r"^(?:Consilia|Consiliorum)\.?\s*$", re.IGNORECASE)
+            if split_at is None:
+                for i in range(_n_sum - 1):
+                    if _RE_PAGE_HDR.match(self._summary_lines[i].text.strip()):
+                        j = i + 1
+                        while j < _n_sum:
+                            nxt = self._summary_lines[j].text.strip()
+                            if not _RE_PAGE_HDR.match(nxt) and not re.match(r"^\d+$", nxt):
+                                if nxt and nxt[0].islower():
+                                    split_at = j
+                                break
+                            j += 1
+                        if split_at is not None:
+                            break
+
+            # Pass 3: embedded dagger (†) within the first 40 characters of any
+            # line in the first 10 summary lines — handles cases like
+            # "v † primo puncto" or "sacrilegi † robatores" where the big initial
+            # is OCR-separated and the dagger marks the real body opener.
+            _RE_DAGGER_ANY = re.compile(r"[††]")
+            if split_at is None:
+                for i, lr in enumerate(self._summary_lines):
+                    if i == 0 or i >= 10:
+                        continue
+                    if _RE_DAGGER_ANY.search(lr.text[:40]):
+                        split_at = i
+                        break
+
+            # Pass 4: last-resort heuristic — after a sequence of summary
+            # propositions (short lines ending with '.'), the body starts.
+            # Look within the first 10 summary lines for the last such proposition
+            # and split at the next line, provided ≥ 5 lines remain.
+            if split_at is None:
+                _RE_ARTIFACT = re.compile(
+                    r"^(?:Consilia|Consiliorum)\.?\s*$|\d+$", re.IGNORECASE
+                )
+                last_prop_idx: int | None = None
+                for i, lr in enumerate(self._summary_lines[:10]):
+                    text = lr.text.strip()
+                    if (text.endswith(".")
+                            and not text.endswith("¬")
+                            and len(text) < 65
+                            and not _RE_ARTIFACT.match(text)):
+                        last_prop_idx = i
+                if last_prop_idx is not None:
+                    candidate = last_prop_idx + 1
+                    if _n_sum - candidate >= 5:
+                        split_at = candidate
+
+            if split_at is not None:
+                self._body_lines = self._summary_lines[split_at:]
+                self._summary_lines = self._summary_lines[:split_at]
+                log.info(
+                    "Body recovered for '%s' (n=%d): split at line %d (%r)",
+                    self._title, self._n, split_at,
+                    self._body_lines[0].text[:60],
+                )
+            else:
+                log.warning(
+                    "No body found for '%s' (n=%d); storing all content as summary.",
+                    self._title, self._n,
+                )
 
         base_id = (
             f"consilium-{self.volume.lower()}-{self._n}"
@@ -768,6 +869,27 @@ class ConsiliumSegmenter:
         return False
 
     @staticmethod
+    def _is_body_opener_geometric(lr: LineRef, section_heights: list[int]) -> bool:
+        """Tall, full-width line after summary items — body opener even without
+        a recognisable opener formula (handles diverse v4/v5 openers).
+
+        Only fires when we have enough context lines to compute a reliable median,
+        and only for wide lines so we don't confuse body openers with headings.
+        """
+        if len(section_heights) < _GEO_OPENER_MIN_CONTEXT:
+            return False
+        median_h = statistics.median(section_heights)
+        if median_h <= 0 or lr.height < median_h * _TALL_LINE_RATIO:
+            return False
+        # Wide line: spans a meaningful fraction of the column
+        if lr.width_ratio < _SHORT_LINE_RATIO:
+            return False
+        # Not a numbered summary item
+        if _RE_SUMMARY_ITEM.match(lr.text):
+            return False
+        return True
+
+    @staticmethod
     def _looks_like_heading_geometrically(lr: LineRef) -> bool:
         """Narrow, all-caps line not matching a numbered summary item.
 
@@ -786,7 +908,10 @@ class ConsiliumSegmenter:
             return False  # bare numeral fragment (e.g. "CCLXVI.")
         if _RE_WORD_FRAGMENT.match(text.strip()):
             return False  # tail of a split word (e.g. "LIVM CCLIII.")
-        if _RE_SECTION_LABEL.match(text.strip()):
+        # Strip spaces, periods, and OCR noise for label matching
+        # "CA S VS." → "CASVS"   "CAS. VS." → "CASVS"   "CASV§." → "CASV"
+        _norm = re.sub(r"[\s.§*]", "", text.strip())
+        if _RE_SECTION_LABEL.match(text.strip()) or _RE_SECTION_LABEL.match(_norm):
             return False  # section label (casus, additio) — belongs to adjacent consilium
         return (
             lr.width_ratio < _SHORT_LINE_RATIO
@@ -840,17 +965,25 @@ class ConsiliumSegmenter:
             self._track_span(lr)
 
             if self._state == "SUMMARY":
+                self._section_heights.append(lr.height)
                 if self._is_body_opener(text):
+                    self._state = "BODY"
+                    self._body_lines.append(lr)
+                elif self._is_body_opener_geometric(lr, self._section_heights[:-1]):
+                    # Geometric fallback: tall, wide line signals body start even
+                    # without a recognised opener formula (diverse v4/v5 openers).
+                    log.debug(
+                        "Geometric body opener on %s: %r  h=%d median=%.0f",
+                        lr.page_filename, text[:60], lr.height,
+                        statistics.median(self._section_heights[:-1]),
+                    )
                     self._state = "BODY"
                     self._body_lines.append(lr)
                 elif self._is_summary_continuation(text):
                     # Continuation of a multi-line summary item → append to last item
                     if self._summary_lines:
-                        # merge into previous line's text by appending to its list
-                        # (we keep as separate LineRef so LB model can process them)
                         self._summary_lines.append(lr)
                     else:
-                        # Edge case: continuation before first numbered item
                         self._summary_lines.append(lr)
                 else:
                     self._summary_lines.append(lr)

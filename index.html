@@ -186,6 +186,24 @@
       font-family: monospace;
       margin-bottom: .4rem;
     }
+    .card-actions {
+      margin-top: 1.1rem;
+      padding-top: .55rem;
+      border-top: 1px solid var(--border);
+      display: flex;
+      gap: .5rem;
+    }
+    .action-link {
+      font-size: .72rem;
+      color: var(--muted);
+      text-decoration: none;
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      padding: .18rem .6rem;
+      transition: color .12s, border-color .12s;
+      font-family: inherit;
+    }
+    .action-link:hover { color: var(--accent); border-color: var(--accent); }
     .card h2 {
       font-size: 1rem;
       font-weight: bold;
@@ -550,6 +568,10 @@ function cardHTML(c, re) {
     html += `<div class="section-label">Body</div>`;
     c.body.forEach(s => { html += `<div class="body-section">${h(s)}</div>`; });
   }
+  const simUrl = `search.html?similar=${c.n}&vol=${encodeURIComponent(c.volume)}`;
+  html += `<div class="card-actions">
+    <a class="action-link" href="${simUrl}">≈ Find similar consilia</a>
+  </div>`;
   return html;
 }
 

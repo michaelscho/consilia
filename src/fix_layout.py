@@ -26,6 +26,7 @@ from __future__ import annotations
 
 import argparse
 import re
+import statistics
 import sys
 import xml.etree.ElementTree as ET
 from copy import deepcopy
@@ -198,8 +199,14 @@ def _split_baseline(pts: list[tuple[int, int]], split_x: int):
 
 # Fixed opening formulae that should always stay intact in H_left
 _OPENERS = re.compile(
-    r"^(In Christi nomine\.|In nomine (?:Christi|Domini|Dei|Iesu|DominnI|DominnL)\.|"
-    r"IN CHRISTI NOMINE\.|IN NOMINE DEI\.|In Christi nomine Amen\.)",
+    r"^("
+    r"In\s+Christi\s+Nomine\.?\s+Amen\.?"    # "In Christi Nomine Amen." (v4/v5)
+    r"|In\s+(?:Dei|Nomine\s+Domini)\s+Amen\.?"  # "In Dei Nomine Amen." / "In Nomine Domini Amen."
+    r"|IN\s+Nomine\s+[Dd]omini\.?\s*(?:Amen\.?)?"  # "IN Nomine domini Amen."
+    r"|In\s+Christi\s+nomine\."              # "In Christi nomine." (v1)
+    r"|In\s+nomine\s+(?:Christi|Domini|Dei|Iesu|DominnI|DominnL)\."
+    r"|IN\s+CHRISTI\s+NOMINE\.|IN\s+NOMINE\s+DEI\."
+    r")",
     re.IGNORECASE,
 )
 
@@ -281,9 +288,25 @@ def _find_pairs(region_elem: ET.Element) -> list[tuple[ET.Element, ET.Element, i
         if overlap < _MIN_Y_OVERLAP:
             continue
 
-        # H must start with a body opener ("In Christi nomine." etc.)
         H_text = _get_text(H)
+
+        # H must start with a recognisable body opener phrase.
+        # Geometric body-opener detection (tall + wide) is left to the segmenter
+        # which has the SUMMARY/BODY context; here we would have no way to tell
+        # apart a body opener from a mid-body tall line.
         if not _BODY_OPENERS.match(H_text):
+            continue
+
+        # L must have substantial text (empty or single-character lines are stray
+        # artifacts, not truncated body lines)
+        L_text = _get_text(L)
+        if len(L_text.strip()) < 3:
+            continue
+
+        # L must not be a heading line — after a fix, the heading that preceded the
+        # original L ends up adjacent to the body opener and looks like a new pair,
+        # but it isn't one we should touch.
+        if re.search(r"\bCO(?:NS|S)ILI[VU]M\b", L_text, re.IGNORECASE):
             continue
 
         pairs.append((L, H, L_x_min))
@@ -353,10 +376,11 @@ def _fix_region(region_elem: ET.Element, dry_run: bool, show: bool = False) -> l
     msgs: list[str] = []
 
     for L, H, split_x in pairs:
+        H_id   = H.get("id", "")
         H_text = _get_text(H)
         L_text = _get_text(L)
-        ro_L = _get_ro(L)
-        ro_H = _get_ro(H)
+        ro_L   = _get_ro(L)
+        ro_H   = _get_ro(H)
 
         # Estimate split ratio from baseline
         H_bl = _get_baseline(H)
@@ -570,8 +594,10 @@ def main() -> None:
                 stem = xml_path.stem
                 if args.page and stem != args.page:
                     continue
+                # Accept both "0101" and "page_101" filename styles
+                nr_str = re.sub(r"^page_0*", "", stem)
                 try:
-                    page_nr = int(stem)
+                    page_nr = int(nr_str)
                 except ValueError:
                     continue
                 if args.from_page and page_nr < args.from_page:

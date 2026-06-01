@@ -374,6 +374,171 @@
     /* timing */
     .timing { font-size: .7rem; color: var(--muted); font-family: monospace; }
 
+    /* Scope / K controls (semantic mode) */
+    .sort-row input[type="number"] {
+      width: 3.2rem;
+      border: 1px solid var(--border);
+      border-radius: 3px;
+      background: var(--paper);
+      font-size: .78rem;
+      padding: .15rem .3rem;
+      font-family: inherit;
+      color: var(--text);
+      text-align: center;
+    }
+
+    /* ── Scope pills (Find Similar) ─────────────────── */
+    .scope-pills { display: flex; gap: .35rem; flex-wrap: wrap; justify-content: center; }
+    .scope-pill {
+      padding: .22rem .85rem;
+      border-radius: 20px;
+      border: 1px solid rgba(255,255,255,.2);
+      background: transparent;
+      color: rgba(255,255,255,.45);
+      font-size: .76rem;
+      cursor: pointer;
+      transition: all .15s;
+      font-family: inherit;
+      white-space: nowrap;
+    }
+    .scope-pill:hover { border-color: rgba(255,255,255,.45); color: rgba(255,255,255,.8); }
+    .scope-pill.active {
+      background: rgba(255,255,255,.22);
+      border-color: rgba(255,255,255,.55);
+      color: #fff;
+    }
+
+    /* Reference consilium chip */
+    .sim-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: .45rem;
+      background: rgba(255,255,255,.12);
+      border: 1px solid rgba(255,255,255,.25);
+      border-radius: 6px;
+      padding: .3rem .75rem;
+      font-size: .78rem;
+      color: rgba(255,255,255,.85);
+      max-width: 420px;
+    }
+    .sim-chip .chip-n {
+      font-family: monospace;
+      font-weight: bold;
+      color: #fff;
+      white-space: nowrap;
+    }
+    .sim-chip .chip-title {
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      color: rgba(255,255,255,.65);
+      font-style: italic;
+      font-size: .72rem;
+    }
+    .sim-chip .chip-clear {
+      background: none; border: none; color: rgba(255,255,255,.4);
+      cursor: pointer; font-size: .85rem; padding: 0 0 0 .2rem; line-height: 1;
+      flex-shrink: 0;
+    }
+    .sim-chip .chip-clear:hover { color: rgba(255,255,255,.9); }
+    .sim-prompt {
+      font-size: .74rem;
+      color: rgba(255,255,255,.45);
+      font-style: italic;
+    }
+    .sim-n-input {
+      background: rgba(255,255,255,.1);
+      color: #fff;
+      border: 1px solid rgba(255,255,255,.25);
+      border-radius: 4px;
+      padding: .22rem .5rem;
+      font-size: .78rem;
+      font-family: monospace;
+      width: 4.5rem;
+      outline: none;
+      text-align: center;
+    }
+
+    /* ≈ icon button on result cards */
+    .sim-btn {
+      flex-shrink: 0;
+      background: none;
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      color: var(--muted);
+      font-size: .68rem;
+      padding: .1rem .38rem;
+      cursor: pointer;
+      transition: all .12s;
+      font-family: inherit;
+      line-height: 1.3;
+    }
+    .sim-btn:hover { border-color: var(--accent); color: var(--accent); background: #fef3e8; }
+
+    /* PCA color-mode toggle */
+    .pca-color-toggle {
+      display: flex; gap: .25rem;
+    }
+    .pca-color-btn {
+      font-size: .62rem; font-family: inherit;
+      padding: .1rem .45rem; border-radius: 3px;
+      border: 1px solid var(--border);
+      background: var(--paper); color: var(--muted);
+      cursor: pointer; transition: all .1s;
+    }
+    .pca-color-btn.active {
+      background: var(--accent); color: #fff; border-color: var(--accent);
+    }
+
+    /* Volume badge on cross-print result cards */
+    .vol-badge {
+      font-size: .62rem;
+      font-family: monospace;
+      background: var(--active-bg);
+      color: var(--muted);
+      border-radius: 3px;
+      padding: .05rem .4rem;
+      margin-left: .3rem;
+      vertical-align: middle;
+    }
+
+    #pca-canvas {
+      display: block;
+      width: 100%;
+      max-width: 100%;
+      height: auto;
+      border-radius: 4px;
+      cursor: crosshair;
+    }
+    .pca-legend {
+      display: flex;
+      gap: .75rem;
+      margin-top: .4rem;
+      flex-wrap: wrap;
+      font-size: .72rem;
+      color: var(--muted);
+    }
+    .pca-legend-dot {
+      display: inline-block;
+      width: 8px; height: 8px;
+      border-radius: 50%;
+      margin-right: .25rem;
+      vertical-align: middle;
+    }
+    #pca-tooltip {
+      position: fixed;
+      background: var(--text);
+      color: var(--bg);
+      font-size: .7rem;
+      padding: .25rem .55rem;
+      border-radius: 4px;
+      pointer-events: none;
+      display: none;
+      z-index: 100;
+      max-width: 260px;
+      line-height: 1.4;
+    }
+
     /* Semantic similarity bar */
     .sem-bar-track {
       height: 3px;
@@ -415,6 +580,77 @@
     }
     .model-status.busy  { color: rgba(255,215,80,.75); }
     .model-status.ready { color: rgba(120,230,120,.75); }
+
+    /* ── Embedding source selector ───────────────────── */
+    .embed-source {
+      display: flex;
+      gap: .4rem;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+    .embed-tab {
+      padding: .28rem .9rem;
+      border-radius: 4px;
+      border: 1px solid rgba(255,255,255,.18);
+      background: rgba(255,255,255,.05);
+      color: rgba(255,255,255,.5);
+      font-size: .78rem;
+      cursor: pointer;
+      transition: all .15s;
+      font-family: inherit;
+      text-align: center;
+      line-height: 1.3;
+      white-space: nowrap;
+    }
+    .embed-tab:hover { background: rgba(255,255,255,.13); color: rgba(255,255,255,.85); }
+    .embed-tab.active {
+      background: rgba(255,255,255,.2);
+      color: #fff;
+      border-color: rgba(255,255,255,.5);
+    }
+    .embed-tab .tab-label { font-weight: bold; font-size: .8rem; display: block; }
+    .embed-tab .tab-hint  { font-size: .63rem; opacity: .65; display: block; margin-top: .1rem; }
+    .embed-detail {
+      text-align: center;
+      color: rgba(255,255,255,.5);
+      font-size: .72rem;
+      max-width: 460px;
+      line-height: 1.5;
+    }
+    .embed-detail input[type="password"] {
+      display: block;
+      margin: 0 auto .3rem;
+      width: 22rem;
+      max-width: 90vw;
+      background: rgba(255,255,255,.1);
+      color: #fff;
+      border: 1px solid rgba(255,255,255,.25);
+      border-radius: 4px;
+      padding: .25rem .7rem;
+      font-size: .75rem;
+      font-family: monospace;
+      outline: none;
+    }
+    .embed-action-btn {
+      display: inline-block;
+      margin-bottom: .3rem;
+      background: rgba(255,255,255,.08);
+      color: rgba(255,255,255,.7);
+      border: 1px solid rgba(255,255,255,.2);
+      border-radius: 4px;
+      padding: .25rem .9rem;
+      font-size: .78rem;
+      font-family: inherit;
+      cursor: pointer;
+      transition: all .15s;
+    }
+    .embed-action-btn:hover:not(:disabled) { background: rgba(255,255,255,.16); color: #fff; }
+    .embed-action-btn.ready-state {
+      background: rgba(120,230,120,.15);
+      color: rgba(150,255,150,.85);
+      border-color: rgba(120,230,120,.35);
+      cursor: default;
+    }
   </style>
 </head>
 <body>
@@ -437,30 +673,74 @@
     </div>
   </div>
   <div class="mode-toggle">
-    <button class="mode-btn active" id="btn-keyword" onclick="setMode('keyword')">Keyword</button>
+    <button class="mode-btn active" id="btn-keyword"  onclick="setMode('keyword')">Keyword</button>
     <button class="mode-btn"        id="btn-semantic" onclick="setMode('semantic')">Semantic</button>
+    <button class="mode-btn"        id="btn-similar"  onclick="setMode('similar')">≈ Similar</button>
   </div>
   <p class="hint" id="search-hint">
     Normalised &mdash;
     <kbd>j</kbd>=<kbd>i</kbd> &nbsp; <kbd>v</kbd>=<kbd>u</kbd> &nbsp;
     <kbd>ae</kbd>=<kbd>e</kbd> &nbsp;·&nbsp; prefix &amp; fuzzy
   </p>
-  <div id="sem-controls" style="display:none;gap:.5rem;align-items:center;flex-wrap:wrap;justify-content:center">
-    <input id="hf-token" type="password"
-           placeholder="HuggingFace token (optional — raises rate limit)"
-           style="background:rgba(255,255,255,.12);color:#fff;border:1px solid rgba(255,255,255,.25);
-                  border-radius:4px;padding:.22rem .65rem;font-size:.75rem;font-family:monospace;
-                  width:22rem;outline:none;"
-           autocomplete="off" spellcheck="false">
-    <button id="btn-local-model" onclick="toggleLocalModel()"
-            style="background:rgba(255,255,255,.1);color:rgba(255,255,255,.7);
-                   border:1px solid rgba(255,255,255,.22);border-radius:4px;
-                   padding:.22rem .75rem;font-size:.75rem;font-family:inherit;cursor:pointer;
-                   white-space:nowrap;transition:background .12s,color .12s">
-      Download model to local machine (~130 MB)
-    </button>
+  <div id="sem-controls" style="display:none; flex-direction:column; align-items:center; gap:.5rem; width:100%; max-width:560px; margin-top:.2rem">
+
+    <div class="embed-source">
+      <button class="embed-tab active" id="etab-hf-api" onclick="setEmbedMode('hf-api')">
+        <span class="tab-label">HF API</span>
+        <span class="tab-hint">Free account · queries on HF servers</span>
+      </button>
+      <button class="embed-tab" id="etab-local" onclick="setEmbedMode('local')">
+        <span class="tab-label">Local model</span>
+        <span class="tab-hint">Offline · ~130 MB once</span>
+      </button>
+    </div>
+
+    <div class="embed-detail" id="epanel-hf-api">
+      <input id="hf-token" type="password" placeholder="HuggingFace token (hf_…)"
+             autocomplete="off" spellcheck="false">
+      A free token is required.
+      <a href="https://huggingface.co/settings/tokens" target="_blank"
+         style="color:rgba(255,200,100,.8);text-decoration:underline">
+        huggingface.co/settings/tokens</a>
+      — create a read token, paste it above.
+      Stored locally in your browser only.
+    </div>
+
+    <div class="embed-detail" id="epanel-local" style="display:none">
+      <button class="embed-action-btn" id="btn-local-model" onclick="activateLocalModel()">
+        Download BGE-M3 ONNX model (~130 MB)
+      </button>
+      Downloaded once, cached in your browser. No account needed.
+      All queries run locally — no data leaves your machine.
+    </div>
+
+    <div class="model-status" id="model-status"></div>
   </div>
-  <div class="model-status" id="model-status"></div>
+
+  <!-- ── Similar-mode controls ───────────────────────────────────── -->
+  <div id="sim-controls" style="display:none; flex-direction:column; align-items:center; gap:.45rem; width:100%; max-width:560px; margin-top:.2rem">
+
+    <div id="sim-ref-row" style="display:flex;align-items:center;gap:.5rem;flex-wrap:wrap;justify-content:center">
+      <span class="sim-prompt">Choose a consilium — click ≈ on any result, or enter n =</span>
+      <input id="sim-n-input" class="sim-n-input" type="number" min="1" placeholder="n"
+             onchange="findSimilarByInput()" onkeydown="if(event.key==='Enter')findSimilarByInput()">
+    </div>
+    <div id="sim-chip-row" style="display:none">
+      <div class="sim-chip" id="sim-chip">
+        <span class="chip-n" id="chip-n"></span>
+        <span class="chip-title" id="chip-title"></span>
+        <button class="chip-clear" onclick="clearSimilar()" title="Clear">×</button>
+      </div>
+    </div>
+
+    <div class="scope-pills" id="scope-pills">
+      <button class="scope-pill active" id="spill-volume" onclick="setSimilarScope('volume')">In this print</button>
+      <button class="scope-pill"        id="spill-author" onclick="setSimilarScope('author')">All Baldo</button>
+      <button class="scope-pill"        id="spill-all"    onclick="setSimilarScope('all')">All corpus</button>
+    </div>
+
+    <div class="model-status" id="sim-status"></div>
+  </div>
 </div>
 
 <div class="results-layout" id="results-layout" style="display:none">
@@ -469,14 +749,27 @@
     <div class="sort-row">
       <span id="result-timing" class="timing"></span>
       <span style="flex:1"></span>
+      <label id="scope-ctrl" style="display:none">
+        Scope:
+        <select id="scope-select" onchange="rerenderSemantic()">
+          <option value="volume">This print</option>
+          <option value="all">All prints</option>
+        </select>
+      </label>
+      <label id="topk-ctrl" style="display:none">
+        Top&nbsp;K:
+        <input id="topk-input" type="number" min="5" max="500" value="20"
+               onchange="rerenderSemantic()">
+      </label>
       Sort:
-      <select id="sort-select">
+      <select id="sort-select" onchange="rerenderSemantic()">
         <option value="score">Relevance</option>
         <option value="n">Sequence (n)</option>
       </select>
     </div>
     <div class="results-list" id="results-list"></div>
   </section>
+  <div id="pca-tooltip"></div>
 
   <aside class="stats-panel">
 
@@ -520,8 +813,26 @@
         <span class="count" style="width:auto; font-size:.75rem" id="stat-score-max">—</span>
       </div>
       <div class="field-row" style="margin:.3rem 0 0">
-        <span class="label">Lowest</span>
+        <span class="label">Lowest (top K)</span>
         <span class="count" style="width:auto; font-size:.75rem" id="stat-score-min">—</span>
+      </div>
+    </div>
+
+    <div class="stat-block" id="sem-map-block" style="display:none">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:.5rem">
+        <h3 style="margin:0">Semantic Map · PCA</h3>
+        <div class="pca-color-toggle">
+          <button class="pca-color-btn active" id="pcabtn-volume"  onclick="setPCAColor('volume')">Volume</button>
+          <button class="pca-color-btn"        id="pcabtn-cluster" onclick="setPCAColor('cluster')">Cluster k=<input id="k-input" type="number" min="3" max="20" value="12" style="width:2.2rem;border:none;background:transparent;font-size:.62rem;font-family:monospace;color:inherit;padding:0;outline:none" onclick="event.stopPropagation()" onchange="resetClusters()"></button>
+          <button class="pca-color-btn" onclick="resetClusters();if(pcaColorMode==='cluster')computeClusters();" title="Recompute clusters (random re-seed)">↺</button>
+        </div>
+      </div>
+      <canvas id="pca-canvas" width="520" height="380"
+              style="width:100%;height:auto;border-radius:3px;cursor:crosshair;display:block"></canvas>
+      <div class="pca-legend" id="pca-legend" style="margin-top:.4rem"></div>
+      <div style="font-size:.62rem;color:var(--muted);margin-top:.35rem;line-height:1.4">
+        Each dot = one consilium · color = print · <strong style="color:var(--accent)">highlighted</strong> = top-K results<br>
+        Hover for details · click to open
       </div>
     </div>
 
@@ -628,6 +939,18 @@ Promise.all([
   const sel = document.getElementById('volume-select');
   sel.addEventListener('change', () => loadVolume(sel.value));
   loadVolume(sel.options[0].value);
+
+  // Handle ?similar=N&vol=VOLUME from reader deep-link
+  const params = new URLSearchParams(location.search);
+  const simN   = parseInt(params.get('similar') ?? '', 10);
+  const simVol = params.get('vol');
+  if (simN && simVol) {
+    setMode('similar');
+    // Set volume select to match
+    const volOpt = [...sel.options].find(o => o.value === simVol);
+    if (volOpt) { sel.value = simVol; loadVolume(simVol); }
+    findSimilarByNVol(simN, simVol);
+  }
 }).catch(err => {
   document.getElementById('initial-msg').textContent =
     'Could not load consilia.json: ' + err.message;
@@ -775,6 +1098,7 @@ function renderResults(results, re) {
         <span class="result-n">n = ${c.n}</span>
         <span class="result-title">${esc(c.title)}</span>
         <span class="result-score">${r.score.toFixed(1)}</span>
+        <button class="sim-btn" onclick="event.preventDefault();findSimilarFromCard(${c.n},'${c.volume}')" title="Find similar">≈</button>
       </div>
       <div class="result-fields">
         ${['title','summary','body'].map(f =>
@@ -827,19 +1151,35 @@ function renderStats(results) {
 let searchMode    = 'keyword';
 let semEmbeddings = null;   // Float32Array [N * D], normalized
 let semMeta       = null;   // {ids, ns, dims, n, model}
-let lastSemResults = [];    // [{c, score}]
+let lastSemResults = [];    // [{c, score, idx}]
+let lastSimResults = [];    // [{c, score, idx}] — similar-mode results
 let semExtractor  = null;   // transformers.js pipeline (local ONNX model)
 let localModelState = '';   // '' | 'loading' | 'ready'
+let embedMode = 'hf-api';   // 'hf-api' | 'local'
 
 function setMode(mode) {
   searchMode = mode;
   document.getElementById('btn-keyword').classList.toggle('active', mode === 'keyword');
   document.getElementById('btn-semantic').classList.toggle('active', mode === 'semantic');
   document.getElementById('sem-controls').style.display = mode === 'semantic' ? 'flex' : 'none';
-  if (mode !== 'semantic') setModelStatus('');
+  document.getElementById('sim-controls').style.display = mode === 'similar'  ? 'flex' : 'none';
+  document.getElementById('scope-ctrl').style.display   = mode === 'semantic' ? '' : 'none';
+  document.getElementById('topk-ctrl').style.display    = (mode === 'semantic' || mode === 'similar') ? '' : 'none';
+  ['keyword','semantic','similar'].forEach(m =>
+    document.getElementById('btn-' + m).classList.toggle('active', m === mode)
+  );
+  if (mode !== 'semantic' && mode !== 'similar') {
+    setModelStatus('');
+    document.getElementById('sem-map-block').style.display = 'none';
+  }
   const hint = document.getElementById('search-hint');
   if (mode === 'semantic') {
-    hint.innerHTML = 'BGE-M3 semantic search via HF API &mdash; Latin, German, or English';
+    hint.innerHTML = 'BGE-M3 · 1 508 consilia · Latin, German, or English';
+    setEmbedMode(embedMode);
+  } else if (mode === 'similar') {
+    hint.innerHTML = 'Cosine similarity · BGE-M3 embeddings · choose reference consilium below';
+    if (simRefIdx !== null) runSimilarSearch();
+    return;
   } else {
     hint.innerHTML = 'Normalised &mdash; <kbd>j</kbd>=<kbd>i</kbd> &nbsp; <kbd>v</kbd>=<kbd>u</kbd> &nbsp; <kbd>ae</kbd>=<kbd>e</kbd> &nbsp;·&nbsp; prefix &amp; fuzzy';
   }
@@ -849,7 +1189,27 @@ function setMode(mode) {
   else runSearch(q);
 }
 
-// Persist HF token and restore local model preference on load
+function setEmbedMode(mode) {
+  embedMode = mode;
+  ['hf-api', 'local'].forEach(m => {
+    document.getElementById('etab-' + m).classList.toggle('active', m === mode);
+    document.getElementById('epanel-' + m).style.display = m === mode ? '' : 'none';
+  });
+  if (mode === 'hf-api') {
+    const hasToken = !!localStorage.getItem('hf_token');
+    setModelStatus(hasToken ? 'Ready · HF API with your token' : 'Enter your HF token above', '');
+  } else {
+    if (localModelState === 'ready') {
+      setModelStatus('Local model active · queries run offline', 'ready');
+    } else if (localStorage.getItem('use_local_model')) {
+      setModelStatus('Previously downloaded — click to reload', '');
+    } else {
+      setModelStatus('Download the model once to run queries offline', '');
+    }
+  }
+}
+
+// Restore preferences and wire up token input
 document.addEventListener('DOMContentLoaded', () => {
   const inp = document.getElementById('hf-token');
   const stored = localStorage.getItem('hf_token');
@@ -858,11 +1218,14 @@ document.addEventListener('DOMContentLoaded', () => {
     const v = inp.value.trim();
     if (v) localStorage.setItem('hf_token', v);
     else localStorage.removeItem('hf_token');
+    setModelStatus(v ? 'Ready · HF API with your token' : 'Enter your HF token above', '');
   });
 
-  // If the user previously downloaded the model, offer to reload it
+  // Restore last-used mode
   if (localStorage.getItem('use_local_model')) {
-    setLocalModelBtn('Reload local model', false);
+    embedMode = 'local';
+    const btn = document.getElementById('btn-local-model');
+    if (btn) btn.textContent = 'Reload local model';
   }
 });
 
@@ -902,14 +1265,9 @@ async function ensureEmbeddings() {
 }
 
 // ── local ONNX model (transformers.js) ────────────────────────────────────
-async function toggleLocalModel() {
+async function activateLocalModel() {
   if (localModelState === 'ready') {
-    // Switch back to API mode
-    semExtractor = null;
-    localModelState = '';
-    localStorage.removeItem('use_local_model');
-    setLocalModelBtn('Download model (~130 MB)', false);
-    setModelStatus('Using HF API', '');
+    setModelStatus('Local model active · queries run offline', 'ready');
     return;
   }
   if (localModelState === 'loading') return;
@@ -918,8 +1276,9 @@ async function toggleLocalModel() {
 
 async function loadLocalModel() {
   localModelState = 'loading';
-  setLocalModelBtn('Downloading…', false);
-  setModelStatus('Downloading BGE-M3 ONNX — first time only, cached after (~130 MB)…', 'busy');
+  const btn = document.getElementById('btn-local-model');
+  if (btn) { btn.textContent = 'Downloading…'; btn.disabled = true; }
+  setModelStatus('Downloading BGE-M3 ONNX — first time only, cached (~130 MB)…', 'busy');
   try {
     const { pipeline, env } =
       await import('https://cdn.jsdelivr.net/npm/@xenova/transformers@2/dist/transformers.min.js');
@@ -935,30 +1294,24 @@ async function loadLocalModel() {
     });
     localModelState = 'ready';
     localStorage.setItem('use_local_model', '1');
-    setLocalModelBtn('Local model active ✓', true);
-    setModelStatus('Local model ready — queries run offline', 'ready');
+    if (btn) { btn.textContent = 'Local model active ✓'; btn.classList.add('ready-state'); btn.disabled = false; }
+    setModelStatus('Local model active · queries run offline', 'ready');
   } catch(e) {
     localModelState = '';
-    setLocalModelBtn('Download model (~130 MB)', false);
-    setModelStatus('Download failed: ' + e.message);
+    if (btn) { btn.textContent = 'Download BGE-M3 ONNX model (~130 MB)'; btn.disabled = false; }
+    setModelStatus('Download failed: ' + e.message, '');
     throw e;
   }
 }
 
-function setLocalModelBtn(text, active) {
-  const btn = document.getElementById('btn-local-model');
-  if (!btn) return;
-  btn.textContent = text;
-  btn.style.background = active ? 'rgba(120,230,120,.2)'  : 'rgba(255,255,255,.1)';
-  btn.style.color       = active ? 'rgba(150,255,150,.9)'  : 'rgba(255,255,255,.7)';
-  btn.style.borderColor = active ? 'rgba(120,230,120,.4)'  : 'rgba(255,255,255,.22)';
-}
-
-// Dispatch: use local ONNX model if loaded, otherwise HF API
+// Dispatch: local model if active, otherwise HF API
 async function embedQuery(text) {
-  if (localModelState === 'ready' && semExtractor) {
+  if (embedMode === 'local' && localModelState === 'ready' && semExtractor) {
     const out = await semExtractor(text, { pooling: 'cls', normalize: true });
     return out.data instanceof Float32Array ? out.data : new Float32Array(out.data);
+  }
+  if (embedMode === 'local' && localModelState !== 'ready') {
+    throw new Error('Local model not loaded yet — click "Download BGE-M3 ONNX model" first.');
   }
   return embedQueryViaAPI(text);
 }
@@ -968,8 +1321,10 @@ async function embedQuery(text) {
 // Returns a normalized Float32Array of length 1024.
 async function embedQueryViaAPI(text) {
   const token = localStorage.getItem('hf_token') || '';
-  const headers = { 'Content-Type': 'application/json' };
-  if (token) headers['Authorization'] = `Bearer ${token}`;
+  if (!token) {
+    throw new Error('No HF token set — enter your token in the HF API panel above.');
+  }
+  const headers = { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` };
 
   const resp = await fetch(
     'https://api-inference.huggingface.co/models/BAAI/bge-m3',
@@ -985,9 +1340,13 @@ async function embedQueryViaAPI(text) {
     return embedQueryViaAPI(text);
   }
 
+  if (resp.status === 401 || resp.status === 403) {
+    throw new Error('HF token missing or invalid — switch to "HF Token" and enter your token from huggingface.co/settings/tokens');
+  }
+
   if (!resp.ok) {
     const err = await resp.json().catch(() => ({}));
-    throw new Error(err.error || `HF API ${resp.status}`);
+    throw new Error(err.error || `HF API error ${resp.status}`);
   }
 
   const data = await resp.json();
@@ -1007,7 +1366,26 @@ async function embedQueryViaAPI(text) {
 }
 
 // ── main semantic search ───────────────────────────────────────────────────
+
+// Volume colour palette for PCA and badges
+const VOL_COLORS = ['#7b4c1c','#2a7b4c','#2a4c7b','#7b2a4c','#4c7b2a','#6b4c7b'];
+let volColorMap = {};  // volume → colour
+
+function volColor(vol) {
+  if (!volColorMap[vol]) {
+    const keys = Object.keys(volColorMap);
+    volColorMap[vol] = VOL_COLORS[keys.length % VOL_COLORS.length];
+  }
+  return volColorMap[vol];
+}
+
+function volShort(vol) {
+  // "Baldo_Cons_Print_Venice_1575_v4" → "v4"
+  return vol.replace(/.*_(v\d+)$/, '$1') || vol.slice(-4);
+}
+
 async function runSemanticSearch(raw) {
+  if (searchMode !== 'semantic') return;   // guard against race conditions
   if (!raw.trim()) { clearResults(); return; }
 
   document.getElementById('initial-msg').style.display = 'none';
@@ -1017,38 +1395,63 @@ async function runSemanticSearch(raw) {
 
   try {
     await ensureEmbeddings();
-    setModelStatus('Calling HF API…', 'busy');
+    const modeLabel = embedMode === 'local' ? 'Local BGE-M3' : 'HF API';
+    setModelStatus(`Embedding via ${modeLabel}…`, 'busy');
     const t0 = performance.now();
 
-    const qVec = await embedQuery(raw);  // Float32Array [dims], normalised — API or local
+    const qVec = await embedQuery(raw);
     const D = semMeta.dims;
 
-    // Dot product with each embedding (unit vectors → cosine similarity)
+    // Score ALL consilia — scope filter applied at render time
     const results = [];
     for (let i = 0; i < semMeta.n; i++) {
       const id = semMeta.ids[i];
       const c = consilia[id];
-      if (!c || c.volume !== volume) continue;
+      if (!c) continue;
       let sim = 0;
       const off = i * D;
       for (let d = 0; d < D; d++) sim += qVec[d] * semEmbeddings[off + d];
-      results.push({ c, score: sim });
+      results.push({ c, score: sim, idx: i });
     }
     results.sort((a, b) => b.score - a.score);
     lastSemResults = results;
 
     const elapsed = performance.now() - t0;
-    setModelStatus(`Done in ${elapsed.toFixed(0)} ms`, 'ready');
+    setModelStatus(`${modeLabel} · done in ${elapsed.toFixed(0)} ms`, 'ready');
 
     document.getElementById('result-timing').textContent =
-      `${results.length} consilia ranked in ${elapsed.toFixed(0)} ms (BGE-M3)`;
+      `${semMeta.n} consilia scored in ${elapsed.toFixed(0)} ms (BGE-M3)`;
 
     renderSemanticStats(results);
     renderSemanticResults(results);
 
+    // Show and render PCA map
+    document.getElementById('sem-map-block').style.display = '';
+    if (!pcaCoords) computeAndRenderPCA();
+    else renderPCAScatter();
+
   } catch(e) {
+    let msg = String(e.message ?? e);
+    if (msg.toLowerCase().includes('networkerror') || msg.toLowerCase().includes('failed to fetch')) {
+      const hasToken = !!localStorage.getItem('hf_token');
+      if (hasToken) {
+        msg = 'Network error despite token — HuggingFace may be blocking requests from '
+            + 'http://localhost. Try the Local model option, or access the page via https://.';
+      } else {
+        msg = 'Network error — no HF token set. Enter a free token from '
+            + 'huggingface.co/settings/tokens, or use the Local model option.';
+      }
+    }
     document.getElementById('results-list').innerHTML =
-      `<div class="state-msg">Error: ${esc(String(e.message ?? e))}</div>`;
+      `<div class="state-msg">Error: ${esc(msg)}</div>`;
+  }
+}
+
+function rerenderSemantic() {
+  if (searchMode === 'semantic' && lastSemResults.length) {
+    renderSemanticStats(lastSemResults);
+    renderSemanticResults(lastSemResults);
+    if (pcaCoords) renderPCAScatter();
   }
 }
 
@@ -1059,35 +1462,61 @@ function semScoreColor(score) {
 }
 
 function renderSemanticResults(results) {
-  const sort = document.getElementById('sort-select').value;
+  const sort  = document.getElementById('sort-select').value;
+  const scope = document.getElementById('scope-select')?.value ?? 'volume';
+  const topK  = Math.max(1, parseInt(document.getElementById('topk-input')?.value ?? '20', 10));
+
+  // Apply scope filter
+  const scoped = scope === 'all' ? results : results.filter(r => r.c.volume === volume);
+
   const sorted = sort === 'n'
-    ? [...results].sort((a, b) => (a.c.n ?? 0) - (b.c.n ?? 0))
-    : results;   // already sorted by score
+    ? [...scoped].sort((a, b) => (a.c.n ?? 0) - (b.c.n ?? 0))
+    : scoped;
 
-  const TOP = 20;
-  const topResults = sorted.slice(0, TOP);
-
-  // Normalise bars relative to the highest score so the top result is always full-width
+  const topResults = sorted.slice(0, topK);
   const maxScore = topResults.reduce((m, r) => Math.max(m, r.score), 0) || 1;
 
   const list = document.getElementById('results-list');
   list.innerHTML = '';
 
-  topResults.forEach(({ c, score }) => {
-    const barPct   = (score / maxScore * 100).toFixed(1);
-    const color    = semScoreColor(score);
+  const queryRe = buildHighlightRe(document.getElementById('search-input').value);
 
-    // Prefer summary for the snippet (most structured); fall back to body
-    const raw = (c.summary || (c.body || []).join(' ')).slice(0, 220);
-    const preview = esc(raw) + (raw.length >= 220 ? '…' : '');
+  topResults.forEach(({ c, score }) => {
+    const barPct = (score / maxScore * 100).toFixed(1);
+    const color  = semScoreColor(score);
+
+    // Prefer a snippet that contains a query term; fall back to summary start
+    const summaryText = c.summary || '';
+    const bodyText    = (c.body   || []).join(' ');
+    let preview;
+    if (queryRe) {
+      queryRe.lastIndex = 0;
+      if (queryRe.test(summaryText)) {
+        preview = highlightText(snippet(summaryText, queryRe), queryRe);
+      } else {
+        queryRe.lastIndex = 0;
+        if (queryRe.test(bodyText)) {
+          preview = highlightText(snippet(bodyText, queryRe), queryRe);
+        } else {
+          preview = esc(summaryText.slice(0, 220)) + (summaryText.length > 220 ? '…' : '');
+        }
+      }
+    } else {
+      const t = summaryText || bodyText;
+      preview = esc(t.slice(0, 220)) + (t.length > 220 ? '…' : '');
+    }
+
+    const volBadge = scope === 'all'
+      ? `<span class="vol-badge" style="background:${volColor(c.volume)}22;color:${volColor(c.volume)}">${volShort(c.volume)}</span>`
+      : '';
 
     const el = document.createElement('a');
     el.className = 'result-card';
-    el.href = `index.html?n=${c.n}`;
+    el.href = `index.html?n=${c.n}&vol=${encodeURIComponent(c.volume)}`;
     el.innerHTML =
       `<div class="result-head">
          <span class="result-n">${c.n}</span>
-         <span class="result-title">${esc(c.title)}</span>
+         <span class="result-title">${esc(c.title)}${volBadge}</span>
          <span class="result-score" style="color:${color}">${score.toFixed(3)}</span>
        </div>
        <div class="sem-bar-track">
@@ -1097,32 +1526,34 @@ function renderSemanticResults(results) {
     list.appendChild(el);
   });
 
-  if (sorted.length > TOP) {
+  if (scoped.length > topK) {
     const info = document.createElement('div');
     info.className = 'state-msg';
     info.style.paddingTop = '.75rem';
-    info.textContent = `Showing top ${TOP} of ${sorted.length} scored consilia.`;
+    info.textContent = `Showing top ${topK} of ${scoped.length} consilia in scope.`;
     list.appendChild(info);
   }
 }
 
 function renderSemanticStats(results) {
-  const total = items.length;
-  document.getElementById('stat-count').textContent = Math.min(results.length, 20);
+  const topK  = Math.max(1, parseInt(document.getElementById('topk-input')?.value ?? '20', 10));
+  const scope = document.getElementById('scope-select')?.value ?? 'volume';
+  const scoped = scope === 'all' ? results : results.filter(r => r.c.volume === volume);
+  const total  = scope === 'all' ? Object.keys(consilia).length : items.length;
+  document.getElementById('stat-count').textContent = Math.min(scoped.length, topK);
   document.getElementById('stat-pct').textContent =
-    `top 20 of ${total} consilia by similarity`;
+    `top ${topK} of ${total} consilia by similarity`;
 
   // Hide field breakdown (not applicable for semantic)
   document.querySelectorAll('#results-layout .field-row').forEach(r => r.style.display = 'none');
 
-  const scores = results.map(r => r.score);
-  document.getElementById('stat-score-max').textContent = scores[0]?.toFixed(4) ?? '—';
-  document.getElementById('stat-score-min').textContent =
-    scores[scores.length - 1]?.toFixed(4) ?? '—';
+  const topSlice = scoped.slice(0, topK);
+  document.getElementById('stat-score-max').textContent = topSlice[0]?.score.toFixed(4) ?? '—';
+  document.getElementById('stat-score-min').textContent = topSlice[topSlice.length - 1]?.score.toFixed(4) ?? '—';
 
-  // Show n-distribution of top 20 results
+  // Distribution: top-K within scope
   renderDistribution(
-    results.slice(0, 20).map((r) => ({
+    topSlice.map((r) => ({
       id: items.findIndex(it => it.id === r.c.id),
       score: r.score,
     }))
@@ -1190,6 +1621,512 @@ function renderDistribution(results) {
     span.textContent = bi * binSize + 1;
     axisEl.appendChild(span);
   });
+}
+
+// ── PCA Scatter (Explore panel) ────────────────────────────────────────────
+
+let pcaCoords = null;          // {raw, minX, maxX, minY, maxY, N} — computed once
+let pcaColorMode = 'volume';   // 'volume' | 'cluster'
+let clusterAssignments = null; // Int32Array[N]
+let clusterLabels = null;      // string[k]
+let simScope = 'volume';       // 'volume' | 'author' | 'all'
+let simRefIdx  = null;         // embedding index of reference consilium
+
+const CLUSTER_PALETTE = [
+  '#c0392b','#e67e22','#f39c12','#27ae60','#16a085',
+  '#2980b9','#8e44ad','#d35400','#1abc9c','#2c3e50',
+  '#7f8c8d','#e91e63',
+];
+const LAT_STOP = new Set([
+  // Latin function words & conjunctions
+  'an','de','et','in','ad','per','cum','non','sed','quia','quod','vel','aut',
+  'est','si','ut','ex','pro','qui','quae','dum','nam','iam','nec','neu',
+  'etiam','tamen','autem','vero','enim','ergo','ideo','item','idem','igitur',
+  'quando','quomodo','quoniam','quam','inter','post','ante','apud','sine',
+  'sive','atque','neque','quin','qua','quo','qua','ubi','unde','nisi',
+  // Ubiquitous legal question words (appear in almost every consilium)
+  'possit','potest','possint','potuit','posse','posset',
+  'debet','debetur','debeatur','debent','debere',
+  // "consilivm" heading — every title starts with it
+  'consilivm','consilium','consilii','consilio','consiliis',
+  // Common modal/copular verbs
+  'esse','fuit','sunt','fuerit','sit','sint','fuerat','fuisse','erat','erit',
+  'habet','habuit','habeat','habere','habens','habeatur','habentur',
+  // Very common verbs in propositions
+  'dici','dictum','dicta','dixit','dixerit','dicatur','dicendum',
+  'fieri','fieret','facta','factum','facti','facere','factus',
+  'tenetur','teneatur','teneri',
+  // Common question / indefinite pronouns
+  'quid','quis','aliquid','aliquis','aliqua','aliquam','alicui',
+  'ille','illa','illud','ipse','ipsa','ipsum','hoc','haec','hic',
+  'tale','talis','tale','idem','eadem','idem',
+  // Preposition-like words
+  'propter','contra','super','ultra','secundum','coram','circa',
+  // English/German (sometimes in summaries)
+  'the','of','and','to','is','are','that','from','this','with',
+  'for','not','but','when','by','be','oder','und','der','die','das',
+]);
+
+// ── thematic clustering ────────────────────────────────────────────────────
+
+function resetClusters() {
+  clusterAssignments = null;
+  clusterLabels = null;
+  if (pcaColorMode === 'cluster') renderPCAScatter();
+}
+
+function setPCAColor(mode) {
+  pcaColorMode = mode;
+  ['volume','cluster'].forEach(m => {
+    document.getElementById('pcabtn-' + m).classList.toggle('active', m === mode);
+  });
+  if (mode === 'cluster' && !clusterAssignments && pcaCoords) {
+    computeClusters();
+  } else {
+    renderPCAScatter();
+  }
+}
+
+function computeClusters() {
+  if (!pcaCoords) return;
+  const k  = Math.max(3, Math.min(20, parseInt(document.getElementById('k-input').value, 10) || 12));
+  const { raw: coords, N } = pcaCoords;
+
+  // k-means++ on 2D PCA coordinates
+  const cx = new Float32Array(k), cy = new Float32Array(k);
+
+  // Seed first center
+  const seed = Math.floor(Math.random() * N);
+  cx[0] = coords[seed * 2]; cy[0] = coords[seed * 2 + 1];
+
+  // k-means++ subsequent seeds
+  for (let ki = 1; ki < k; ki++) {
+    const dist2 = new Float32Array(N);
+    let total = 0;
+    for (let i = 0; i < N; i++) {
+      let minD = Infinity;
+      for (let j = 0; j < ki; j++) {
+        const dx = coords[i*2] - cx[j], dy = coords[i*2+1] - cy[j];
+        minD = Math.min(minD, dx*dx + dy*dy);
+      }
+      dist2[i] = minD; total += minD;
+    }
+    let r = Math.random() * total, acc = 0;
+    for (let i = 0; i < N; i++) {
+      acc += dist2[i];
+      if (acc >= r) { cx[ki] = coords[i*2]; cy[ki] = coords[i*2+1]; break; }
+    }
+  }
+
+  // Iterate
+  const asgn = new Int32Array(N);
+  for (let iter = 0; iter < 25; iter++) {
+    let changed = 0;
+    for (let i = 0; i < N; i++) {
+      let bestK = 0, bestD = Infinity;
+      for (let ki = 0; ki < k; ki++) {
+        const dx = coords[i*2] - cx[ki], dy = coords[i*2+1] - cy[ki];
+        const d = dx*dx + dy*dy;
+        if (d < bestD) { bestD = d; bestK = ki; }
+      }
+      if (asgn[i] !== bestK) { asgn[i] = bestK; changed++; }
+    }
+    if (changed === 0) break;
+    // Update centroids
+    const sumX = new Float32Array(k), sumY = new Float32Array(k), cnt = new Int32Array(k);
+    for (let i = 0; i < N; i++) {
+      const ki = asgn[i]; sumX[ki] += coords[i*2]; sumY[ki] += coords[i*2+1]; cnt[ki]++;
+    }
+    for (let ki = 0; ki < k; ki++) {
+      if (cnt[ki]) { cx[ki] = sumX[ki]/cnt[ki]; cy[ki] = sumY[ki]/cnt[ki]; }
+    }
+  }
+  clusterAssignments = asgn;
+  clusterLabels = buildClusterLabels(asgn, k);
+  renderPCAScatter();
+}
+
+function buildClusterLabels(asgn, k) {
+  const MIN_CORPUS_FREQ = 5;  // word must appear in ≥5 distinct consilia corpus-wide
+
+  // Step 1: per-cluster word counts + corpus-wide distinct-consilium count
+  const clusterFreq = Array.from({length: k}, () => ({}));
+  const corpusFreq  = {};   // word → number of distinct consilia containing it
+
+  asgn.forEach((ki, i) => {
+    const c = consilia[semMeta.ids[i]];
+    if (!c) return;
+    const titleClean = (c.title || '').replace(/CONSILI[VU]M?\s*[IVXLCDM\d\.]+\s*/i, '');
+    const text = titleClean + ' ' + (c.summary || '') + ' ' + (c.summary || '');
+    const seenHere = new Set();
+    text.toLowerCase()
+      .replace(/[^a-zäöüàáâãèéêëìíïòóôùúæœ\s]/g, ' ')
+      .split(/\s+/)
+      .forEach(w => {
+        if (w.length < 4 || LAT_STOP.has(w)) return;
+        clusterFreq[ki][w] = (clusterFreq[ki][w] || 0) + 1;
+        if (!seenHere.has(w)) {
+          corpusFreq[w] = (corpusFreq[w] || 0) + 1;
+          seenHere.add(w);
+        }
+      });
+  });
+
+  // Step 2: cluster document frequency (how many clusters contain the word)
+  const clusterDf = {};
+  clusterFreq.forEach(freq => {
+    Object.keys(freq).forEach(w => { clusterDf[w] = (clusterDf[w] || 0) + 1; });
+  });
+
+  // Step 3: TF-IDF, filtering out rare words (proper names, OCR fragments)
+  return clusterFreq.map(freq => {
+    const total = Object.values(freq).reduce((s, n) => s + n, 0) || 1;
+    const scored = Object.entries(freq)
+      .filter(([w]) => (corpusFreq[w] || 0) >= MIN_CORPUS_FREQ)  // drop rare / proper nouns
+      .map(([w, cnt]) => {
+        const idf = Math.log((k + 1) / (clusterDf[w] || 1));
+        return [w, (cnt / total) * idf];
+      })
+      .filter(([, s]) => s > 0.001);
+    scored.sort((a, b) => b[1] - a[1]);
+    return scored.slice(0, 4).map(([w]) => w).join(', ') || '—';
+  });
+}
+
+// ── find similar ───────────────────────────────────────────────────────────
+
+function setSimilarScope(scope) {
+  simScope = scope;
+  ['volume','author','all'].forEach(s => {
+    document.getElementById('spill-' + s).classList.toggle('active', s === scope);
+  });
+  if (simRefIdx !== null) runSimilarSearch();
+}
+
+function findSimilarFromCard(n, vol) {
+  // Switch to similar mode and trigger search
+  setMode('similar');
+  findSimilarByNVol(n, vol);
+}
+
+function findSimilarByInput() {
+  const n = parseInt(document.getElementById('sim-n-input').value, 10);
+  if (!n) return;
+  const c = Object.values(consilia).find(x => x.n === n && x.volume === volume);
+  if (c) findSimilarByNVol(c.n, c.volume);
+  else {
+    document.getElementById('sim-status').textContent = `n=${n} not found in current print`;
+  }
+}
+
+function findSimilarByNVol(n, vol) {
+  if (!semMeta) {
+    // Need embeddings — load them first
+    ensureEmbeddings().then(() => _doFindSimilar(n, vol)).catch(e => {
+      document.getElementById('sim-status').textContent = 'Error loading embeddings: ' + e.message;
+    });
+    return;
+  }
+  _doFindSimilar(n, vol);
+}
+
+function _doFindSimilar(n, vol) {
+  // Find the embedding index for this consilium
+  const id = Object.keys(consilia).find(k => consilia[k].n === n && consilia[k].volume === vol);
+  if (!id) {
+    document.getElementById('sim-status').textContent = `Consilium n=${n} not found`;
+    return;
+  }
+  const idx = semMeta.ids.indexOf(id);
+  if (idx === -1) {
+    document.getElementById('sim-status').textContent = `Embedding not found for n=${n}`;
+    return;
+  }
+  simRefIdx = idx;
+  const ref = consilia[id];
+
+  // Show chip
+  document.getElementById('sim-ref-row').style.display = 'none';
+  document.getElementById('sim-chip-row').style.display = '';
+  document.getElementById('chip-n').textContent = `n = ${ref.n}`;
+  document.getElementById('chip-title').textContent = ref.title;
+
+  runSimilarSearch();
+}
+
+function clearSimilar() {
+  simRefIdx = null;
+  document.getElementById('sim-chip-row').style.display = 'none';
+  document.getElementById('sim-ref-row').style.display = '';
+  document.getElementById('sim-n-input').value = '';
+  document.getElementById('sim-status').textContent = '';
+  clearResults();
+}
+
+function runSimilarSearch() {
+  if (simRefIdx === null || !semEmbeddings) return;
+
+  const D   = semMeta.dims;
+  const ref = consilia[semMeta.ids[simRefIdx]];
+  const refVol  = ref?.volume;
+  const refViaf = ref?.author_viaf;
+
+  const topK = Math.max(1, parseInt(document.getElementById('topk-input')?.value ?? '20', 10));
+  const t0 = performance.now();
+  const ri = simRefIdx * D;
+
+  const results = [];
+  for (let i = 0; i < semMeta.n; i++) {
+    if (i === simRefIdx) continue;
+    const c = consilia[semMeta.ids[i]];
+    if (!c) continue;
+    if (simScope === 'volume' && c.volume !== refVol) continue;
+    if (simScope === 'author' && c.author_viaf !== refViaf) continue;
+    let dot = 0;
+    const ci = i * D;
+    for (let d = 0; d < D; d++) dot += semEmbeddings[ri + d] * semEmbeddings[ci + d];
+    results.push({ c, score: dot, idx: i });
+  }
+  results.sort((a, b) => b.score - a.score);
+
+  const elapsed = performance.now() - t0;
+  const scopeLabel = simScope === 'volume' ? `${volShort(refVol)}` : simScope === 'author' ? 'All Baldo' : 'All corpus';
+  document.getElementById('sim-status').textContent =
+    `${results.length} consilia ranked in ${elapsed.toFixed(0)} ms · ${scopeLabel}`;
+
+  document.getElementById('initial-msg').style.display = 'none';
+  document.getElementById('results-layout').style.display = '';
+  document.getElementById('result-timing').textContent =
+    `Top similar to n=${ref.n} · ${scopeLabel}`;
+
+  lastSimResults = results;
+  renderSimilarResults(results.slice(0, topK), ref);
+  renderSemanticStats(results);
+
+  document.getElementById('sem-map-block').style.display = '';
+  if (!pcaCoords) computeAndRenderPCA();
+  else renderPCAScatter();
+}
+
+function renderSimilarResults(results, ref) {
+  const sort  = document.getElementById('sort-select').value;
+  const scope = simScope;
+  const sorted = sort === 'n'
+    ? [...results].sort((a, b) => (a.c.n ?? 0) - (b.c.n ?? 0))
+    : results;
+
+  const maxScore = sorted[0]?.score || 1;
+  const list = document.getElementById('results-list');
+  list.innerHTML = '';
+
+  sorted.forEach(({ c, score }) => {
+    const barPct = (score / maxScore * 100).toFixed(1);
+    const color  = semScoreColor(score);
+    const raw    = (c.summary || (c.body || []).join(' ')).slice(0, 220);
+    const volBadge = scope !== 'volume'
+      ? `<span class="vol-badge" style="background:${volColor(c.volume)}22;color:${volColor(c.volume)}">${volShort(c.volume)}</span>`
+      : '';
+
+    const el = document.createElement('a');
+    el.className = 'result-card';
+    el.href = `index.html?n=${c.n}&vol=${encodeURIComponent(c.volume)}`;
+    el.innerHTML =
+      `<div class="result-head">
+         <span class="result-n">${c.n}</span>
+         <span class="result-title">${esc(c.title)}${volBadge}</span>
+         <span class="result-score" style="color:${color}">${score.toFixed(3)}</span>
+         <button class="sim-btn" onclick="event.preventDefault();findSimilarFromCard(${c.n},'${c.volume}')" title="Find similar">≈</button>
+       </div>
+       <div class="sem-bar-track"><div class="sem-bar-fill" style="width:${barPct}%;background:${color}"></div></div>
+       <div class="result-snippet">${esc(raw)}${raw.length >= 220 ? '…' : ''}</div>`;
+    list.appendChild(el);
+  });
+}
+
+async function computeAndRenderPCA() {
+  const canvas = document.getElementById('pca-canvas');
+  const ctx = canvas.getContext('2d');
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  ctx.fillStyle = '#aaa';
+  ctx.font = '13px monospace';
+  ctx.fillText('Computing PCA…', 16, canvas.height / 2);
+
+  // Yield to browser so the message renders, then compute
+  await new Promise(r => setTimeout(r, 0));
+
+  const N = semMeta.n;
+  const D = semMeta.dims;
+  const X = semEmbeddings;   // Float32Array N×D
+
+  // Power-iteration for top-2 principal components
+  // Center data (mean subtraction)
+  const mean = new Float32Array(D);
+  for (let i = 0; i < N; i++) {
+    const off = i * D;
+    for (let d = 0; d < D; d++) mean[d] += X[off + d];
+  }
+  for (let d = 0; d < D; d++) mean[d] /= N;
+
+  // 2 principal components via power iteration (5 steps each)
+  const u = [new Float32Array(D), new Float32Array(D)];
+  // Random init
+  for (let k = 0; k < 2; k++) {
+    for (let d = 0; d < D; d++) u[k][d] = Math.random() - 0.5;
+    let n = 0; for (let d = 0; d < D; d++) n += u[k][d] ** 2;
+    n = Math.sqrt(n); for (let d = 0; d < D; d++) u[k][d] /= n;
+  }
+
+  for (let iter = 0; iter < 6; iter++) {
+    for (let k = 0; k < 2; k++) {
+      // v = X_c^T (X_c u_k)
+      const a = new Float32Array(N);
+      for (let i = 0; i < N; i++) {
+        const off = i * D; let s = 0;
+        for (let d = 0; d < D; d++) s += (X[off + d] - mean[d]) * u[k][d];
+        a[i] = s;
+      }
+      const v = new Float32Array(D);
+      for (let i = 0; i < N; i++) {
+        const off = i * D;
+        for (let d = 0; d < D; d++) v[d] += a[i] * (X[off + d] - mean[d]);
+      }
+      // Deflate: remove projections onto previous components
+      for (let j = 0; j < k; j++) {
+        let dot = 0; for (let d = 0; d < D; d++) dot += v[d] * u[j][d];
+        for (let d = 0; d < D; d++) v[d] -= dot * u[j][d];
+      }
+      let n = 0; for (let d = 0; d < D; d++) n += v[d] ** 2;
+      n = Math.sqrt(n);
+      if (n > 0) for (let d = 0; d < D; d++) u[k][d] = v[d] / n;
+    }
+  }
+
+  // Project all points
+  const coords = new Float32Array(N * 2);
+  let minX = Infinity, maxX = -Infinity, minY = Infinity, maxY = -Infinity;
+  for (let i = 0; i < N; i++) {
+    const off = i * D; let px = 0, py = 0;
+    for (let d = 0; d < D; d++) {
+      const x = X[off + d] - mean[d];
+      px += x * u[0][d]; py += x * u[1][d];
+    }
+    coords[i * 2] = px; coords[i * 2 + 1] = py;
+    minX = Math.min(minX, px); maxX = Math.max(maxX, px);
+    minY = Math.min(minY, py); maxY = Math.max(maxY, py);
+  }
+
+  // Store normalised [0,1]
+  pcaCoords = { raw: coords, minX, maxX, minY, maxY, N };
+  renderPCAScatter();
+}
+
+function renderPCAScatter() {
+  if (!pcaCoords || !semMeta) return;
+  const canvas = document.getElementById('pca-canvas');
+  const W = canvas.width, H = canvas.height;
+  const ctx = canvas.getContext('2d');
+  ctx.clearRect(0, 0, W, H);
+
+  const { raw, minX, maxX, minY, maxY, N } = pcaCoords;
+  const pad = 24;
+  const scaleX = (x) => pad + (x - minX) / (maxX - minX) * (W - 2 * pad);
+  const scaleY = (y) => H - pad - (y - minY) / (maxY - minY) * (H - 2 * pad);
+
+  // Colour-by function
+  const useCluster = pcaColorMode === 'cluster' && clusterAssignments;
+  const pointColor = (i) => {
+    if (useCluster) return CLUSTER_PALETTE[clusterAssignments[i] % CLUSTER_PALETTE.length];
+    const vol = semMeta.ids[i] ? consilia[semMeta.ids[i]]?.volume : null;
+    return vol ? volColor(vol) : '#888';
+  };
+
+  // Build highlight set from active results (semantic or similar)
+  const topK = Math.max(1, parseInt(document.getElementById('topk-input')?.value ?? '20', 10));
+  const activeResults = searchMode === 'similar' ? lastSimResults : lastSemResults;
+  const highlightIdx  = new Set(activeResults.slice(0, topK).map(r => r.idx));
+  // Also highlight simRef point
+  if (simRefIdx !== null) highlightIdx.add(simRefIdx);
+
+  // Draw background points
+  for (let i = 0; i < N; i++) {
+    const color = pointColor(i);
+    const px = scaleX(raw[i * 2]), py = scaleY(raw[i * 2 + 1]);
+    ctx.beginPath();
+    ctx.arc(px, py, 2.5, 0, 2 * Math.PI);
+    ctx.fillStyle = (highlightIdx.size && !highlightIdx.has(i)) ? color + '30' : color + 'aa';
+    ctx.fill();
+  }
+
+  // Draw highlighted points on top
+  highlightIdx.forEach(i => {
+    if (i >= N) return;
+    const isRef = (i === simRefIdx);
+    const color = pointColor(i);
+    const px = scaleX(raw[i * 2]), py = scaleY(raw[i * 2 + 1]);
+    ctx.beginPath();
+    ctx.arc(px, py, isRef ? 7 : 5, 0, 2 * Math.PI);
+    ctx.fillStyle = isRef ? '#fff' : color;
+    ctx.fill();
+    ctx.strokeStyle = isRef ? color : '#fff';
+    ctx.lineWidth = isRef ? 2 : 1.2;
+    ctx.stroke();
+  });
+
+  // Legend
+  const legend = document.getElementById('pca-legend');
+  if (useCluster) {
+    const k = CLUSTER_PALETTE.length;
+    legend.innerHTML = clusterLabels.map((lbl, ki) =>
+      `<span><span class="pca-legend-dot" style="background:${CLUSTER_PALETTE[ki % CLUSTER_PALETTE.length]}"></span>${ki+1}: ${lbl}</span>`
+    ).join('');
+  } else {
+    const vols = [...new Set(semMeta.ids.map(id => consilia[id]?.volume).filter(Boolean))];
+    legend.innerHTML = vols.map(v =>
+      `<span><span class="pca-legend-dot" style="background:${volColor(v)}"></span>${volShort(v)} — ${v.replace(/_/g,' ')}</span>`
+    ).join('');
+  }
+
+  // Tooltip on hover
+  canvas.onmousemove = (e) => {
+    const rect = canvas.getBoundingClientRect();
+    const mx = (e.clientX - rect.left) * (W / rect.width);
+    const my = (e.clientY - rect.top)  * (H / rect.height);
+    let best = null, bestDist = 64;
+    for (let i = 0; i < N; i++) {
+      const px = scaleX(raw[i * 2]), py = scaleY(raw[i * 2 + 1]);
+      const d = (px - mx) ** 2 + (py - my) ** 2;
+      if (d < bestDist) { bestDist = d; best = i; }
+    }
+    const tip = document.getElementById('pca-tooltip');
+    if (best !== null) {
+      const c   = consilia[semMeta.ids[best]];
+      const hit = lastSemResults.find(r => r.idx === best);
+      tip.innerHTML = `<strong>n=${c?.n}</strong> ${esc(c?.title ?? '')}` +
+        (hit ? `<br>score: ${hit.score.toFixed(4)}` : '') +
+        `<br><span style="opacity:.6">${volShort(c?.volume ?? '')}</span>`;
+      tip.style.display = 'block';
+      tip.style.left = (e.clientX + 12) + 'px';
+      tip.style.top  = (e.clientY - 8)  + 'px';
+    } else {
+      tip.style.display = 'none';
+    }
+  };
+  canvas.onmouseleave = () => { document.getElementById('pca-tooltip').style.display = 'none'; };
+  canvas.onclick = (e) => {
+    const rect = canvas.getBoundingClientRect();
+    const mx = (e.clientX - rect.left) * (W / rect.width);
+    const my = (e.clientY - rect.top)  * (H / rect.height);
+    let best = null, bestDist = 100;
+    for (let i = 0; i < N; i++) {
+      const px = scaleX(raw[i * 2]), py = scaleY(raw[i * 2 + 1]);
+      const d = (px - mx) ** 2 + (py - my) ** 2;
+      if (d < bestDist) { bestDist = d; best = i; }
+    }
+    if (best !== null) {
+      const c = consilia[semMeta.ids[best]];
+      if (c) window.open(`index.html?n=${c.n}&vol=${encodeURIComponent(c.volume)}`, '_blank');
+    }
+  };
 }
 </script>
 

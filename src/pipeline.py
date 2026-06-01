@@ -59,7 +59,8 @@ def find_prints(data_dir: Path) -> list[tuple[str, str, Path]]:
             continue
         viaf = author_dir.name
         for print_dir in sorted(author_dir.iterdir()):
-            if print_dir.is_dir() and (print_dir / "page").is_dir():
+            if print_dir.is_dir() and (print_dir / "page").is_dir() \
+                    and not print_dir.name.endswith("_backup"):
                 result.append((viaf, print_dir.name, print_dir))
     return result
 
@@ -71,7 +72,11 @@ def find_prints(data_dir: Path) -> list[tuple[str, str, Path]]:
 
 def load_pages(print_dir: Path) -> list[PageData]:
     page_dir = print_dir / "page"
-    xml_files = sorted(page_dir.glob("*.xml"), key=lambda p: int(p.stem))
+    def _page_nr(p: Path) -> int:
+        s = p.stem
+        s = s[5:] if s.startswith("page_") else s   # strip "page_" prefix
+        return int(s.lstrip("0") or "0")
+    xml_files = sorted(page_dir.glob("*.xml"), key=_page_nr)
     pages: list[PageData] = []
     for xml_file in xml_files:
         try:
