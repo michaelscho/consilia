@@ -163,7 +163,7 @@ async function embedQuery(text){
 async function embedQueryViaAPI(text){
   const token=localStorage.getItem('hf_token')||'';
   if(!token) throw new Error('No HuggingFace token — enter one above, or switch to Local model.');
-  const resp=await fetch('https://api-inference.huggingface.co/models/BAAI/bge-m3',{ method:'POST', headers:{'Content-Type':'application/json','Authorization':`Bearer ${token}`}, body:JSON.stringify({inputs:text}) });
+  const resp=await fetch('https://router.huggingface.co/hf-inference/models/BAAI/bge-m3/pipeline/feature-extraction',{ method:'POST', headers:{'Content-Type':'application/json','Authorization':`Bearer ${token}`}, body:JSON.stringify({inputs:text}) });
   if(resp.status===503){ const info=await resp.json().catch(()=>({})); const wait=Math.min((info.estimated_time??20)*1000,30000); setModelStatus(`Model warming up (~${(wait/1000).toFixed(0)} s)…`,'busy'); await new Promise(r=>setTimeout(r,wait)); return embedQueryViaAPI(text); }
   if(resp.status===401||resp.status===403) throw new Error('HF token missing or invalid.');
   if(!resp.ok){ const err=await resp.json().catch(()=>({})); throw new Error(err.error||('HF API error '+resp.status)); }
